@@ -28,7 +28,7 @@ button {
 	font-size: 62px;
 	color: black;
 	width: inherit;
-	height: 20%;
+	height: 15%;
 	border-radius: 8px;
 	margin-top: 18px;
 }
@@ -39,5 +39,5 @@ button {
 
 li {
 	margin-top: 4px;
-	font-size: 32px;
+	font-size: 38px;
 }
