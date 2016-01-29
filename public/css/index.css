@@ -15,7 +15,7 @@ img {
 
 #divContainer {
 	height: inherit;
-	width: inherit;
+	width: 100%;
 }
 
 #divButtonMenu {
@@ -25,11 +25,12 @@ img {
 
 button {
 	background-color: #33ffff;
-	font-weight: bold;
+	font-size: 62px;
 	color: black;
 	width: inherit;
-	height: 25%;
+	height: 20%;
 	border-radius: 8px;
+	margin-top: 10px;
 }
 
 .accordionButtons {
