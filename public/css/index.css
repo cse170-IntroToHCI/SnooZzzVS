@@ -1,0 +1,23 @@
+body {
+	width: 100%;
+	height: 100%;
+}
+
+img {
+	width: 25px;
+	height: 25px;
+}
+
+#divHeader {
+	background-color: blue;
+}
+
+#divCore {
+	background-color: mediumpurple;
+}
+
+button {
+	background-color: purple;
+	font-weight: bold;
+	color: white;
+}
