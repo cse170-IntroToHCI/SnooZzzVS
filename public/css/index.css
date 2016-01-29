@@ -5,13 +5,14 @@ html, body {
 }
 
 img {
-	width:  75px;
-	height: 75px;
+	width:  85px;
+	height: 85px;
 }
 
 #rightCell {
-	width: 75px;
-	padding-left: 120px;
+	width: 100%;
+	text-align: right;
+	padding-right: 40px;
 }
 
 #divHeader {
