@@ -6,6 +6,7 @@ body {
 img {
 	width: 25px;
 	height: 25px;
+<<<<<<< HEAD
 }
 
 #divHeader {
@@ -20,4 +21,6 @@ button {
 	background-color: purple;
 	font-weight: bold;
 	color: white;
+=======
+>>>>>>> fa3d24c751f867cdf10bd7b5d5295292626d761a
 }
