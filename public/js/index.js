@@ -1,8 +1,13 @@
-var b1boolean = 1; // starts open
-var b2boolean = 1;
-var b3boolean = 1;
+var b1boolean = 0; // starts closed
+var b2boolean = 0;
+var b3boolean = 0;
 
 $(document).ready(function() {
+	$(".accordionLists").hide();
+});
+
+$(document).ready(function() {
+
 	$("#b1").click(function() {
 		if(b1boolean == 1) {
 			b1boolean = 0;
@@ -16,7 +21,7 @@ $(document).ready(function() {
 			b3boolean = 0;
 			$("#list3").slideUp();
 		}
-	})
+	});
 	$("#b2").click(function() {
 		if(b2boolean == 1) {
 			b2boolean = 0;
@@ -30,7 +35,7 @@ $(document).ready(function() {
 			b3boolean = 0;
 			$("#list3").slideUp();
 		}
-	})
+	});
 	$("#b3").click(function() {
 		if(b3boolean == 1) {
 			b3boolean = 0;
@@ -44,5 +49,5 @@ $(document).ready(function() {
 			b2boolean = 0;
 			$("#list2").slideUp();
 		}
-	})
+	});
 });
