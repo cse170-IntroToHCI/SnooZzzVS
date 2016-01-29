@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var app = express();
 
 // tells express to look files to render in views directory
@@ -13,7 +14,7 @@ var port = process.env.PORT || 8080;
 // app.set('view engine', 'ejs');
 
 // make express look in the public directory for assets (css/js/img)
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/views'));
 
 // set the home page route
