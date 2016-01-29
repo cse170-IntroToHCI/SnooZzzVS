@@ -5,8 +5,13 @@ html, body {
 }
 
 img {
-	width: 25px;
-	height: 25px;
+	width:  75px;
+	height: 75px;
+}
+
+#rightCell {
+	width: 75px;
+	padding-left: 120px;
 }
 
 #divHeader {
@@ -24,7 +29,7 @@ img {
 }
 
 button {
-	background-color: #33ffff;
+	background-color: #d8d8d8;
 	font-size: 62px;
 	color: black;
 	width: inherit;
@@ -40,4 +45,14 @@ button {
 li {
 	margin-top: 4px;
 	font-size: 38px;
+}
+
+#leftName {
+	font-size: 62px;
+	color: blue;
+}
+
+#rightName {
+	font-size: 62px;
+	color: yellow;
 }
