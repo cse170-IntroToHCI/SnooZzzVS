@@ -17,7 +17,7 @@ $(document).ready(function() {
 		} else if(b1boolean == 0) {
 			b1boolean = 1;
 			$("#list1").slideDown(slideSpeed);
-			
+
 			b2boolean = 0;
 			$("#list2").slideUp(slideSpeed);
 			b3boolean = 0;

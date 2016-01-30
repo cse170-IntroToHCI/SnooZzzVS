@@ -1,0 +1,6 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: lightgrey;
+    font-family: "amaranth"; /* This is our default font-family (at least it should be) */
+}

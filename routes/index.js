@@ -9,4 +9,12 @@ router.get('/', function(req, res) {
     res.render('index');
 });
 
+router.get('/sleep', function(req, res) {
+    res.render('sleep');
+});
+
+router.get('/wake', function(req, res) {
+    res.render('wake');
+});
+
 module.exports = router;
