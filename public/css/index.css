@@ -57,9 +57,11 @@ p {
 #leftName {
 	font-size: 62px;
 	color: blue;
+	text-shadow: black 0.1em 0.1em 0.1em;
 }
 
 #rightName {
 	font-size: 62px;
 	color: yellow;
+	text-shadow: black 0.1em 0.1em 0.1em;
 }

@@ -1,0 +1,21 @@
+// According to a stackoverflow post,
+// http://stackoverflow.com/questions/28759149/nodejs-bin-www-script-not-running-on-startup
+// if I'm going to have a bin/www then this implies I am using express v4.0
+// Which means that instead of running,
+//      $node app.js
+// I instead need to do:
+//      $npm start
+// However that gave me an error at the terminal that I do not understand.
+// Turns out I need to add the line:
+//      module.exports = app;
+// to app.js to fix the issue
+
+// the server (has nothing to do with the app)
+// all it does loads our app
+var app   = require('../app');
+
+app.set('port', process.env.PORT || 5000);
+
+var server = app.listen(app.get('port'), function() {
+    console.log('Express server listening on port ' + server.address().port);
+});
