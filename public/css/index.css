@@ -23,24 +23,28 @@ img {
 	height: 100%;
 }
 
-button {
+.accordionButtons {
 	background-color: lightgray;
 	font-size: 62px;
 	color: black;
 	width: inherit;
-	height: 15%;
+	height: 12%;
 	border-radius: 8px;
 	margin-top: 18px;
 	font-family: "amaranth";
 }
 
-p {
-	margin: 0;
-	margin-top: 7px;
-	font-size: 48px;
+.accordionSubButtons {
+	padding: 5px 0px;
+	font-size: 54px;
 	font-family: "josefin sans";
 	list-style-type: none;
 	text-align: center;
+	background-color: dimgray;
+}
+
+.textInAccordionSubButtons {
+	margin: 0px;
 }
 
 #leftName {
