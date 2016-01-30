@@ -35,7 +35,7 @@ img {
 }
 
 .accordionSubButtons {
-	padding: 5px 0px;
+	padding: 1px 0px;
 	font-size: 54px;
 	font-family: "josefin sans";
 	list-style-type: none;
@@ -44,7 +44,7 @@ img {
 }
 
 .textInAccordionSubButtons {
-	margin: 0px;
+	/*margin: 27px 0px;*/
 }
 
 #leftName {
