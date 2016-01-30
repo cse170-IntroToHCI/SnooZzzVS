@@ -53,3 +53,14 @@ $(document).ready(function() {
 		}
 	});
 });
+
+// for navigation on main page (index.html)
+$(document).ready(function () {
+	$("#b1sb1").click(function () {
+		window.location.href = $('a', this).attr('href');
+	});
+
+	$("#b1sb2").click(function () {
+		window.location.href = $('a', this).attr('href');
+	});
+});
