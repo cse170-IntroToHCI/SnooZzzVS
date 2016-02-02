@@ -25,4 +25,6 @@ router.get('/entergoals', function(req, res) {
     res.render('enterGoals');
 });
 
+// include routes for "/compare" and "/alarm"
+
 module.exports = router;

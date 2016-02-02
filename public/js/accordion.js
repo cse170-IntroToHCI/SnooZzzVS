@@ -57,4 +57,6 @@ $(document).ready(function () {
 	$("#b2sb2").click(function () {
 		window.location.href = $('a', this).attr('href');
 	});
+
+	// include button clicks for "Compare" and "Alarm"
 });
