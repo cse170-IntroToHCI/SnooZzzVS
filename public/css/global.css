@@ -23,9 +23,11 @@ img {
 #leftName {
     font-size: 62px;
     color: blue;
+    font-family: "amaranth";
 }
 
 #rightName {
     font-size: 62px;
     color: yellow;
+    font-family: "amaranth";
 }
