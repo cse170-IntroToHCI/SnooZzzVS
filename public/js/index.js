@@ -38,20 +38,6 @@ $(document).ready(function() {
 			$("#list3").slideUp(slideSpeed);
 		}
 	});
-	$("#b3").click(function() {
-		if(b3boolean == 1) {
-			b3boolean = 0;
-			$("#list3").slideUp(slideSpeed);
-		} else if(b3boolean == 0) {
-			b3boolean = 1;
-			$("#list3").slideDown(slideSpeed);
-
-			b1boolean = 0;
-			$("#list1").slideUp(slideSpeed);
-			b2boolean = 0;
-			$("#list2").slideUp(slideSpeed);
-		}
-	});
 });
 
 // for navigation on main page (index.html)
