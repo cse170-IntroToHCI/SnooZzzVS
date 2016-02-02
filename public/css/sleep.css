@@ -1,6 +1,6 @@
-#divHeader {
-	width: 100%;
 
+#divTitle {
+	width: 100%;
 }
 
 /*#table {
@@ -10,15 +10,23 @@
 	font-size: 100px;
 }*/
 
-#header {
-	font-size: 62px;
-	color: blue;
-}
 
 #h1Title {
 	color: purple;
+	font-size: 50px;
 }
 
 .timeTable {
-	font-size: 50px;
+	font-size: 35px;
+	text-align: center;
+}
+
+#feeling {
+	width: 100%;
+	color: yellow;
+}
+
+#setBtn {
+	font-size: 30px;
+	font-family: "josefin sans";
 }
