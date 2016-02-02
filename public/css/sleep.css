@@ -3,22 +3,22 @@
 
 }
 
-#table {
+/*#table {
 	height: inherit;
 	width: 100%;
 	left-margin: 50px;
 	font-size: 100px;
-}
+}*/
 
 #header {
 	font-size: 62px;
 	color: blue;
 }
 
-h1 {
+#h1Title {
 	color: purple;
 }
 
 .timeTable {
-	font-size: 2000px;
+	font-size: 50px;
 }
