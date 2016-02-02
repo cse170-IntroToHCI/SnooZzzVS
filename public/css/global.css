@@ -19,3 +19,13 @@ img {
 #divHeader {
     width: 100%;
 }
+
+#leftName {
+    font-size: 62px;
+    color: blue;
+}
+
+#rightName {
+    font-size: 62px;
+    color: yellow;
+}
