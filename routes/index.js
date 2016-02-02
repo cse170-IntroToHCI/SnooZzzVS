@@ -13,12 +13,16 @@ router.get('/sleep', function(req, res) {
     res.render('sleep');
 });
 
-router.get('/sleep.html', function(req, res) {
-    res.render('sleep');
-})
-
 router.get('/wake', function(req, res) {
     res.render('wake');
+});
+
+router.get('/happinesshistory', function(req, res) {
+    res.render('happinessHistory');
+});
+
+router.get('/entergoals', function(req, res) {
+    res.render('enterGoals');
 });
 
 module.exports = router;

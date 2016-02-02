@@ -49,4 +49,12 @@ $(document).ready(function () {
 	$("#b1sb2").click(function () {
 		window.location.href = $('a', this).attr('href');
 	});
+
+	$("#b2sb1").click(function () {
+		window.location.href = $('a', this).attr('href');
+	});
+
+	$("#b2sb2").click(function () {
+		window.location.href = $('a', this).attr('href');
+	});
 });
