@@ -1,17 +1,17 @@
-#container {
-    /*height: 100%;*/
-    /*width: 100%;*/
-    background-color: green;
-}
-
 #topHalfDiv {
-    height: calc(50% - 110px);
+    height: calc(50% - 58px);
     width: 100%;
     background-color: yellow;
 }
 
 #bottomHalfDiv {
-    height: calc(50% - 110px);
+    height: calc(50% - 58px);
     width: 100%;
     background-color: blue;
+}
+
+#userLineChart {
+    height: 100%;
+    width: 500px;
+    margin: 0 auto;
 }
