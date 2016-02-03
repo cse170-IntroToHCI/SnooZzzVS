@@ -1,11 +1,11 @@
 #topHalfDiv {
-    height: calc(80% - 58px);
+    height: calc(70% - 58px);
     width: 100%;
     background-color: yellow;
 }
 
 #bottomHalfDiv {
-    height: calc(20% - 58px);
+    height: calc(30% - 58px);
     width: 100%;
     background-color: blue;
 }

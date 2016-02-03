@@ -28,6 +28,13 @@ router.get('/entergoals', function(req, res) {
 router.get('/sleepData', function(req, res) {
     res.render('sleepData');
 });
-// include routes for "/compare" and "/alarm"
+
+router.get('/compare', function(req, res) {
+    res.render('compare');
+});
+
+router.get('/alarm', function(req, res) {
+    res.render('alarm');
+});
 
 module.exports = router;

@@ -58,5 +58,13 @@ $(document).ready(function () {
 		window.location.href = $('a', this).attr('href');
 	});
 
+	$("#b3").click(function () {
+		window.location.href = $('a', this).attr('href');
+	});
+
+	$("#b4").click(function () {
+		window.location.href = $('a', this).attr('href');
+	});
+
 	// include button clicks for "Compare" and "Alarm"
 });
