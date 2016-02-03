@@ -7,7 +7,7 @@ var lineChartData = {
     labels : ["January","February","March","April","May","June","July"],
     datasets : [
         {
-            label: "My First dataset",
+            label: "Wake up Happiness",
             fillColor : "rgba(220,220,220,0.2)",
             strokeColor : "rgba(220,220,220,1)",
             pointColor : "rgba(220,220,220,1)",
@@ -17,7 +17,17 @@ var lineChartData = {
             data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
         },
         {
-            label: "My Second dataset",
+            label: "Sleep Happiness",
+            fillColor : "rgba(100,100,100,0.2)",
+            strokeColor : "rgba(220,220,220,1)",
+            pointColor : "rgba(220,220,220,1)",
+            pointStrokeColor : "#fff",
+            pointHighlightFill : "#fff",
+            pointHighlightStroke : "rgba(220,220,220,1)",
+            data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+        },
+        {
+            label: "Average Happiness",
             fillColor : "rgba(151,187,205,0.2)",
             strokeColor : "rgba(151,187,205,1)",
             pointColor : "rgba(151,187,205,1)",
