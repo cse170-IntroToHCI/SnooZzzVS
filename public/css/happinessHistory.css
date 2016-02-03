@@ -1,12 +1,11 @@
 #topHalfDiv {
-    height: calc(50% - 58px);
+    height: calc(80% - 58px);
     width: 100%;
     background-color: yellow;
-    display: inline-block;
 }
 
 #bottomHalfDiv {
-    height: calc(50% - 58px);
+    height: calc(20% - 58px);
     width: 100%;
     background-color: blue;
 }
@@ -18,7 +17,7 @@
 
 #left {
     height: 100%;
-    width: 33%;
+    width: 20%;
     background-color: green;
 }
 
@@ -29,7 +28,7 @@
 
 #right {
     height: 100%;
-    width: 33%;
+    width: 20%;
     background-color: purple;
 }
 
