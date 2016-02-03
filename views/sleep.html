@@ -20,7 +20,16 @@
 
 	<div style ="text-align:center" id="divTitle">
 		<h1 id="h1Title">Time to go to Sleep!</h1>
-		<h2>Today is: <button id="dateBtn">February 1st, 2016</button></h2>
+		<h2>Today is: &nbsp
+			<div class="dropdown">
+				<button id="dateBtn" onclick="myFunction()" class="dropbtn">February 1st, 2016</button>
+				<div id="myDropdown" class="dropdown-content">
+					<a href="#">February 1st, 2016</a></li>
+					<a href="#">February 2nd, 2016</a></li>
+					<a href="#">February 3rd, 2016</a></li>
+				</div>
+			</div>
+		</h2>
 	</div> 
 
 	<div class="timeTable">
@@ -38,7 +47,7 @@
 
 	<div style="text-align:center" id="feeling">
 		<h2>I'm currently feeling: &nbsp</h2>
-		<table align="center">
+		<table align="center" cellspacing="30">
 			<tr>
 				<td><img src="img/happy.png"></td>
 				<td><img src="img/happy.png"></td>
@@ -52,16 +61,32 @@
 	</div>
 	<br>
 
-	<div class="buttons">
-		<table align="center" id="buttonTable">
-			<tr>
-				<td><button id="userBtn"><a href="./sleepData">Set</a></button></td>
-			</tr>
-			<tr>
-				<td><button id="userBtn">Cancel</button></td>
-			</tr>
-		</table>
+	<div class="buttons" align="center">
+		<button id="userBtn" onClick="window.location='./sleepData'">Set</button><br><br>
+		<button id="userBtn">Cancel</button>
 	</div>
-	<br>
+	<br><br>
+
+	<script type="text/javascript">
+		/* When the user clicks on the button, 
+		toggle between hiding and showing the dropdown content */
+		function myFunction() {
+    		document.getElementById("myDropdown").classList.toggle("show");
+		}
+		// Close the dropdown menu if the user clicks outside of it
+	window.onclick = function(event) {
+	  	if (!event.target.matches('.dropbtn')) {
+
+		    var dropdowns = document.getElementsByClassName("dropdown-content");
+		    var i;
+		    for (i = 0; i < dropdowns.length; i++) {
+		      var openDropdown = dropdowns[i];
+		      if (openDropdown.classList.contains('show')) {
+		        openDropdown.classList.remove('show');
+		      }
+		    }
+	  	}
+	}
+	</script>
 </body>
 </html>
