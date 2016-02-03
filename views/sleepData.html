@@ -20,7 +20,15 @@
 
 	<div style ="text-align:center" id="divTitle">
 		<h1 id="h1Title">Time to go to Sleep!</h1>
-		<h2>Today is: <button id="dateBtn">February 1st, 2016</button></h2>
+		<h2>Today is: &nbsp;
+			<div class="dropdown">
+				<button id="dateBtn" onclick="myFunction()" class="dropbtn">February 1st, 2016</button>
+				<div id="myDropdown" class="dropdown-content">
+					<a href="#">February 1st, 2016</a></li>
+					<a href="#">February 2nd, 2016</a></li>
+					<a href="#">February 3rd, 2016</a></li>
+				</div>
+			</div><br>
 		<h3>You are going to sleep at:<h3>
 		<p>2:15 AM<p>
 	</div> 
@@ -33,25 +41,34 @@
 			</tr>
 		</table>
 	</div>
-	<br>
+	<br><br>
 
-	<div class="buttons">
-		<table align="center">
-			<tr>
-				<td><button id="userBtn"><a href="./sleep">Edit</a></button></td>
-			</tr>
-			<tr>
-				<td><button id="homeBtn" onClick="window.location='http://snoozzzvs.herokuapp.com/'">
-					Home</button></td>
-			</tr>
-		</table>
+	<div class="buttons" align="center">
+		<button id="userBtn" onClick="window.location='./sleep'">Edit</button><br><br>
+		<button id="homeBtn" onClick="window.location='http://snoozzzvs.herokuapp.com/'">
+					Home</button>
 	</div>
-	<br>
+	<br><br>
 
 	<script type="text/javascript">
-		function goHome() {
-			var url = "http://snoozzzvs.herokuapp.com/";
-			window.location(url);
+			/* When the user clicks on the button, 
+			toggle between hiding and showing the dropdown content */
+			function myFunction() {
+	    		document.getElementById("myDropdown").classList.toggle("show");
+			}
+			// Close the dropdown menu if the user clicks outside of it
+		window.onclick = function(event) {
+		  	if (!event.target.matches('.dropbtn')) {
+
+			    var dropdowns = document.getElementsByClassName("dropdown-content");
+			    var i;
+			    for (i = 0; i < dropdowns.length; i++) {
+			      var openDropdown = dropdowns[i];
+			      if (openDropdown.classList.contains('show')) {
+			        openDropdown.classList.remove('show');
+			      }
+			    }
+		  	}
 		}
 	</script>
 </body>
