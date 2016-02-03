@@ -3,6 +3,10 @@
 	width: 100%;
 }
 
+p {
+	font-size: 50px;
+}
+
 /*#table {
 	height: inherit;
 	width: 100%;
@@ -26,16 +30,30 @@
 
 .buttons {
 	width: 100%;
-	height: 100px;
+	height: 50px;
+}
+
+#dateBtn {
+	font-size: 20px;
+	font-family: "josefin sans";
 }
 
 #userBtn {
-	font-size: 30px;
+	font-size: 25px;
+	font-family: "josefin sans";
+}
+
+#homeBtn {
+	font-size: 25px;
 	font-family: "josefin sans";
 }
 
 #feeling {
 	width: 100%;
 	color: yellow;
+}
+
+#buttonTable {
+	height: inherit;
 }
 
