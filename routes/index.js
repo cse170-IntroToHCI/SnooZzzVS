@@ -29,6 +29,10 @@ router.get('/sleepData', function(req, res) {
     res.render('sleepData');
 });
 
+router.get('/wakeData', function(req, res) {
+    res.render('wakeData');
+});
+
 router.get('/compare', function(req, res) {
     res.render('compare');
 });

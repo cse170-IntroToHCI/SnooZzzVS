@@ -1,12 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
     <link rel="stylesheet" type="text/css" href="css/global.css">
     <link rel="stylesheet" type="text/css" href="css/wake.css">
+    <link rel="shortcut icon" href="img/snooZzzvs.png">
     <meta charset="UTF-8">
-    <title>Wake Up</title>
+    <title>Wake Up Time</title>
 </head>
 <body>
-    <h1>Time to Wake Up Snowflake!</h1>
+	<div id="divHeader">
+	<table>
+		<tr>
+			<td><h3><span id="leftName">SnooZzz&nbsp;</span><span id="rightName">VS</span></h3></td>
+			<td id="rightCell"><img src="img/hamburgerMenu.png"></td>
+		</tr>
+	</table>
+	</div>
+
+	<div style ="text-align:center" id="divTitle">
+		<h1 id="h1Title">Time to start your day!</h1>
+		<h2>Today is &nbsp
+			<div class="dropdown">
+				<button id="dateBtn" onclick="myFunction()" class="dropbtn">February 4th, 2016</button>
+				<div id="myDropdown" class="dropdown-content">
+					<a href="#">February 4th, 2016</a></li>
+					<a href="#">February 5th, 2016</a></li>
+					<a href="#">February 6th, 2016</a></li>
+				</div>
+			</div>
+		</h2>
+		<h3>Waking up at: &nbsp</h3>
+	</div> 
+
+	<div class="timeTable">
+		<table align="center" cellspacing="50">
+			<tr>
+				<td>Hour</td>
+				<td>Minutes</td>
+			</tr>      
+	      	<tr>
+	      		<td>AM</td>
+	      		<td>PM</td>
+	      	</tr>
+		</table>
+	</div>
+
+	<div style="text-align:center" id="feeling">
+		<h2>I'm currently feeling: &nbsp</h2>
+		<table align="center" cellspacing="30">
+			<tr>
+				<td><img src="img/happy.png"></td>
+				<td><img src="img/happy.png"></td>
+				<td><img src="img/happy.png"></td>
+				<td><img src="img/happy.png"></td>
+				<td><img src="img/happy.png"></td>
+				<td><img src="img/happy.png"></td>
+				<td><img src="img/happy.png"></td>
+			</tr>
+		</table>
+	</div>
+	<br>
+
+	<div class="buttons" align="center">
+		<button id="userBtn" onClick="window.location='./wakeData'">Set</button><br><br>
+		<button id="userBtn">Cancel</button>
+	</div>
+	<br><br>
+
+	<script type="text/javascript">
+		/* When the user clicks on the button, 
+		toggle between hiding and showing the dropdown content */
+		function myFunction() {
+    		document.getElementById("myDropdown").classList.toggle("show");
+		}
+		// Close the dropdown menu if the user clicks outside of it
+	window.onclick = function(event) {
+	  	if (!event.target.matches('.dropbtn')) {
+
+		    var dropdowns = document.getElementsByClassName("dropdown-content");
+		    var i;
+		    for (i = 0; i < dropdowns.length; i++) {
+		      var openDropdown = dropdowns[i];
+		      if (openDropdown.classList.contains('show')) {
+		        openDropdown.classList.remove('show');
+		      }
+		    }
+	  	}
+	}
+	</script>
 </body>
 </html>
