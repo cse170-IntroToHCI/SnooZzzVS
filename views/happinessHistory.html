@@ -26,12 +26,12 @@
         <table id="topHalfContainer">
             <tr>
                 <td id="left"></td>
-                <td id="center"><canvas id="canvas"></canvas></td>
+                <td id="center"><canvas id="canvas" width="800" height="300"></canvas></td>
                 <td id="right">
-                    <table>
-                        <tr><td><button>Wake Up</button></td></tr>
-                        <tr><td><button>Sleep</button></td></tr>
-                        <tr><td><button>Average</button></td></tr>
+                    <table id="toggleButtonTable">
+                        <tr class="trClass"><td class="tdClass"><button class="toggleButtons">Wake Up</button></td></tr>
+                        <tr class="trClass"><td class="tdClass"><button class="toggleButtons">Sleep</button></td></tr>
+                        <tr class="trClass"><td class="tdClass"><button class="toggleButtons">Average</button></td></tr>
                     </table>
                 </td>
             </tr>
@@ -39,6 +39,14 @@
     </div>
 
     <div id="bottomHalfDiv">
+        <table id="timeScaleButtonTable">
+            <tr>
+                <td class="tdofButtons"><button id="leftmostButton" class="timeScaleButtons">Daily</button></td>
+                <td class="tdofButtons"><button class="timeScaleButtons">Weekly</button></td>
+                <td class="tdofButtons"><button class="timeScaleButtons">Monthly</button></td>
+                <td class="tdofButtons"><button id="rightmostButton" class="timeScaleButtons">Overall</button></td>
+            </tr>
+        </table>
     </div>
 
 </body>
