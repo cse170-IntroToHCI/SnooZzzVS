@@ -49,6 +49,8 @@ window.onload = function(){
     var ctx = document.getElementById("canvas").getContext("2d");
     var lineChart = window.myLine;
     lineChart = new Chart(ctx).Line(lineChartData, {
-        animation: false
+        animation: false,
+        responsive: true,
+        maintainAspectRatio: false
     });
 }
