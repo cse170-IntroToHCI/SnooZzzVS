@@ -45,6 +45,7 @@ var lineChartData = {
         }
     ]
 }
+
 window.onload = function(){
     var ctx = document.getElementById("canvas").getContext("2d");
     var lineChart = window.myLine;
@@ -53,4 +54,5 @@ window.onload = function(){
         responsive: true,
         maintainAspectRatio: false
     });
+
 }

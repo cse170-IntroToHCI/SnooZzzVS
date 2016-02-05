@@ -48,17 +48,6 @@ button {
     margin: 0 auto;
 }
 
-.tdofForm {
-    margin: 0px;
-    padding: 0px;
-    width: 10px;
-}
-
-input {
-    height: 50px;
-    width: 50px;
-}
-
 .tdofButtons {
     width: 25%;
 }
