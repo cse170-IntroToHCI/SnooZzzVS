@@ -2,7 +2,7 @@
  * Created by pablo on 2/4/2016.
  */
 
-var x = document.getElementById("homeButton");
-x.onclick = function() {
+var homeButton = document.getElementById("homeButton");
+homeButton.onclick = function() {
     window.location = "./";
 };

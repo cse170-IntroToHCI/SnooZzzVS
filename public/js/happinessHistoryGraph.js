@@ -52,7 +52,7 @@ window.onload = function(){
     lineChart = new Chart(ctx).Line(lineChartData, {
         animation: false,
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scaleFontSize: 30
     });
-
 }
