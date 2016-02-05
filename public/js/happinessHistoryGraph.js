@@ -10,8 +10,8 @@ window.alert(myDate + "\n\n" + myMonth + "/" + myDay + "/" + myYear);
 */
 var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 var lineChartData = {
-    labels : ["January","February", "eh1", "eh2", "eh3", "eh4", "eh5"],
-    datasetStroke: false, // this is where i left off
+    labels : ["January","February", "March", "April", "May"],
+    datasetStroke: false,
     datasets : [
         {
             label: "Wake up Happiness",
@@ -53,6 +53,7 @@ window.onload = function(){
         animation: false,
         responsive: true,
         maintainAspectRatio: false,
-        scaleFontSize: 30
+        scaleFontSize: 30,
+        scaleFontColor: "#FFF"
     });
 }
