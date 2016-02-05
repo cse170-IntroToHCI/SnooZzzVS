@@ -5,13 +5,13 @@ button {
 #topHalfDiv {
     height: calc(70% - 58px);
     width: 100%;
-    background-color: yellow;
+    /*background-color: yellow;*/
 }
 
 #bottomHalfDiv {
     height: calc(30% - 58px);
     width: 100%;
-    background-color: blue;
+    /*background-color: blue;*/
     text-align: center;
 }
 
@@ -23,13 +23,13 @@ button {
 #center {
     height: 100%;
     width: 70%;
-    background-color: red;
+    /*background-color: red;*/
 }
 
 #right {
     height: 100%;
     width: 30%;
-    background-color: purple;
+    /*background-color: purple;*/
 }
 
 .toggleButtons {
@@ -66,7 +66,7 @@ button {
 }
 
 #homeButtonDiv {
-    background-color: green;
+    /*background-color: green;*/
     width: 100%;
     text-align: center;
     position: absolute;
