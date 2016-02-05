@@ -1,3 +1,7 @@
+button {
+    font-size: 58px;
+}
+
 #topHalfDiv {
     height: calc(70% - 58px);
     width: 100%;
@@ -34,6 +38,7 @@
 .toggleButtons {
     height: 100px;
     width: 100%;
+    font-size: 34px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -54,13 +59,15 @@
 .timeScaleButtons {
     height: 100px;
     width: 100%;
-    /*margin: 0;*/
 }
 
-/*#leftmostButton {*/
-    /*margin-left: 5px;*/
-/*}*/
+#homeButtonDiv {
+    background-color: green;
+    width: 100%;
+    text-align: center;
+}
 
-/*#rightmostButton {*/
-    /*margin-right: 5px;*/
-/*}*/
+#homeButton {
+    height: 100px;
+    width: 25%;
+}
