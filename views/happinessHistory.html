@@ -29,9 +29,16 @@
                 <td id="center"><canvas id="canvas" width="800" height="300"></canvas></td>
                 <td id="right">
                     <table id="toggleButtonTable">
-                        <tr class="trClass"><td class="tdClass"><button class="toggleButtons">Wake Up</button></td></tr>
-                        <tr class="trClass"><td class="tdClass"><button class="toggleButtons">Sleep</button></td></tr>
-                        <tr class="trClass"><td class="tdClass"><button class="toggleButtons">Average</button></td></tr>
+                        <tr class="trClass" style="display: block;">
+                            <td class="tdofForm"><form><input type="checkbox"></form></td>
+                            <td class="tdClass"><button class="toggleButtons">Wake Up</button></td>
+                        </tr>
+                        <tr class="trClass">
+                            <td class="tdClass"><button class="toggleButtons">Sleep</button></td>
+                        </tr>
+                        <tr class="trClass">
+                            <td class="tdClass"><button class="toggleButtons">Average</button></td>
+                        </tr>
                     </table>
                 </td>
             </tr>
@@ -41,10 +48,10 @@
     <div id="bottomHalfDiv">
         <table id="timeScaleButtonTable">
             <tr>
-                <td class="tdofButtons"><button id="leftmostButton" class="timeScaleButtons">Daily</button></td>
-                <td class="tdofButtons"><button class="timeScaleButtons">Weekly</button></td>
-                <td class="tdofButtons"><button class="timeScaleButtons">Monthly</button></td>
-                <td class="tdofButtons"><button id="rightmostButton" class="timeScaleButtons">Overall</button></td>
+                <td class="tdofButtons"><button id="leftmostButton" class="timeScaleButtons">Week</button></td>
+                <td class="tdofButtons"><button class="timeScaleButtons">Month</button></td>
+                <td class="tdofButtons"><button class="timeScaleButtons">Year</button></td>
+                <td class="tdofButtons"><button id="rightmostButton" class="timeScaleButtons">History</button></td>
             </tr>
         </table>
 
