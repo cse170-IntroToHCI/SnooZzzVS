@@ -1,10 +1,17 @@
 /**
  * Created by pablo on 2/2/2016.
  */
-
+/*
+var myDate = new Date();
+var myDay = myDate.getDay();
+var myMonth = myDate.getMonth() + 1; // January = 0, February = 1, etc...
+var myYear = myDate.getFullYear();
+window.alert(myDate + "\n\n" + myMonth + "/" + myDay + "/" + myYear);
+*/
 var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 var lineChartData = {
-    labels : ["January","February","March","April","May","June","July"],
+    labels : ["January","February", "eh1", "eh2", "eh3", "eh4", "eh5"],
+    datasetStroke: false, // this is where i left off
     datasets : [
         {
             label: "Wake up Happiness",
@@ -20,10 +27,10 @@ var lineChartData = {
             label: "Sleep Happiness",
             fillColor : "rgba(100,100,100,0.2)",
             strokeColor : "rgba(220,220,220,1)",
-            pointColor : "rgba(220,220,220,1)",
+            pointColor : "rgba(0,0,0,0)",
             pointStrokeColor : "#fff",
             pointHighlightFill : "#fff",
-            pointHighlightStroke : "rgba(220,220,220,1)",
+            pointHighlightStroke : "rgba(255,0,255,0)",
             data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
         },
         {
@@ -40,7 +47,8 @@ var lineChartData = {
 }
 window.onload = function(){
     var ctx = document.getElementById("canvas").getContext("2d");
-    window.myLine = new Chart(ctx).Line(lineChartData, {
-        responsive: true
+    var lineChart = window.myLine;
+    lineChart = new Chart(ctx).Line(lineChartData, {
+        animation: false
     });
 }

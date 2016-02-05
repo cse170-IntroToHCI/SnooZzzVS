@@ -15,23 +15,52 @@
     width: inherit;
 }
 
-#left {
-    height: 100%;
-    width: 20%;
-    background-color: green;
-}
-
 #center {
     height: 100%;
+    width: 70%;
     background-color: red;
+}
+
+#canvas {
+    /*bottom: 0px;*/
 }
 
 #right {
     height: 100%;
-    width: 20%;
+    width: 30%;
     background-color: purple;
 }
 
-button {
-    width: 71px;
+.toggleButtons {
+    height: 100px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
+
+#toggleButtonTable {
+    width: 100%;
+}
+
+#timeScaleButtonTable {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.tdofButtons {
+    width: 25%;
+}
+
+.timeScaleButtons {
+    height: 100px;
+    width: 100%;
+    /*margin: 0;*/
+}
+
+/*#leftmostButton {*/
+    /*margin-left: 5px;*/
+/*}*/
+
+/*#rightmostButton {*/
+    /*margin-right: 5px;*/
+/*}*/
