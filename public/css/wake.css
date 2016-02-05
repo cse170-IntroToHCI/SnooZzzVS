@@ -12,7 +12,7 @@ h2 {
 	font-size: 60px;
 }
 
-h3 {
+#header3 {
 	font-size: 40px;
 }
 
@@ -72,11 +72,6 @@ p {
 .date:hover, .date:focus {
     background-color: #3e8e41;
 }
-
-
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
