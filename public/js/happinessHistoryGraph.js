@@ -51,9 +51,9 @@ window.onload = function(){
     var lineChart = window.myLine;
     lineChart = new Chart(ctx).Line(lineChartData, {
         animation: false,
-        responsive: true,
-        maintainAspectRatio: false,
-        scaleFontSize: 30,
-        scaleFontColor: "#FFF"
+        responsive: false,
+        //maintainAspectRatio: false,
+        //scaleFontSize: 30,
+        scaleFontColor: "#000"
     });
 }

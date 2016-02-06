@@ -6,10 +6,14 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res) {
-    res.render('home');
+    res.render('index');
 });
 
-router.get('/', function(req, res) {
+router.get('/index', function(req, res) {
+    res.render('index');
+});
+
+router.get('/home', function(req, res) {
     res.render('index');
 });
 
@@ -21,11 +25,11 @@ router.get('/wake', function(req, res) {
     res.render('wake');
 });
 
-router.get('/happinesshistory', function(req, res) {
+router.get('/happinessHistory', function(req, res) {
     res.render('happinessHistory');
 });
 
-router.get('/entergoals', function(req, res) {
+router.get('/enterGoals', function(req, res) {
     res.render('enterGoals');
 });
 
