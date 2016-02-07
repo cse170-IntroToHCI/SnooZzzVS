@@ -1,77 +1,40 @@
-#divTitle {
-	width: 100%;
-}
 
-
-#h1Title {
-	color: purple;
-	font-size: 80px;
-}
-
-h2 {
-	font-size: 60px;
-}
-
-#header3 {
-	font-size: 40px;
+#h1 {
+	color: midnightblue;
+	font-size: 30px;
 }
 
 p {
-	font-size: 55px;
+	font-size: 25px;
 }
 
-.timeTable {
-	font-size: 50px;
-	background-color: gray;
-	text-align: center;
-	width: 100%;
-	height: 250px;
-}
-
-.buttons {
-	width: 100%;
-	height: 50px;
-}
-
-#dateBtn {
-	font-size: 30px;
-	font-family: "josefin sans";
-}
-
-#userBtn {
-	font-size: 50px;
-	font-family: "josefin sans";
-}
-
-#homeBtn {
-	font-size: 50px;
-	font-family: "josefin sans";
-}
 
 #feeling {
-	width: 100%;
-	color: yellow;
+	color: orange;
 }
 
-#buttonTable {
-	height: inherit;
+.alert {
+	display: none;
 }
 
-.date {
+.hour {
     background-color: #4CAF50;
     color: white;
     padding: 30px;
     font-size: 30px;
     border: none;
     cursor: pointer;
-    width: 300px;
-    height: 100px;
+    width: 230%;
+    height: 50px;
 }
 
-/* Dropdown button on hover & focus */
-.date:hover, .date:focus {
-    background-color: #3e8e41;
+.minutes {
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    width: 230%;
+    height: 50px;
 }
-
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
