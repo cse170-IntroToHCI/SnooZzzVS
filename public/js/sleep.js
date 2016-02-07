@@ -23,6 +23,4 @@ function dataSelect() {
 	        // Revalidate the date field
 	        $('#eventForm').formValidation('revalidateField', 'date');
 	    });
-
-	    
 };
