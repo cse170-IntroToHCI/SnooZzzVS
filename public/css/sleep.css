@@ -12,3 +12,29 @@ p {
 #feeling {
 	color: orange;
 }
+
+.alert {
+	display: none;
+}
+
+.hour {
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    width: 230%;
+    height: 50px;
+}
+
+.minutes {
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    width: 230%;
+    height: 50px;
+}
