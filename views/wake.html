@@ -105,12 +105,16 @@
 	</div><br>
 
 	<div class="container" align="center">
-		<div class="btn-group" role="group" aria-label="...">
-		  	<button type="button" class="btn btn-default">AM</button>
-		  	<button type="button" class="btn btn-default">PM</button>
-		</div>
-	</div>
-	<br>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>AM
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">PM
+            </label>
+        </div>
+    </div>
+    <br><br>
 
 	<div style="text-align:center" id="feeling">
 		<h4>I'm currently feeling:</h4>
@@ -132,7 +136,7 @@
 		<button type="button" class="btn btn-default">Set</button><br>
 		<a class="btn btn-default" href="./wakeData" role="button">Temporary Set</a><br>
 		<button type="button" class="btn btn-default" id="btnShow">Cancel</button><br><br>
-		<div class="alert alert-warning alert-dismissable">
+		<div class="alert alert-warning alert-dismissable" id="cancelAlert">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		<strong>Warning!</strong> You are going back to the homepage without saving your edits.<br><br>
 		<a class="btn btn-danger" href="./">Yes, go to homepage</a>

@@ -1,25 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html width="100%" height="100%" lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/jquery-1.12.0.min.js"></script>
-    <script src="js/alarm.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="css/alarm.css">
-    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <script src="js/accordion.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/sleep.js" type="text/javascript"></script>
+    <script src="js/global.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/sleep.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Josefin+Sans" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
-    <link rel="shortcut icon" href="img/snooZzzvs.png">
+    <link rel="shortcut icon" href="img/snooZzzvs.png?r=2423">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
+    <style type="text/css">
+    /**
+     * Override feedback icon position
+     * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
+     */
+    #eventForm .form-control-feedback {
+        top: 0;
+        right: -15px;
+    }
+    </style>
     <title>Alarm</title>
 </head>
-<body>
-    <div id="divHeader">
-        <table>
-            <tr>
-                <td id="globalHomeButton"><h3><span id="leftName">SnooZzz&nbsp;</span><span id="rightName">VS</span></h3></td>
-                <td id="rightCell"><img src="img/hamburgerMenu.png"></td>
-            </tr>
-        </table>
+<body width="100%" height="100%">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./"><span style="color: lightblue">SnooZzz </span><span style="color: gold">VS</span></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header" align="center">
+      <h1 id="h1">Set an Alarm</h1>
     </div>
-    <script src="js/global.js" type="text/javascript"></script>
+
+    <div class="container">
+        <div class="col-xs-2 col-xs-offset-2">
+            <select class="hour">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+            </select>
+        </div>
+        <div class="col-xs-2 col-xs-offset-2">
+            <select class="minutes">
+                <option>00</option>
+                <option>15</option>
+                <option>30</option>
+                <option>45</option>
+            </select>
+        </div>
+    </div><br>
+
+    <div class="container" align="center">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>AM
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">PM
+            </label>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="container" align="center">
+        <div class="col-xs-8 col-xs-offset-2">
+            <h4>Alarm Sound</h4>
+            <a class="btn btn-default" href="./alarmSounds">Default</a>
+        </div>
+        <div class="col-xs-8 col-xs-offset-2">
+            <h4>Settings</h4>
+            <a class="btn btn-default" href="./settings">
+                <span class="glyphicon glyphicon-wrench"></span>
+            </a>
+        </div>
+    </div><br><br>
+
+    <div class="container" align="center">
+        <button type="button" class="btn btn-default" id="setBtn">Set</button><br><br>
+        <div class="alert alert-success" id="setAlert">
+            Your alarm has been successfully set!<br><br>
+        </div>
+        <button type="button" class="btn btn-default" id="btnShow">Cancel</button><br><br>
+        <div class="alert alert-warning alert-dismissable" id="cancelAlert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Warning!</strong> You are going back to the homepage without saving your edits.<br><br>
+            <a class="btn btn-danger" href="./">Yes, go to homepage</a>
+        </div>
+    </div>
+    <br>
+
 </body>
 </html>

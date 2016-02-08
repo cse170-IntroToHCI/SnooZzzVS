@@ -49,4 +49,12 @@ router.get('/alarm', function(req, res) {
     res.render('alarm');
 });
 
+router.get('/alarmSounds', function(req, res) {
+    res.render('alarmSounds');
+});
+
+router.get('/settings', function(req, res) {
+    res.render('settings');
+});
+
 module.exports = router;
