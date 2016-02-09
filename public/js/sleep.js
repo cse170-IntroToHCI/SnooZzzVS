@@ -22,10 +22,10 @@ function setClick() {
 function dataSelect() {
  	$('#datePicker')
 	    .datepicker({
-	        ormat: 'mm/dd/yyyy'
+	        format: 'mm/dd/yyyy'
 	    })
-	    .on('changeDate', function(e) {
-	        // Revalidate the date field
-	        $('#eventForm').formValidation('revalidateField', 'date');
-	    });
+	    // .on('changeDate', function(e) {
+	    //     // Revalidate the date field
+	    //     // $('#eventForm').formValidation('revalidateField', 'date');
+	    // });
 };

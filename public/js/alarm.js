@@ -4,30 +4,22 @@
 
 
 $(document).ready(function() {
-	// $("#btnShow").click(alertClick);
-	// $("#setBtn").click(setClick);
-
-	// dataSelect();
-
-$('button.btnDelete').on('click', function (e) {
-    e.preventDefault();
-    var id = $(this).closest('tr').data('id');
-    $('#myModal').data('id', id).modal('show');
-});
-
-$('#btnDelteYes').click(function () {
-    var id = $('#myModal').data('id');
-    $('[data-id=' + id + ']').remove();
-    $('#myModal').modal('hide');
-});
+	deleteAlarm();
 
 });
 
-// function alertClick() {
-// 	$("#cancelAlert").show('medium');
-// }
+function deleteAlarm() {
+	$('button.btnDelete').on('click', function (e) {
+	    e.preventDefault();
+	    var id = $(this).closest('tr').data('id');
+	    $('#myModal').data('id', id).modal('show');
+	});
 
-// function setClick() {
-// 	$("#setAlert").show('medium');
-// }
+	$('#btnDelteYes').click(function () {
+	    var id = $('#myModal').data('id');
+	    $('[data-id=' + id + ']').remove();
+	    $('#myModal').modal('hide');
+	});
+}
+
 
