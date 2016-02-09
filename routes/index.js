@@ -53,6 +53,10 @@ router.get('/alarmSounds', function(req, res) {
     res.render('alarmSounds');
 });
 
+router.get('/addAlarm', function(req, res) {
+    res.render('addAlarm');
+});
+
 router.get('/settings', function(req, res) {
     res.render('settings');
 });
