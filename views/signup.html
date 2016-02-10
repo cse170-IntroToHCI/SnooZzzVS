@@ -14,6 +14,59 @@
     <title>Sign Up</title>
 </head>
 <body>
+    <!-- Title -->
+    <div class="page-header" align="center">
+        <h1 style="color: lightblue">SnooZzz <span style="color: gold">VS</span></h1>
+    </div>
 
+    <!-- Sign up Form -->
+    <div style="width: 90%; margin: 0 auto" class="container">
+        <form>
+            <!-- First Name -->
+            <fieldset class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text-muted" class="form-control" id="firstName" placeholder="Enter email">
+            </fieldset>
+
+            <!-- Last Name -->
+            <fieldset class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text-muted" class="form-control" id="lastName" placeholder="Password">
+            </fieldset>
+
+            <!-- Email -->
+            <fieldset class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <small class="email">We'll never share your email with anyone else.</small>
+            </fieldset>
+
+            <!-- Password -->
+            <fieldset class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password">
+            </fieldset>
+
+            <!-- Confirm Password -->
+            <fieldset class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+            </fieldset>
+
+            <!-- Agreement -->
+            <div class="checkbox text-center">
+                <label>
+                    <input type="checkbox"> I have read and accept the terms and conditions
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary center-block">Submit</button>
+
+            <!-- Back Button -->
+            <br>
+            <button type="button" class="btn btn-default center-block" id="historyButton">Login</button>
+        </form>
+    </div>
 </body>
 </html>
