@@ -1,7 +1,3 @@
-/**
- * Created by Emily on 2/6/2016.
- */
-
 
 $(document).ready(function() {
 	$("#btnShow").click(alertClick);
