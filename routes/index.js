@@ -67,7 +67,7 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
-// DELETE THIS ROUTE
+/* DELETE THIS ROUTE */
 router.get('/wake2', function(req, res) {
     res.render('wake2');
 });
