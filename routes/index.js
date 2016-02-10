@@ -68,8 +68,8 @@ router.get('/signup', function(req, res) {
 });
 
 /* DELETE THIS ROUTE */
-router.get('/wake2', function(req, res) {
-    res.render('wake2');
+router.get('/wakeTwo', function(req, res) {
+    res.render('wakeTwo');
 });
 
 module.exports = router;
