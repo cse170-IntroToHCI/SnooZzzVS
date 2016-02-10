@@ -18,8 +18,6 @@ function alertClick() {
 
 function setClick() {
     $("#setAlert").show('medium');
-    // todo - submit the JSON here
-
 }
 
 function dataSelect() {
