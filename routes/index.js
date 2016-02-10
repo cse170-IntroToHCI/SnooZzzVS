@@ -21,7 +21,7 @@ router.get('/sleep', function(req, res) {
 });
 
 router.get('/wake', function(req, res) {
-    //console.log(data);
+    console.log(data);
     res.render('wake');
 });
 
@@ -74,9 +74,9 @@ router.get('/wakeTwo', function(req, res) {
     res.render('wakeTwo');
 });
 
-/* JSON */
+/* JSON /
 router.get('/add', function(req, res) {
     res.render('add');
-});
+});*/
 
 module.exports = router;

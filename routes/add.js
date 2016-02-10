@@ -14,8 +14,6 @@ exports.addWakeData = function(req, res) {
         "wakeFeeling": wakeFeeling
     };
 
-    console.log("Inside add.js");
-    console.log(newWakeData);
     res.render('add');
     wakeData["wakeData"].push(newWakeData);
 };
