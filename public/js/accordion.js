@@ -8,12 +8,18 @@ $(document).ready(function () {
 		window.location.href = $('a', this).attr('href');
 	});
 
+	/*
 	$("#b2sb1").click(function () {
 		window.location.href = $('a', this).attr('href');
 	});
 
 	$("#b2sb2").click(function () {
 		window.location.href = $('a', this).attr('href');
+	});
+	*/
+
+	$("#headingTwo").click(function () {
+		window.location.href = $('strong', this).attr('href');
 	});
 
 	$("#headingThree").click(function () {
