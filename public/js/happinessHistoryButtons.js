@@ -1,7 +1,7 @@
 
 var homeButton = document.getElementById("homeButton");
 homeButton.onclick = function() {
-    window.location = "./";
+    window.location = "./index";
 };
 
 

@@ -6,5 +6,5 @@ signupButton.onclick = function() {
 
 var loginButton = document.getElementById("loginButton");
 loginButton.onclick = function() {
-    window.location = "./";
+    window.location = "./index";
 };
