@@ -22,5 +22,5 @@ exports.addWakeData = function(req, res) {
 };
 
 exports.getAll = function(req, res) {
-    res.json(wakeData);
+    res.json(wakeData["wakeData"]);
 };

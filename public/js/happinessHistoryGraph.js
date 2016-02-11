@@ -1,4 +1,31 @@
 
+function showGetResult( name )
+{
+    var result = null;
+    var scriptUrl = "/getAllWakeData?name=" + name;
+    $.ajax({
+        url: scriptUrl,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
+}
+var extractWakeData = showGetResult("TEST");
+var length = extractWakeData.length;
+
+var length = extractWakeData.length;
+var wakeData = [
+    extractWakeData[length-1].wakeFeeling,
+    extractWakeData[length-2].wakeFeeling,
+    extractWakeData[length-3].wakeFeeling,
+];
+
+alert(wakeData);
+
 var options = {
     animation: false,
     responsive: false,
@@ -24,7 +51,7 @@ var enableCheck = function() {
             strokeColor: "#449bf7",
             pointColor: "#449bf7",
             fillColor: "transparent",
-            data: [1,2,3,4,5,6]
+            data: wakeData
         };
     }
     if (!(sadButton)) {
