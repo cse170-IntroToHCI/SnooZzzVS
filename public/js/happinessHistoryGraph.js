@@ -1,59 +1,91 @@
-/**
- * Created by pablo on 2/2/2016.
- */
-/*
-var myDate = new Date();
-var myDay = myDate.getDay();
-var myMonth = myDate.getMonth() + 1; // January = 0, February = 1, etc...
-var myYear = myDate.getFullYear();
-window.alert(myDate + "\n\n" + myMonth + "/" + myDay + "/" + myYear);
-*/
-var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-var lineChartData = {
-    labels : ["January","February", "March", "April", "May"],
-    datasetStroke: false,
-    datasets : [
-        {
-            label: "Wake up Happiness",
-            fillColor : "rgba(220,220,220,0.2)",
-            strokeColor : "rgba(220,220,220,1)",
-            pointColor : "rgba(220,220,220,1)",
-            pointStrokeColor : "#fff",
-            pointHighlightFill : "#fff",
-            pointHighlightStroke : "rgba(220,220,220,1)",
-            data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-        },
-        {
-            label: "Sleep Happiness",
-            fillColor : "rgba(100,100,100,0.2)",
-            strokeColor : "rgba(220,220,220,1)",
-            pointColor : "rgba(0,0,0,0)",
-            pointStrokeColor : "#fff",
-            pointHighlightFill : "#fff",
-            pointHighlightStroke : "rgba(255,0,255,0)",
-            data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-        },
-        {
-            label: "Average Happiness",
-            fillColor : "rgba(151,187,205,0.2)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            pointHighlightFill : "#fff",
-            pointHighlightStroke : "rgba(151,187,205,1)",
-            data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-        }
-    ]
-}
 
-window.onload = function(){
-    var ctx = document.getElementById("canvas").getContext("2d");
-    var lineChart = window.myLine;
-    lineChart = new Chart(ctx).Line(lineChartData, {
+//window.onload = function() {
+    var ctx = document.getElementById("LineChart").getContext("2d");
+
+    var options = {
         animation: false,
         responsive: false,
-        //maintainAspectRatio: false,
-        //scaleFontSize: 30,
         scaleFontColor: "#000"
-    });
-}
+    };
+
+    var chartlabel = [2000, 2001, 2002, 2003, 2004];
+
+    var enableCheck = function() {
+        happyButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
+        sadButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
+        avgButton = document.getElementsByClassName('aB')[0].className.indexOf('enabled') != -1;
+        if (!(happyButton)) {
+            happyChart = {};
+        } else {
+            happyChart = {
+                label: "NCREIF Property Index Annual Returns",
+                strokeColor: "#449bf7",
+                pointColor: "#449bf7",
+                fillColor: "transparent",
+                data: [11.72, 7.10, 6.58, 8.70, 13.77, 18.72]
+            };
+        }
+        if (!(sadButton)) {
+            sadChart = {};
+        } else {
+            sadChart = {
+                label: "S&P 500 Avg. Annual % Change in Value",
+                strokeColor: "#efb96c",
+                pointColor: "#efb96c",
+                fillColor: "transparent",
+                data: [0, 1, 0, 1, 0, 1]
+            };
+        }
+        if (!(avgButton)) {
+            averageChart = {};
+        } else {
+            averageChart = {
+                label: "NCREIF Average Return",
+                strokeColor: "#aacdf2",
+                pointColor: "#aacdf2",
+                fillColor: "transparent",
+                data: [2,4,6,8,10,12]
+            };
+        }
+    };
+
+
+    enableCheck();
+    data = {
+        labels: chartlabel,
+        datasets: [ sadChart, averageChart, happyChart ]
+    };
+    baseChart = new Chart(ctx).Line(data, options);
+    currentChart = baseChart;
+
+    function toggleLine(t) {
+
+        currentChart.destroy();
+        if (t.className.indexOf('enabled') == -1)
+            t.className += ' enabled';
+        else
+            t.className = t.className.replace('enabled', '');
+        enableCheck();
+        data = {
+            labels: chartlabel,
+            datasets: [ sadChart, averageChart, happyChart ]
+        };
+        newChart = new Chart(ctx).Line(data, options);
+        currentChart = newChart;
+    };
+
+    var theHB = document.getElementById("ex1");
+    theHB.onclick = function() {
+        toggleLine(this);
+    };
+
+    var theSB = document.getElementById("ex2");
+    theSB.onclick = function() {
+        toggleLine(this);
+    };
+
+    var theAB = document.getElementById("ex3");
+    theAB.onclick = function() {
+        toggleLine(this);
+    };
+//};
