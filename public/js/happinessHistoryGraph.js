@@ -22,6 +22,8 @@ var wakeData = [
     extractWakeData[length-1].wakeFeeling,
     extractWakeData[length-2].wakeFeeling,
     extractWakeData[length-3].wakeFeeling,
+    extractWakeData[length-4].wakeFeeling,
+    extractWakeData[length-5].wakeFeeling,
 ];
 
 var options = {

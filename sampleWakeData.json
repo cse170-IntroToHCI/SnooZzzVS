@@ -5,21 +5,35 @@
       "hour": 2,
       "minute": 11,
       "meridiem": "AM",
-      "wakeFeeling": 7
+      "wakeFeeling": 3
     },
     {
       "date": "01/01/2000",
       "hour": 2,
       "minute": 11,
       "meridiem": "AM",
-      "wakeFeeling": 7
+      "wakeFeeling": 2
+    },
+    {
+      "date": "01/01/2000",
+      "hour": 2,
+      "minute": 11,
+      "meridiem": "AM",
+      "wakeFeeling": 4
+    },
+    {
+      "date": "01/01/2000",
+      "hour": 2,
+      "minute": 11,
+      "meridiem": "AM",
+      "wakeFeeling": 1
     },
     {
       "date": "01/01/2010",
       "hour": 2,
       "minute": 11,
       "meridiem": "AM",
-      "wakeFeeling": 7
+      "wakeFeeling": 5
     }
   ]
 }
