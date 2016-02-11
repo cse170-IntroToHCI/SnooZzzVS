@@ -5,7 +5,11 @@
     var options = {
         animation: false,
         responsive: false,
-        scaleFontColor: "#000"
+        scaleFontColor: "#000",
+        scaleOverride: true,
+        scaleStartValue: 1,
+        scaleStepWidth: 1,
+        scaleSteps: 6
     };
 
     var chartlabel = [2000, 2001, 2002, 2003, 2004];
@@ -22,7 +26,7 @@
                 strokeColor: "#449bf7",
                 pointColor: "#449bf7",
                 fillColor: "transparent",
-                data: [11.72, 7.10, 6.58, 8.70, 13.77, 18.72]
+                data: [1,2,3,4,5,6]
             };
         }
         if (!(sadButton)) {
@@ -33,7 +37,7 @@
                 strokeColor: "#efb96c",
                 pointColor: "#efb96c",
                 fillColor: "transparent",
-                data: [0, 1, 0, 1, 0, 1]
+                data: [1,2,1,2,1,2]
             };
         }
         if (!(avgButton)) {
@@ -44,7 +48,7 @@
                 strokeColor: "#aacdf2",
                 pointColor: "#aacdf2",
                 fillColor: "transparent",
-                data: [2,4,6,8,10,12]
+                data: [7,5,3,1,6,4]
             };
         }
     };
