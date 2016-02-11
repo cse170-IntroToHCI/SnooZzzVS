@@ -9,6 +9,10 @@ function alertClick() {
     $("#cancelAlert").show('medium');
 }
 
+function successClick() {
+    $("#setAlert").show('medium');
+}
+
 function dataSelect() {
     $('#datePicker')
         .datepicker({
@@ -34,6 +38,7 @@ window.onload = function() {
     }
 
     $("#btnShow").click(alertClick);
+    $("#setBtn").click(successClick);
 
     $('form').submit(function() {
         $.ajax({
