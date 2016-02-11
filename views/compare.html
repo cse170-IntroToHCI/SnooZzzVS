@@ -49,16 +49,16 @@
 	  <h1>Let's Compare!</h1>
 	</div>
 
-	<h4 align="center">Filter data by:</h4>
+	<h4 align="center">Filter data by:</h4><br>
 
 	<div class="container" align="center">
     <table>
         <tbody>
-        	<div class="btn-group" role="group" aria-label="...">
             <tr>
-                <td>
-                	<p><button data-toggle="button" type="button" class="btn btn-default">Average Sleep Time: &nbsp; 
+                <td><p>Average Sleep Time: &nbsp;</td>
+                	<td>
 	                	<select id="selectHour">
+	                		<option>0</option>
 		                    <option>1</option>
 		                    <option>2</option>
 		                    <option>3</option>
@@ -90,9 +90,10 @@
 		        </td></button>
             </tr>
             <tr>
-                <td>
-                	<p><button data-toggle="button" type="button" class="btn btn-default">Average Wake Time: &nbsp; 
+                <td><p>Average Wake Time: &nbsp;</td>
+                	<td>
 	                	<select id="selectHour">
+	                		<option>0</option>
 		                    <option>1</option>
 		                    <option>2</option>
 		                    <option>3</option>
@@ -124,9 +125,10 @@
                 </td></button>
             </tr>
             <tr>
-                <td>
-                	<p><button data-toggle="button" type="button" class="btn btn-default">Average Happiness: &nbsp;
+                <td><p>Average Happiness: &nbsp;</td>
+                	<td>
 	                	<select>
+	                		<option>0</option>
 		                    <option>1</option>
 		                    <option>2</option>
 		                    <option>3</option>
@@ -139,9 +141,10 @@
                 </td></button>
             </tr>
             <tr>
-                <td>
-                	<p><button data-toggle="button" type="button" class="btn btn-default"># of Data Sets: &nbsp;
+                <td><p># of Data Sets: &nbsp;</td>
+                	<td>
 	                	<select>
+	                		<option>0</option>
 		                    <option>1</option>
 		                    <option>2</option>
 		                    <option>3</option>
@@ -161,7 +164,22 @@
     </table><br><br>
 
     <div class="container">
-    	Data will go here
+    	<table class="table">
+    		<thead>
+    			<th>#</th>
+    			<th>Sleep</th>
+    			<th>Wake</th>
+    			<th>Happiness</th>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td>1</td>
+    				<td>00:00AM</td>
+    				<td>00:00AM</td>
+    				<td>5</td>
+    			</tr>
+    		</tbody>
+    	</table>
     </div><br>
 
 	<div class="container" align="center">
