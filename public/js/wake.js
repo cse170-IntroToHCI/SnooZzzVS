@@ -1,26 +1,12 @@
 
 var today = new Date();
+var theDay = (today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear();
 var theHour = today.getHours() % 12;
 var theMinute = today.getMinutes();
 var theMeridiem = today.getHours();
 
-$(document).ready(function() {
-    $("#btnShow").click(alertClick);
-    $("#setBtn").click(setClick);
-
-    dataSelect();
-    $('#datePicker').datepicker("setDate", today);
-});
-
 function alertClick() {
     $("#cancelAlert").show('medium');
-}
-
-function setClick() {
-    $("#setAlert").show('medium');
-    //$.get("/add", function(result) {
-    //    console.log(result);
-    //});
 }
 
 function dataSelect() {
@@ -30,8 +16,10 @@ function dataSelect() {
         });
 }
 
-// Sets default fields for each <select> element, except for the Happiness Slider
 window.onload = function() {
+    // happiness slider
+    var mySlider = new Slider("#happinessSlider", {});
+
     var defaultHour = document.getElementById("selectHour");
     defaultHour[theHour - 1].setAttribute("selected", "selected"); // -1 b/c array begins at zero
 
@@ -44,4 +32,24 @@ window.onload = function() {
     } else {
         defaultMeridiem[1].setAttribute("selected", "selected");
     }
+
+    $("#btnShow").click(alertClick);
+
+    $('form').submit(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/postWakeData',
+            data: {
+                "date": theDay,
+                "hour": theHour,
+                "minute": theMinute,
+                "meridiem": theMeridiem,
+                "wakeFeeling": mySlider.getValue()
+            }
+        });
+        return false;
+    });
+
+    dataSelect();
+    $('#datePicker').datepicker("setDate", today);
 };

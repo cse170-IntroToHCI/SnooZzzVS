@@ -2,6 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
+var wakeData = require('./wake');
 
 router.get('/', function(req, res) {
     res.render('login');
@@ -66,5 +67,8 @@ router.get('/login', function(req, res) {
 router.get('/signup', function(req, res) {
     res.render('signup');
 });
+
+router.post('/postWakeData', wakeData.addWakeData);
+router.get('/getAllWakeData', wakeData.getAll);
 
 module.exports = router;

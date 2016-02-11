@@ -17,6 +17,10 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+// to support URL-encoded bodies
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use('/', routes);
 
 module.exports = app;
