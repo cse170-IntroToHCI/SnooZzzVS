@@ -24,8 +24,6 @@ var wakeData = [
     extractWakeData[length-3].wakeFeeling,
 ];
 
-alert(wakeData);
-
 var options = {
     animation: false,
     responsive: false,
