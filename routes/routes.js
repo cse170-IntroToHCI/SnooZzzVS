@@ -2,7 +2,6 @@
 
 var express = require('express');
 var router = express.Router();
-var data = require('../sampleWakeData');
 
 router.get('/', function(req, res) {
     res.render('login');
@@ -21,7 +20,6 @@ router.get('/sleep', function(req, res) {
 });
 
 router.get('/wake', function(req, res) {
-    //console.log(data);
     res.render('wake');
 });
 
@@ -68,15 +66,5 @@ router.get('/login', function(req, res) {
 router.get('/signup', function(req, res) {
     res.render('signup');
 });
-
-/* DELETE THIS ROUTE */
-router.get('/wakeTwo', function(req, res) {
-    res.render('wakeTwo');
-});
-
-/* JSON /
-router.get('/add', function(req, res) {
-    res.render('add');
-});*/
 
 module.exports = router;

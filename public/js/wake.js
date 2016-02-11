@@ -18,6 +18,9 @@ function alertClick() {
 
 function setClick() {
     $("#setAlert").show('medium');
+    //$.get("/add", function(result) {
+    //    console.log(result);
+    //});
 }
 
 function dataSelect() {

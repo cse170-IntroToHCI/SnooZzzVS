@@ -3,8 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 // set the routes
-var routes = require('./routes/index');
-var add = require('./routes/add');
+var routes = require('./routes/routes');
 
 // line responsible for getting our app started
 var app = express();
@@ -18,8 +17,6 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-
 app.use('/', routes);
-app.get('/add', add.addWakeData);
 
 module.exports = app;
