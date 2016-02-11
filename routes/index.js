@@ -21,7 +21,7 @@ router.get('/sleep', function(req, res) {
 });
 
 router.get('/wake', function(req, res) {
-    console.log(data);
+    //console.log(data);
     res.render('wake');
 });
 
