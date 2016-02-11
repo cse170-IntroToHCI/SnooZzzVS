@@ -26,7 +26,7 @@ var wakeData = [
     extractWakeData[length-1].wakeFeeling
 ];
 
-var dateLabel = [
+var wakeLabel = [
     extractWakeData[length-5].date,
     extractWakeData[length-4].date,
     extractWakeData[length-3].date,
@@ -44,7 +44,6 @@ var options = {
     scaleSteps: 6
 };
 
-var chartlabel = [2000, 2001, 2002, 2003, 2004];
 var ctx = document.getElementById("LineChart").getContext("2d");
 
 var enableCheck = function() {
@@ -89,7 +88,7 @@ var enableCheck = function() {
 
 enableCheck();
 data = {
-    labels: chartlabel,
+    labels: wakeLabel,
     datasets: [ sadChart, averageChart, happyChart ]
 };
 baseChart = new Chart(ctx).Line(data, options);
@@ -104,7 +103,7 @@ function toggleLine(t) {
         t.className = t.className.replace('enabled', '');
     enableCheck();
     data = {
-        labels: chartlabel,
+        labels: wakeLabel,
         datasets: [ sadChart, averageChart, happyChart ]
     };
     newChart = new Chart(ctx).Line(data, options);

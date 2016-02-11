@@ -60,20 +60,21 @@
 	<!-- Form begins here -->
 	<div class="text-center">
 		<form enctype="application/json">
+
 			<!-- Calendar -->
-			<div style="padding-left: 5px; padding-right: 5px;">
+			<div id="calendarContainer" style="padding-left: 5px; padding-right: 5px;">
 				<div id="datePicker" class="input-group input-append date">
-					<input type="text" class="form-control" name="date" placeholder="Date">
+					<input id="selectDate" type="text" class="form-control" name="date" placeholder="Date">
 					<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 			</div>
 			<br>
 
 			<!-- Time Fields -->
-			<h4>Waking up at:</h4>
-			<div class="row center-block">
+			<h4 id="wakingUpAtH4">Waking up at:</h4>
+			<div id="clockContainer" class="row center-block">
 				<!-- Hour -->
-				<div class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
+				<div id="hourContainer" class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
 					<select id="selectHour" class="form-control" name="hour">
 						<option>1</option>
 						<option>2</option>
@@ -91,7 +92,7 @@
 				</div>
 
 				<!-- Minute -->
-				<div class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
+				<div id="minuteContainer" class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
 					<select id="selectMinute" class="form-control" name="minute">
 						<option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option>
 						<option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
@@ -103,7 +104,7 @@
 				</div>
 
 				<!-- Meridiem -->
-				<div class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
+				<div id="meridiemContainer" class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
 					<select id="selectMeridiem" class="form-control" name="meridiem">
 						<option>AM</option>
 						<option>PM</option>
@@ -113,8 +114,8 @@
 			<br>
 
 			<!-- Happiness Slider -->
-			<div style="text-align:center" id="feeling">
-				<h4>I'm currently feeling:</h4>
+			<div id="sliderContainer" style="text-align:center" id="feeling">
+				<h4 id="iAmFeelingH4">I'm currently feeling:</h4>
 				<!-- Happiness Slider -->
 				<input id="happinessSlider" class="slider" name="wakeFeeling" type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-tooltip="show" data-slider-value="4" data-slider-handle="custom"/>
 			</div>
@@ -122,7 +123,7 @@
 
 			<!-- Set Button -->
 			<button id="setBtn" type="submit" class="btn btn-primary">Set</button>
-			<div class="alert alert-success g alert-dismissable" id="setAlert" align="center">
+			<div id="setAlert" class="alert alert-success g alert-dismissable" align="center">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<strong>Success! </strong>Your time has been logged.
 				<br>
