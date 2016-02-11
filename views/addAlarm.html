@@ -41,7 +41,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="./"><span style="color: lightblue">SnooZzz </span><span style="color: gold">VS</span></a>
+                <a class="navbar-brand" href="./index"><span style="color: lightblue">SnooZzz </span><span style="color: gold">VS</span></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -55,7 +55,7 @@
     </nav>
 
     <div class="page-header" align="center">
-      <h1 id="h1">Set an Alarm</h1>
+      <h1 id="h1">Add an Alarm</h1>
     </div>
 
     <div class="container">
@@ -63,6 +63,7 @@
             <!-- Hour -->
             <div class="col-xs-4" style="padding-left: 5px; padding-right: 5px">
                 <select id="selectHour" class="form-control">
+                    <option>0</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -148,9 +149,8 @@
     </div><br>
 
     <div class="container" align="center">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-        Add
-        </button><br>
+        <input type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" 
+        onClick="showAlarm()" value="Add"><br>
         <a class="btn btn-default" href="./alarm">Cancel</a>
     </div>
     <br>
@@ -164,6 +164,7 @@
                     <h4 class="modal-title" id="myModalLabel">Add Alarm</h4>
                 </div>
                 <div class="modal-body">
+                    <p id="newAlarm"></p>
                     <h4>Your alarm has successfully been added!</h4>
                 </div>
                 <div class="modal-footer">
