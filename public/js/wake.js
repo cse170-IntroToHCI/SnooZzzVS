@@ -27,6 +27,8 @@ window.onload = function() {
         theHour = 11;
     } else if(theHour >= 13) {
         theHour -= 12;
+    } else {
+        --theHour;
     }
     defaultHour[theHour].setAttribute("selected", "selected"); // -1 b/c array begins at zero
 
