@@ -7,7 +7,6 @@ $(document).ready(function() {
 	deleteAlarm();
 	addAlarm();
 	showAlarm();
-	newAlarm();
 
 });
 
@@ -47,16 +46,16 @@ function showAlarm() {
     document.getElementById("newAlarm").innerHTML = text;
 }
 
-function addAlarmToPage() {
-	// var hour = document.getElementById("selectHour");
- //    // var minutes = document.getElementById("selectMinute");
- //    // var meridiem = document.getElementById("selectMeridiem");
- //    // var text = '<p>' + hour.options[hour.selectedIndex].text + ':' + 
- //    // minutes.options[minutes.selectedIndex].text + ' ' + 
- //    // meridiem.options[meridiem.selectedIndex].text + '<p>';
-	// //document.getElementById("testAlarm").innerHTML = text;
-	// document.getElementById("test").innerHTML = hour.options[hour.selectedIndex].text;
-	var HTML = "./alarm";
-	document.getElementById("")
+// function addAlarmToPage() {
+// 	// var hour = document.getElementById("selectHour");
+//  //    // var minutes = document.getElementById("selectMinute");
+//  //    // var meridiem = document.getElementById("selectMeridiem");
+//  //    // var text = '<p>' + hour.options[hour.selectedIndex].text + ':' + 
+//  //    // minutes.options[minutes.selectedIndex].text + ' ' + 
+//  //    // meridiem.options[meridiem.selectedIndex].text + '<p>';
+// 	// //document.getElementById("testAlarm").innerHTML = text;
+// 	// document.getElementById("test").innerHTML = hour.options[hour.selectedIndex].text;
+// 	var HTML = "./alarm";
+// 	document.getElementById("")
 
-}
+// }
