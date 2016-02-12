@@ -1,4 +1,4 @@
-// get the sample json for wake data
+// get the sample json for sleep data
 var sleepData = require('../sampleSleepData.json');
 
 exports.addSleepData = function(req, res) {
