@@ -1,6 +1,14 @@
+var options = {
+    animation: false,
+    responsive: false,
+    scaleFontColor: "#000",
+    scaleOverride: true,
+    scaleStartValue: 1,
+    scaleStepWidth: 1,
+    scaleSteps: 6
+};
 
-function showGetResult( name )
-{
+function showGetWakeResult(name) {
     var result = null;
     var scriptUrl = "/getAllWakeData?name=" + name;
     $.ajax({
@@ -14,31 +22,42 @@ function showGetResult( name )
     });
     return result;
 }
-var extractWakeData = showGetResult("");
+
+function showGetSleepResult(name) {
+    var result = null;
+    var scriptUrl = "/getAllSleepData?name=" + name;
+    $.ajax({
+        url: scriptUrl,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
+}
+
+var extractWakeData = showGetWakeResult("");
+var extractSleepData = showGetSleepResult("");
 var length = extractWakeData.length;
-var options = {
-    animation: false,
-    responsive: false,
-    scaleFontColor: "#000",
-    scaleOverride: true,
-    scaleStartValue: 1,
-    scaleStepWidth: 1,
-    scaleSteps: 6
-};
+
+
 var wakeData  = [];
-var sleepData  = [];
+var sleepData = [];
 var dateLabel = [];
 function fillWakeData() {
-    if(length !== 0) {
-        for(var i = 0; i < 5; ++i) {
-            wakeData[i] = extractWakeData[i].wakeFeeling;
-            sleepData[i] = extractWakeData[i].sleepFeeling;
-            dateLabel[i] = extractWakeData[i].date;
-        }
+    if(length > 5) {
+        length = 5;
+    }
+    for(var i = 0; i < length; ++i) {
+        wakeData[i]  = extractWakeData[i].wakeFeeling;
+        sleepData[i] = extractSleepData[i].sleepFeeling;
+        dateLabel[i] = extractWakeData[i].date;
     }
 }
 
-$("#yAxisTitle").ready(function() {
+$(document).ready(function() {
     fillWakeData();
     var ctx = document.getElementById("LineChart").getContext("2d");
 
@@ -76,7 +95,7 @@ $("#yAxisTitle").ready(function() {
                 strokeColor: "#aacdf2",
                 pointColor: "#aacdf2",
                 fillColor: "transparent",
-                //data: [7,5,3,1,6,4]
+                data: [7,5,3,1,6,4]
             };
         }
     };
