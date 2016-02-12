@@ -38,17 +38,18 @@ window.onload = function() {
         defaultMeridiem[1].setAttribute("selected", "selected");
     }
 
-    // current Form values
-    var dayValue = $("#selectDate").val();
-    var hourValue = $("#selectHour").val();
-    var minuteValue = $("#selectMinute").val();
-    var meridiemValue = $("#selectMeridiem").val();
-
     $('form').submit(function() {
+
+        // current Form values
+        var dayValue = $("#selectDate").val();
+        var hourValue = $("#selectHour").val();
+        var minuteValue = $("#selectMinute").val();
+        var meridiemValue = $("#selectMeridiem").val();
 
         $("#setAlert").show('medium');
 
         // Change page layout
+
         var newCalendarHTML = "<h3><span class='label label-info'>"+dayValue+"</span></h3>";
         var newTimeHTML = "<h3><span class='label label-info'>"+hourValue+":"+minuteValue+" "+meridiemValue+"</span></h3>";
 
@@ -57,6 +58,22 @@ window.onload = function() {
         $("#clockContainer").html(newTimeHTML);
         $("#iAmFeelingH4").html("");
         $("#sliderContainer").html("");
+
+        var setButton = $("#setBtn");
+        setButton.html("Edit");
+        setButton.attr("type", "button");
+        setButton.attr("onclick", "location='/wake'");
+
+        var cancelButton = $("#btnShow");
+        cancelButton.html("Home");
+        cancelButton.attr("onclick", "location='/index'");
+
+        $("#cancelAlert").hide();
+        setTimeout(function() {
+            $("#setAlert").fadeOut();
+        }, 2000);
+
+        // ----- EDITING LAYOUT ENDS HERE -----
 
         // Post data to JSON
         $.ajax({

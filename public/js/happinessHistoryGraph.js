@@ -14,25 +14,39 @@ function showGetResult( name )
     });
     return result;
 }
-var extractWakeData = showGetResult("TEST");
+var extractWakeData = showGetResult("");
 var length = extractWakeData.length;
 
-var length = extractWakeData.length;
-var wakeData = [
-    extractWakeData[length-5].wakeFeeling,
-    extractWakeData[length-4].wakeFeeling,
-    extractWakeData[length-3].wakeFeeling,
-    extractWakeData[length-2].wakeFeeling,
-    extractWakeData[length-1].wakeFeeling
-];
+//var wakeData = [
+//    extractWakeData[length-5].wakeFeeling,
+//    extractWakeData[length-4].wakeFeeling,
+//    extractWakeData[length-3].wakeFeeling,
+//    extractWakeData[length-2].wakeFeeling,
+//    extractWakeData[length-1].wakeFeeling
+//];
+var wakeData  = [];
+var wakeLabel = [];
+function fillWakeData() {
+    alert(length);
+    if(length !== 0) {
+        for(var i = length; i > 0; i++) {
+            wakeData[i]  = extractWakeData[length - i].wakeFeeling;
+            wakeLabel[i] = extractWakeData[length - i].date;
+        }
+    }
+}
 
-var wakeLabel = [
-    extractWakeData[length-5].date,
-    extractWakeData[length-4].date,
-    extractWakeData[length-3].date,
-    extractWakeData[length-2].date,
-    extractWakeData[length-1].date
-];
+window.onload = function() {
+    fillWakeData();
+};
+
+//var wakeLabel = [
+//    extractWakeData[length-5].date,
+//    extractWakeData[length-4].date,
+//    extractWakeData[length-3].date,
+//    extractWakeData[length-2].date,
+//    extractWakeData[length-1].date
+//];
 
 var options = {
     animation: false,

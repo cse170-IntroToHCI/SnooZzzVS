@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var wakeData = require('./wake');
+var sleepData = require('./sleep');
 
 router.get('/', function(req, res) {
     res.render('login');
@@ -68,7 +69,11 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
+// FOR DB "JSON"
 router.post('/postWakeData', wakeData.addWakeData);
 router.get('/getAllWakeData', wakeData.getAll);
+
+router.post('/postSleepData', sleepData.addSleepData);
+router.get('/getAllSleepData', sleepData.getAll);
 
 module.exports = router;
