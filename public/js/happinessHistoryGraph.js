@@ -16,38 +16,6 @@ function showGetResult( name )
 }
 var extractWakeData = showGetResult("");
 var length = extractWakeData.length;
-
-//var wakeData = [
-//    extractWakeData[length-5].wakeFeeling,
-//    extractWakeData[length-4].wakeFeeling,
-//    extractWakeData[length-3].wakeFeeling,
-//    extractWakeData[length-2].wakeFeeling,
-//    extractWakeData[length-1].wakeFeeling
-//];
-var wakeData  = [];
-var wakeLabel = [];
-function fillWakeData() {
-    alert(length);
-    if(length !== 0) {
-        for(var i = length; i > 0; i++) {
-            wakeData[i]  = extractWakeData[length - i].wakeFeeling;
-            wakeLabel[i] = extractWakeData[length - i].date;
-        }
-    }
-}
-
-window.onload = function() {
-    fillWakeData();
-};
-
-//var wakeLabel = [
-//    extractWakeData[length-5].date,
-//    extractWakeData[length-4].date,
-//    extractWakeData[length-3].date,
-//    extractWakeData[length-2].date,
-//    extractWakeData[length-1].date
-//];
-
 var options = {
     animation: false,
     responsive: false,
@@ -57,84 +25,99 @@ var options = {
     scaleStepWidth: 1,
     scaleSteps: 6
 };
-
-var ctx = document.getElementById("LineChart").getContext("2d");
-
-var enableCheck = function() {
-    happyButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
-    sadButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
-    avgButton = document.getElementsByClassName('aB')[0].className.indexOf('enabled') != -1;
-    if (!(happyButton)) {
-        happyChart = {};
-    } else {
-        happyChart = {
-            label: "Happiness History Graph",
-            strokeColor: "#449bf7",
-            pointColor: "#449bf7",
-            fillColor: "transparent",
-            data: wakeData
-        };
+var wakeData  = [];
+var sleepData  = [];
+var dateLabel = [];
+function fillWakeData() {
+    if(length !== 0) {
+        for(var i = 0; i < 5; ++i) {
+            wakeData[i] = extractWakeData[i].wakeFeeling;
+            sleepData[i] = extractWakeData[i].sleepFeeling;
+            dateLabel[i] = extractWakeData[i].date;
+        }
     }
-    if (!(sadButton)) {
-        sadChart = {};
-    } else {
-        sadChart = {
-            label: "Sad History Graph",
-            strokeColor: "#efb96c",
-            pointColor: "#efb96c",
-            fillColor: "transparent",
-            data: [1,2,1,2,1,2]
-        };
-    }
-    if (!(avgButton)) {
-        averageChart = {};
-    } else {
-        averageChart = {
-            label: "Average Happiness History",
-            strokeColor: "#aacdf2",
-            pointColor: "#aacdf2",
-            fillColor: "transparent",
-            data: [7,5,3,1,6,4]
-        };
-    }
-};
+}
+
+$("#yAxisTitle").ready(function() {
+    fillWakeData();
+    var ctx = document.getElementById("LineChart").getContext("2d");
+
+    var enableCheck = function() {
+        happyButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
+        sadButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
+        avgButton = document.getElementsByClassName('aB')[0].className.indexOf('enabled') != -1;
+        if (!(happyButton)) {
+            happyChart = {};
+        } else {
+            happyChart = {
+                label: "Happiness History Graph",
+                strokeColor: "#449bf7",
+                pointColor: "#449bf7",
+                fillColor: "transparent",
+                data: wakeData
+            };
+        }
+        if (!(sadButton)) {
+            sadChart = {};
+        } else {
+            sadChart = {
+                label: "Sad History Graph",
+                strokeColor: "#efb96c",
+                pointColor: "#efb96c",
+                fillColor: "transparent",
+                data: sleepData
+            };
+        }
+        if (!(avgButton)) {
+            averageChart = {};
+        } else {
+            averageChart = {
+                label: "Average Happiness History",
+                strokeColor: "#aacdf2",
+                pointColor: "#aacdf2",
+                fillColor: "transparent",
+                //data: [7,5,3,1,6,4]
+            };
+        }
+    };
 
 
-enableCheck();
-data = {
-    labels: wakeLabel,
-    datasets: [ sadChart, averageChart, happyChart ]
-};
-baseChart = new Chart(ctx).Line(data, options);
-currentChart = baseChart;
-
-function toggleLine(t) {
-
-    currentChart.destroy();
-    if (t.className.indexOf('enabled') == -1)
-        t.className += ' enabled';
-    else
-        t.className = t.className.replace('enabled', '');
     enableCheck();
     data = {
-        labels: wakeLabel,
+        labels: dateLabel,
         datasets: [ sadChart, averageChart, happyChart ]
     };
-    newChart = new Chart(ctx).Line(data, options);
-    currentChart = newChart;
-};
+    baseChart = new Chart(ctx).Line(data, options);
+    currentChart = baseChart;
 
-var theHB = document.getElementById("ex1");
-theHB.onclick = function() {
-    toggleLine(this);
-};
+    function toggleLine(t) {
 
-var theSB = document.getElementById("ex2");
-theSB.onclick = function() {
-    toggleLine(this);
-};
+        currentChart.destroy();
+        if (t.className.indexOf('enabled') == -1)
+            t.className += ' enabled';
+        else
+            t.className = t.className.replace('enabled', '');
+        enableCheck();
+        data = {
+            labels: dateLabel,
+            datasets: [ sadChart, averageChart, happyChart ]
+        };
+        newChart = new Chart(ctx).Line(data, options);
+        currentChart = newChart;
+    };
 
-var theAB = document.getElementById("ex3");
-theAB.onclick = function() {
-    toggleLine(this);
-};
+    var theHB = document.getElementById("ex1");
+    theHB.onclick = function() {
+        toggleLine(this);
+    };
+
+    var theSB = document.getElementById("ex2");
+    theSB.onclick = function() {
+        toggleLine(this);
+    };
+
+    var theAB = document.getElementById("ex3");
+    theAB.onclick = function() {
+        toggleLine(this);
+    };
+});
