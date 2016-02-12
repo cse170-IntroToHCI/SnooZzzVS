@@ -57,8 +57,8 @@ router.get('/addAlarm', function(req, res) {
     res.render('addAlarm');
 });
 
-router.get('/settings', function(req, res) {
-    res.render('settings');
+router.get('/account', function(req, res) {
+    res.render('account');
 });
 
 router.get('/login', function(req, res) {
