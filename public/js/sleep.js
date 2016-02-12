@@ -2,7 +2,7 @@
 // default Form values
 var today = new Date();
 var theDay = (today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear();
-var theHour = today.getHours() % 12; // scale = [0 - 23]. (13 = 1pm)
+var theHour = today.getHours(); // scale = [0 - 23]. (13 = 1pm)
 var theMinute = today.getMinutes();
 var theMeridiem = today.getHours();
 
@@ -23,10 +23,12 @@ window.onload = function() {
 	var mySlider = new Slider("#happinessSlider", {});
 
 	var defaultHour = document.getElementById("selectHour");
-	if(theHour - 1 === -1) {
-		theHour = 13;
+	if(theHour === 12 || theHour === 0) {
+		theHour = 11;
+	} else if(theHour >= 13) {
+		theHour -= 12;
 	}
-	defaultHour[theHour - 1].setAttribute("selected", "selected"); // -1 b/c array begins at zero
+	defaultHour[theHour].setAttribute("selected", "selected"); // -1 b/c array begins at zero
 
 	var defaultMinute = document.getElementById("selectMinute");
 	defaultMinute[theMinute].setAttribute("selected", "selected");
