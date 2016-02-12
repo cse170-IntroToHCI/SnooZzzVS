@@ -69,6 +69,10 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
+router.get('/help', function(req, res) {
+    res.render('help');
+});
+
 // FOR DB "JSON"
 router.post('/postWakeData', wakeData.addWakeData);
 router.get('/getAllWakeData', wakeData.getAll);
