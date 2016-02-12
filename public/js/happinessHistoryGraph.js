@@ -40,20 +40,31 @@ function showGetSleepResult(name) {
 
 var extractWakeData = showGetWakeResult("");
 var extractSleepData = showGetSleepResult("");
-var length = extractWakeData.length;
+var wakeLength = extractWakeData.length;
+var sleepLength = extractSleepData.length;
 
 
 var wakeData  = [];
 var sleepData = [];
 var dateLabel = [];
+var temp = [];
 function fillWakeData() {
-    if(length > 5) {
-        length = 5;
+    if(wakeLength > 5) {
+        wakeLength = 5;
     }
-    for(var i = 0; i < length; ++i) {
+    if(sleepLength > 5) {
+        sleepLength = 5;
+    }
+    for(var i = 0; i < wakeLength; ++i) {
         wakeData[i]  = extractWakeData[i].wakeFeeling;
+        temp[i] = extractWakeData[i].date;
+    }
+    for(var i = 0; i < sleepLength; ++i) {
         sleepData[i] = extractSleepData[i].sleepFeeling;
         dateLabel[i] = extractWakeData[i].date;
+    }
+    if(wakeLength > sleepLength) {
+        dateLabel = temp;
     }
 }
 
