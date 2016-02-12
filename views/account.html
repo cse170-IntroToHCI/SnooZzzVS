@@ -25,35 +25,39 @@
             <!-- First Name -->
             <fieldset class="form-group">
                 <label for="firstName">First Name</label>
-                <input type="text-muted" class="form-control" id="firstName" placeholder="Enter first name">
+                <input type="text-muted" class="form-control" id="firstName" placeholder="Pablo">
             </fieldset>
 
             <!-- Last Name -->
             <fieldset class="form-group">
                 <label for="lastName">Last Name</label>
-                <input type="text-muted" class="form-control" id="lastName" placeholder="Enter last name">
+                <input type="text-muted" class="form-control" id="lastName" placeholder="Jacome">
             </fieldset>
 
             <!-- Email -->
             <fieldset class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
-                <small class="email">We'll never share your email with anyone else.</small>
+                <input type="email" class="form-control" id="email" placeholder="jc123@gmail.com">
             </fieldset>
 
-            <!-- Confirm Email -->
-            
+            <!-- Confirm Email for change-->
+            <fieldset class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="confirmEmail" placeholder="Confirm email for change">
+                <small class="email2">Re-enter your new e-mail</small>
+            </fieldset>
 
             <!-- Password -->
             <fieldset class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter password">
+                <input type="password" class="form-control" id="password" placeholder="teamsixisthebest">
             </fieldset>
 
-            <!-- Confirm Password -->
+            <!-- Confirm Password for change-->
             <fieldset class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password for change">
+                <small class="password2">Re-enter your new password</small>
             </fieldset>
 
             <!-- Agreement -->
@@ -64,11 +68,13 @@
             </div>
 
             <!-- Submit Button -->
-            <button type="button" class="btn btn-primary center-block" id="submitButton">Submit</button>
+            <button type="button" class="btn btn-primary center-block" id="updateButton">Update</button>
 
             <!-- Back Button -->
             <br>
-            <button type="button" class="btn btn-default center-block" id="loginButton">Login</button>
+            <div class="container" align="center">
+                 <a class="btn btn-default" href="./index">Home</a>
+             </div>
         </form>
     </div>
     <br>
