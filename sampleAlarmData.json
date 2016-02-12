@@ -1,0 +1,14 @@
+{
+  "alarmData":[
+    {
+      "hour": 7,
+      "minute": 30,
+      "meridiem": "AM",
+    },
+    {
+      "hour": 7,
+      "minute": 40,
+      "meridiem": "AM",
+    }
+  ]
+}
