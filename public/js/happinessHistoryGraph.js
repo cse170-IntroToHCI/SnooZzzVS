@@ -1,3 +1,7 @@
+var ex1ToggleCount = 0;
+var ex2ToggleCount = 0;
+var ex3ToggleCount = 0;
+
 var options = {
     animation: false,
     responsive: false,
@@ -95,8 +99,9 @@ $(document).ready(function() {
         } else {
             happyChart = {
                 label: "Happiness History Graph",
-                strokeColor: "#449bf7",
-                pointColor: "#449bf7",
+                strokeColor: "gold",
+                pointColor: "gold",
+                pointStrokeColor: "black",
                 fillColor: "transparent",
                 data: wakeData,
             };
@@ -106,8 +111,9 @@ $(document).ready(function() {
         } else {
             sadChart = {
                 label: "Sad History Graph",
-                strokeColor: "#efb96c",
-                pointColor: "#efb96c",
+                strokeColor: "lightblue",
+                pointColor: "lightblue",
+                pointStrokeColor: "black",
                 fillColor: "transparent",
                 data: sleepData
             };
@@ -117,8 +123,9 @@ $(document).ready(function() {
         } else {
             averageChart = {
                 label: "Average Happiness History",
-                strokeColor: "#aacdf2",
-                pointColor: "#aacdf2",
+                strokeColor: "green",
+                pointColor: "green",
+                pointStrokeColor: "black",
                 fillColor: "transparent",
                 data: averageData
             };
@@ -150,18 +157,40 @@ $(document).ready(function() {
         currentChart = newChart;
     };
 
+    $("#ex1").css("background-color", "rgba(255, 215,   0, 0.7)");
+    $("#ex2").css("background-color", "rgba(173, 216, 230, 0.7)");
+    $("#ex3").css("background-color", "rgba(0  , 128,   0, 0.7)");
+
     var theHB = document.getElementById("ex1");
     theHB.onclick = function() {
         toggleLine(this);
+        if(ex1ToggleCount % 2 === 1) {
+            $(this).css("background-color", "rgba(255, 215, 0, 0.7)");
+        } else {
+            $(this).css("background-color", "");
+        }
+        ++ex1ToggleCount;
     };
 
     var theSB = document.getElementById("ex2");
     theSB.onclick = function() {
         toggleLine(this);
+        if(ex2ToggleCount % 2 === 1) {
+            $(this).css("background-color", "rgba(173, 216, 230, 0.7)");
+        } else {
+            $(this).css("background-color", "");
+        }
+        ++ex2ToggleCount;
     };
 
     var theAB = document.getElementById("ex3");
     theAB.onclick = function() {
         toggleLine(this);
+        if(ex3ToggleCount % 2 === 1) {
+            $(this).css("background-color", "rgba(0, 128, 0, 0.7)");
+        } else {
+            $(this).css("background-color", "");
+        }
+        ++ex3ToggleCount;
     };
 });
