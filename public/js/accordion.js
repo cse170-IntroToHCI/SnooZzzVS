@@ -1,32 +1,22 @@
 // for navigation on main page (index.html)
 $(document).ready(function () {
 	$("#b1sb1").click(function () {
-		window.location.href = $('a', this).attr('href');
+		window.location.href = "/wake";
 	});
 
 	$("#b1sb2").click(function () {
-		window.location.href = $('a', this).attr('href');
+		window.location.href = "sleep";
 	});
 
-	/*
-	$("#b2sb1").click(function () {
-		window.location.href = $('a', this).attr('href');
+	$("#b2").click(function () {
+		window.location.href = "/happinessHistory";
 	});
 
-	$("#b2sb2").click(function () {
-		window.location.href = $('a', this).attr('href');
-	});
-	*/
-
-	$("#headingTwo").click(function () {
-		window.location.href = $('strong', this).attr('href');
+	$("#b3").click(function () {
+		window.location.href = "/compare";
 	});
 
-	$("#headingThree").click(function () {
-		window.location.href = $('strong', this).attr('href');
-	});
-
-	$("#headingFour").click(function () {
-		window.location.href = $('strong', this).attr('href');
+	$("#b4").click(function () {
+		window.location.href = "/alarm";
 	});
 });

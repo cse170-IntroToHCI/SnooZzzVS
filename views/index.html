@@ -38,39 +38,30 @@
 		</div>
 	</nav>
 
-<div>
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	<div class="panel-group btn-group-vertical center-block" style="margin-top: 15%; display: table; width: 80%;">
 
-		<div class="panel panel-default">
-			<div class="panel-heading text-center" role="tab" id="headingOne" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-				<strong style="font-size: 18px;">My Sleep </strong><img src="img/mysleep.png"  width="40" height="40">
-			</div>
-			<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-				<ul class="list-group">
-					<li id="b1sb1" class="list-group-item"><strong>Waking Up</strong><a href="./wake"></a></li>
-					<li id="b1sb2" class="list-group-item"><strong>Ready to Sleep</strong><a href="./sleep"></a></li>
-				</ul>
+		<button class="text-center btn btn-default" data-toggle="collapse" data-target="#submenu1" style="width: 100%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-bottom: 0">
+			<span style="font-size: 18px;">Sleep Cycle </span><img src="img/mysleep.png" width="25" height="25">
+		</button>
+		<div id="submenu1" class="collapse" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<div class="btn-group-vertical" style="width: 100%">
+				<button id="b1sb1" class="btn btn-default" style="width: 100%; border-radius: 0px; color: gold;">Waking Up</button>
+				<button id="b1sb2" class="btn btn-default" style="width: 100%; border-radius: 0px; color: lightblue;">Ready to Sleep</button>
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading text-center" role="tab" id="headingTwo" role="button">
-				<strong style="font-size: 18px;" href="./happinessHistory">Progress</strong> <img src="img/progress.png"  width="40" height="40">
-			</div>
-		</div>
+		<button id="b2" class="text-center btn btn-default" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<span style="font-size: 18px;">Progress </span><img src="img/progress.png" width="20" height="20">
+		</button>
 
-		<div class="panel panel-default">
-			<div class="panel-heading text-center" role="tab" id="headingThree" role="button">
-				<strong style="font-size: 18px;" href="./compare">Compare</strong> <img src="img/compare.png"  width="40" height="40">
-			</div>
-		</div>
+		<button id="b3" class="text-center btn btn-default" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<span style="font-size: 18px;">Compare </span><img src="img/compare.png" width="20" height="20">
+		</button>
 
-		<div class="panel panel-default">
-			<div class="panel-heading text-center" role="tab" id="headingFour" role="button">
-				<strong style="font-size: 18px;" href="./alarm">Alarm</strong> <img src="img/alarm.png"  width="40" height="40">
-			</div>
-		</div>
+		<button id="b4" class="text-center btn btn-default" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<span style="font-size: 18px;">Alarm </span><img src="img/alarm.png" width="20" height="20">
+		</button>
+
 	</div>
-</div>
 </body>
 </html>
