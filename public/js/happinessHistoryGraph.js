@@ -68,13 +68,16 @@ function fillData() {
     if(wakeLength > sleepLength) {
         dateLabel = temp;
         for(var i = 0; i < sleepLength; ++i) {
+            // strip year
+
             averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
         }
     } else {
         console.log("\n");
         for(var i = 0; i < wakeLength; ++i) {
+            // strip year
+            dateLabel[i] = dateLabel[i].slice(0, 5);
             averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
-            console.log(averageData[i]);
         }
     }
 }
