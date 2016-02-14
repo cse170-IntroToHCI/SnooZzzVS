@@ -46,9 +46,10 @@ var sleepLength = extractSleepData.length;
 
 var wakeData  = [];
 var sleepData = [];
+var averageData = [];
 var dateLabel = [];
 var temp = [];
-function fillWakeData() {
+function fillData() {
     if(wakeLength > 5) {
         wakeLength = 5;
     }
@@ -59,17 +60,27 @@ function fillWakeData() {
         wakeData[i]  = extractWakeData[i].wakeFeeling;
         temp[i] = extractWakeData[i].date;
     }
+
     for(var i = 0; i < sleepLength; ++i) {
         sleepData[i] = extractSleepData[i].sleepFeeling;
         dateLabel[i] = extractWakeData[i].date;
     }
     if(wakeLength > sleepLength) {
         dateLabel = temp;
+        for(var i = 0; i < sleepLength; ++i) {
+            averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
+        }
+    } else {
+        console.log("\n");
+        for(var i = 0; i < wakeLength; ++i) {
+            averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
+            console.log(averageData[i]);
+        }
     }
 }
 
 $(document).ready(function() {
-    fillWakeData();
+    fillData();
     var ctx = document.getElementById("LineChart").getContext("2d");
 
     var enableCheck = function() {
@@ -84,7 +95,7 @@ $(document).ready(function() {
                 strokeColor: "#449bf7",
                 pointColor: "#449bf7",
                 fillColor: "transparent",
-                data: wakeData
+                data: wakeData,
             };
         }
         if (!(sadButton)) {
@@ -106,7 +117,7 @@ $(document).ready(function() {
                 strokeColor: "#aacdf2",
                 pointColor: "#aacdf2",
                 fillColor: "transparent",
-                data: [7,5,3,1,6,4]
+                data: averageData
             };
         }
     };
