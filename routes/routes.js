@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var wakeData = require('./wake');
 var sleepData = require('./sleep');
+var alarmData = require('./alarm');
 
 router.get('/', function(req, res) {
     res.render('login');
@@ -79,5 +80,8 @@ router.get('/getAllWakeData', wakeData.getAll);
 
 router.post('/postSleepData', sleepData.addSleepData);
 router.get('/getAllSleepData', sleepData.getAll);
+
+router.post('/postAlarmData', alarmData.addAlarmData);
+router.get('/getAllAlarmData', alarmData.getAll);
 
 module.exports = router;

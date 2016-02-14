@@ -9,14 +9,16 @@ exports.addAlarmData = function(req, res) {
     var newAlarmData = {
         "hour": hour,
         "minute": minute,
-        "meridiem": meridiem,
+        "meridiem": meridiem
     };
 
-    console.log(newAlarmData);
+    
+    //console.log(newAlarmData);
     alarmData["alarmData"].push(newAlarmData);
     res.json(alarmData);
+    console.log(alarmData);
 };
 
-// exports.getAll = function(req, res) {
-//     res.json(alarmData["alarmData"]);
-// };
+exports.getAll = function(req, res) {
+    res.json(alarmData["alarmData"]);
+};

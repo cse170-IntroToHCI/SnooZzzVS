@@ -2,13 +2,13 @@
  * Created by Emily on 2/6/2016.
  */
 
-
 $(document).ready(function() {
 	deleteAlarm();
 	addAlarm();
 	showAlarm();
 
 });
+
 
 function deleteAlarm() {
 	$('button.btnDelete').on('click', function (e) {
@@ -46,47 +46,34 @@ function showAlarm() {
     document.getElementById("newAlarm").innerHTML = text;
 }
 
-function addAlarmToPage() {
-	var HTML = "./alarm";
-	document.getElementById("")
+// function addAlarmToPage() {
+// 	var HTML = "./alarm";
+// 	document.getElementById("")
 
-}
+// }
 
-// window.onload = function() {
+window.onload = function() {
 
-//     // current Form values
-//     var hourValue = $("#selectHour").val();
-//     var minuteValue = $("#selectMinute").val();
-//     var meridiemValue = $("#selectMeridiem").val();
 
-//     $('form').submit(function() {
+    $('form').submit(function() {
 
-//         // $("#setAlert").show('medium');
+	 	// current Form values
+	    var hourValue = $("#selectHour").val();
+	    var minuteValue = $("#selectMinute").val();
+	    var meridiemValue = $("#selectMeridiem").val();
 
-//         // // Change page layout
-//         // var newCalendarHTML = "<h3><span class='label label-info'>"+dayValue+"</span></h3>";
-//         // var newTimeHTML = "<h3><span class='label label-info'>"+hourValue+":"+minuteValue+" "+meridiemValue+"</span></h3>";
+        // Post data to JSON
+        $.ajax({
+            type: 'POST',
+            url: '/postAlarmData',
+            data: {
+                "hour": hourValue,
+                "minute": minuteValue,
+                "meridiem": meridiemValue
+            }
+        });
 
-//         // $("#calendarContainer").html(newCalendarHTML);
-//         // $("#wakingUpAtH4").html("You woke up at:");
-//         // $("#clockContainer").html(newTimeHTML);
-//         // $("#iAmFeelingH4").html("");
-//         // $("#sliderContainer").html("");
+        return false;
+    });
 
-//         // Post data to JSON
-//         $.ajax({
-//             type: 'POST',
-//             url: '/postAlarmData',
-//             data: {
-//                 "hour": hourValue,
-//                 "minute": minuteValue,
-//                 "meridiem": meridiemValue,
-//             }
-//         });
-
-//         return false;
-//     });
-
-//     // Button Click Functions
-//     // $("#btnShow").click(alertClick);
-// };
+};
