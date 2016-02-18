@@ -4,8 +4,7 @@
 
 $(document).ready(function() {
 	deleteAlarm();
-	addAlarm();
-	showAlarm();
+    fillData();
 
 });
 
@@ -24,33 +23,67 @@ function deleteAlarm() {
 	});
 }
 
-function addAlarm() {
-	// $('button.addButton').on('click', function (e) {
-	//     e.preventDefault();
 
-	// });
-	$('#myModal').on('shown.bs.modal', function () {
-  		$('#myInput').focus()
-	});
+function addAlarmToPage(name) {
+
+    var result = null;
+    var scriptUrl = "/getAllAlarmData?name=" + name;
+    $.ajax({
+        url: scriptUrl,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
 }
 
-function showAlarm() {
-    var hour = document.getElementById("selectHour");
-    var minutes = document.getElementById("selectMinute");
-    var meridiem = document.getElementById("selectMeridiem");
-    var text = '<p>' + hour.options[hour.selectedIndex].text + ':' + 
-    minutes.options[minutes.selectedIndex].text + ' ' + 
-    meridiem.options[meridiem.selectedIndex].text + '<p>';
-    // document.getElementById("test").innerHTML = hour.options[hour.selectedIndex].text;
-    // document.getElementById("test").innerHTML = minutes.options[minutes.selectedIndex.text];
-    document.getElementById("newAlarm").innerHTML = text;
+var extractAlarmData = addAlarmToPage("");
+var alarmLength = extractAlarmData.length;
+
+var hourData = [];
+var minuteData = [];
+var meridiemData = "";
+var alarmHTML = "";
+// var data-id = 0;
+
+function fillData() {
+
+    for(var i = 0; i < alarmLength; ++i) {
+        hourData[i]  = extractAlarmData[i].hour;
+        minuteData[i] = extractAlarmData[i].minute;
+        meridiemData = extractAlarmData[i].meridiem;
+        // data-id++;
+        console.log(hourData[i]);
+        console.log(minuteData[i]);
+        console.log(meridiemData);
+
+        // alarmHTML += '<button type="button" class="btn btn-default btn-lg" id="anAlarm">' 
+        // + hourData[i] + ":" + minuteData[i] + " " + meridiemData + '</button>' + '&nbsp;';
+        // $("#anAlarm").html(alarmHTML);
+        alarmHTML += '<table id="alarmTable">' + '<tbody>' + 
+            '<tr class="btnDelete" data-id="1">' + '<td>' + 
+            '<div class="btn-group" data-toggle="buttons">' + 
+            '<label class="btn btn-primary active">' + 
+            '<input type="radio" name="options" id="option1" autocomplete="off" checked>' + 'ON' + 
+            '</label>' + '<label class="btn btn-primary">' + 
+            '<input type="radio" name="options" id="option2" autocomplete="off">' + 'OFF' + 
+            '</label>' + '</div>' + '</td>' + 
+            '<td>' + '<button type="button" class="btn btn-default btn-lg" id="anAlarm">' 
+        + hourData[i] + ":" + minuteData[i] + " " + meridiemData + '</button>' + '</td>' +
+            '<td>' + '<button class="btnDelete btn btn-default" href="">' + 
+            '<span class="glyphicon glyphicon-trash"></span></button>' + 
+                '</td>' + 
+            '</tr>' + '</tbody>' + '</table>';
+    }
+
+    $("#alarmData").html(alarmHTML);
+    
+
 }
 
-// function addAlarmToPage() {
-// 	var HTML = "./alarm";
-// 	document.getElementById("")
-
-// }
 
 window.onload = function() {
 
