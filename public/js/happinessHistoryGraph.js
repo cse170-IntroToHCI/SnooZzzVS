@@ -53,7 +53,10 @@ var wakeData  = [];
 var sleepData = [];
 var averageData = [];
 var dateLabel = [];
-var temp = [];
+
+// booleans to determine which dataset has more data points
+var night = 1, day = 0;
+
 function fillData() {
 
     if(wakeLength < 8) {
@@ -63,20 +66,34 @@ function fillData() {
         sleepCount = sleepLength;
     }
 
-    console.log("w_length = " + wakeLength + "\nw_Count = " + wakeCount);
-    for(var i = wakeLength - 1, j = 6; i > wakeLength - wakeCount; --i, --j) {
-        console.log("i: " + i);
-        wakeData[j]  = extractWakeData[i].wakeFeeling;
-        //temp[i] = extractWakeData[i].date;
-        dateLabel[j] = extractWakeData[i].date;
+    // check which dataset has more data points
+    if(wakeLength > sleepLength) {
+        day = 1;
+        night = 0;
     }
-    console.log(wakeData);
-    console.log(dateLabel);
 
-    console.log("s_length = " + sleepLength + "\ns_Count = " + sleepCount);
+    // fill wake feeling data
+    for(var i = wakeLength - 1, j = 6; i > wakeLength - wakeCount; --i, --j) {
+        wakeData[j]  = extractWakeData[i].wakeFeeling;
+        if(day === 1) {
+            dateLabel[j] = extractWakeData[i].date;
+            dateLabel[j] = dateLabel[j].slice(0, 5);
+            // fill average feeling data based on wakeLength
+            averageData[j] = (parseInt(sleepData[j]) + parseInt(wakeData[j]))/2;
+            night = 0;
+        }
+    }
+
+    // fill sleep feeling data
     for(var i = sleepLength - 1, j = 6; i > sleepLength - sleepCount; --i, --j) {
-        sleepData[i] = extractSleepData[i].sleepFeeling;
-        //dateLabel[i] = extractWakeData[i].date;
+        sleepData[j] = extractSleepData[i].sleepFeeling;
+        if(night === 1) {
+            dateLabel[j] = extractSleepData[i].date;
+            dateLabel[j] = dateLabel[j].slice(0, 5);
+            // fill average feeling data based on sleepLength
+            averageData[j] = (parseInt(sleepData[j]) + parseInt(wakeData[j]))/2;
+            day = 0;
+        }
     }
 
     /*

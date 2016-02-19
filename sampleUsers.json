@@ -3,8 +3,8 @@
     {
       "firstName": "firstName",
       "lastName": "lastName",
-      "email": "test@test.com",
-      "password": "password"
+      "email": "test",
+      "password": "test"
     }
   ]
 }

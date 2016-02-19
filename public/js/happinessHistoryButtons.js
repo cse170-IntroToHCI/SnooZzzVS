@@ -1,10 +1,4 @@
 
-var homeButton = document.getElementById("homeButton");
-homeButton.onclick = function() {
-    window.location = "./index";
-};
-
-
 $('#weekButton').click(function (e) {
     $('#monthButton').removeClass('active');
     $('#yearButton').removeClass('active');
