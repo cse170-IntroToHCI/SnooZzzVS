@@ -46,7 +46,8 @@ var extractWakeData = showGetWakeResult("");
 var extractSleepData = showGetSleepResult("");
 var wakeLength = extractWakeData.length;
 var sleepLength = extractSleepData.length;
-
+var wakeCount = 8;
+var sleepCount = 8;
 
 var wakeData  = [];
 var sleepData = [];
@@ -54,36 +55,48 @@ var averageData = [];
 var dateLabel = [];
 var temp = [];
 function fillData() {
-    if(wakeLength > 5) {
-        wakeLength = 5;
+
+    if(wakeLength < 8) {
+        wakeCount = wakeLength;
     }
-    if(sleepLength > 5) {
-        sleepLength = 5;
-    }
-    for(var i = 0; i < wakeLength; ++i) {
-        wakeData[i]  = extractWakeData[i].wakeFeeling;
-        temp[i] = extractWakeData[i].date;
+    if(sleepLength < 8) {
+        sleepCount = sleepLength;
     }
 
-    for(var i = 0; i < sleepLength; ++i) {
+    console.log("w_length = " + wakeLength + "\nw_Count = " + wakeCount);
+    for(var i = wakeLength - 1, j = 6; i > wakeLength - wakeCount; --i, --j) {
+        console.log("i: " + i);
+        wakeData[j]  = extractWakeData[i].wakeFeeling;
+        //temp[i] = extractWakeData[i].date;
+        dateLabel[j] = extractWakeData[i].date;
+    }
+    console.log(wakeData);
+    console.log(dateLabel);
+
+    console.log("s_length = " + sleepLength + "\ns_Count = " + sleepCount);
+    for(var i = sleepLength - 1, j = 6; i > sleepLength - sleepCount; --i, --j) {
         sleepData[i] = extractSleepData[i].sleepFeeling;
-        dateLabel[i] = extractWakeData[i].date;
+        //dateLabel[i] = extractWakeData[i].date;
     }
-    if(wakeLength > sleepLength) {
-        dateLabel = temp;
-        for(var i = 0; i < sleepLength; ++i) {
-            // strip year
 
-            averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
-        }
-    } else {
-        console.log("\n");
-        for(var i = 0; i < wakeLength; ++i) {
-            // strip year
-            dateLabel[i] = dateLabel[i].slice(0, 5);
-            averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
-        }
-    }
+    /*
+    TODO - (1) redo average. (2) fix logic b/c too many for-loops. (3) x-axis buttons
+     */
+
+    //if(wakeLength > sleepLength) {
+    //    dateLabel = temp;
+    //    for(var i = 0; i < sleepLength; ++i) {
+    //        // strip year
+    //        dateLabel[i] = dateLabel[i].slice(0, 5);
+    //        //averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
+    //    }
+    //} else {
+    //    for(var i = 0; i < wakeLength; ++i) {
+    //        // strip year
+    //        dateLabel[i] = dateLabel[i].slice(0, 5);
+    //        //averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
+    //    }
+    //}
 }
 
 $(document).ready(function() {
@@ -103,7 +116,7 @@ $(document).ready(function() {
                 pointColor: "gold",
                 pointStrokeColor: "black",
                 fillColor: "transparent",
-                data: wakeData,
+                data: wakeData
             };
         }
         if (!(sadButton)) {
