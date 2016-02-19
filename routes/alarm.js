@@ -12,8 +12,6 @@ exports.addAlarmData = function(req, res) {
         "meridiem": meridiem
     };
 
-    
-    //console.log(newAlarmData);
     alarmData["alarmData"].push(newAlarmData);
     res.json(alarmData);
     console.log(alarmData);
