@@ -1,4 +1,8 @@
 
+$(document).ready(function() {
+    $("#loginFailedAlert").hide();
+});
+
 var signupButton = document.getElementById("signupButton");
 signupButton.onclick = function() {
     window.location = "./signup";
@@ -6,7 +10,7 @@ signupButton.onclick = function() {
 
 var loginButton = document.getElementById("loginButton");
 loginButton.onclick = function() {
-    console.log($("#email").val() + "\n" + $("#password").val());
+
     // Post data to JSON
     $.ajax({
         type: 'POST',
@@ -19,7 +23,7 @@ loginButton.onclick = function() {
             window.location = "./index";
         },
         error: function() {
-            alert("Either your email or password is incorrect.");
+            $("#loginFailedAlert").fadeIn();
         }
     });
 };

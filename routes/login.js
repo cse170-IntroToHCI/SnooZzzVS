@@ -15,17 +15,27 @@ exports.checkLoginCredentials = function(req, res) {
             if(user_i.password === password) {
                 console.log("YAY!");
                 res.status(200).end();
-                return 0;
             }
         }
     }
 
     res.status(400).end();
-    return 1;
 };
 
-exports.addUser = function(req, res) {};
+exports.addUser = function(req, res) {
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var email = req.body.email;
+    var password = req.body.password;
 
-exports.getAll = function(req, res) {
-    res.json(alarmData["alarmData"]);
+    var newUser = {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": password
+    };
+
+    users["users"].push(newUser);
+    console.log(users);
+    res.status(200).end();
 };
