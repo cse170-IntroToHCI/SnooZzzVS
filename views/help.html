@@ -38,185 +38,225 @@
         </div>
     </nav>
 
+    <!-- actual page -->
     <div class="page-header" align="center">
-      <h1>FAQ</h1>
+      <h1 style="color:black">FAQ</h1>
     </div>
 
     <div>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
+        <!-- section 1: Sleep and wake -->
         <div class="panel panel-default">
             <div class="myPanel text-center" role="tab" id="headingOne" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                <span style="font-size: 18px;">Logging in Sleep and Wake Data</span>
+                <span style="font-size: 18px;">Logging sleep and wake data</span>
             </div>
             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <ul class="list-group">
-                    <li class="list-group-item">
 
+                    <!-- question 1: -->
+                    <li class="list-group-item">
                         <div class="panel-group myPanel" id="subAccordion1a" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="subHeadingOne" role="button" data-toggle="collapse" data-parent="#subAccordion1a" href="#subCollapseOne" aria-expanded="false" aria-controls="subCollapseOne">
-                                    <span style="font-size: 15px;">Q: How do I log data?</span>
+                                    <span style="font-size: 15px;">Q: What is the point of logging my data?</span>
                                 </div>
                                 <div id="subCollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingOne">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: The date and time selectors automatically default to your current day and time, so just click "Set" when you are going to sleep or waking up.</li>
+                                        <li class="list-group-item">A: We believe that the best way to capture the most accurate data is to ask a user like you about your sleep rather than relying on advanced equipments. Doing so will allow you to see your progress and compare your data with others to motivate yourself to adjust your sleep schedule to better fit your lifestyle.</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
                     </li>
-                    <li class="list-group-item">
 
-                        <div class="panel-group" id="subAccordion1b" role="tablist" aria-multiselectable="true">
+                    <!-- question 2 -->
+                    <li class="list-group-item">
+                        <div class="panel-group myPanel" id="subAccordion1b" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="subHeadingTwo" role="button" data-toggle="collapse" data-parent="#subAccordion1b" href="#subCollapseTwo" aria-expanded="false" aria-controls="subCollapseTwo">
-                                    <span style="font-size: 15px;">Q: What is the happiness selector?</span>
+                                    <span style="font-size: 15px;">Q: How many times can I log my data in a given day?</span>
                                 </div>
                                 <div id="subCollapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingTwo">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: From a scale of 1 to 7, choose your happiness level at the time of logging your data, with 1 being the lowest.</li>
+                                        <li class="list-group-item">A: You can log one set of data for sleeping and one for waking every calendar day. However, you can feel free to modify your existing data or fill in ones that you've missed from past dates.</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                    </li>
 
+                    <!-- question 3 -->
+                    <li class="list-group-item">
+                        <div class="panel-group myPanel" id="subAccordion1c" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-center" role="tab" id="subHeadingThree" role="button" data-toggle="collapse" data-parent="#subAccordion1c" href="#subCollapseThree" aria-expanded="false" aria-controls="subCollapseThree">
+                                    <span style="font-size: 15px;">Q:How do I fill in missing data or modify my data?</span>
+                                </div>
+                                <div id="subCollapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingThree">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">A: You would first pick the date you want to modify, if it is today then leave as is. Then modify the data as if you were logging it for the first time, then click set as always. Thats is.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
 
+        <!-- section 2: Progress -->
         <div class="panel panel-default">
             <div class="myPanel text-center" role="tab" id="headingTwo" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <span style="font-size: 18px;" href="./happinessHistory">Tracking Progress</span> 
+                <span style="font-size: 18px;" href="./happinessHistory">Tracking progress</span> 
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <ul class="list-group">
-                    <li class="list-group-item">
 
+                    <!-- question 1 -->
+                    <li class="list-group-item">
                         <div class="panel-group" id="subAccordion2a" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="sub2HeadingOne" role="button" data-toggle="collapse" data-parent="#subAccordion2a" href="#sub2CollapseOne" aria-expanded="false" aria-controls="sub2CollapseOne">
-                                    <span style="font-size: 15px;">Q: What does the graph show?</span>
+                                    <span style="font-size: 15px;">Q: What does the scale from 1-7 on the y-axis represent?</span>
                                 </div>
                                 <div id="sub2CollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingThree">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: The y-axis is the Happiness level and the x-axis is the date.</li>
+                                        <li class="list-group-item">A: The scale is the same as the ones when you log your data. 1 being the absolute rock bottom, and 7 being the happiest you can ever be.</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
                     </li>
+
+                    <!-- question 2 -->
                     <li class="list-group-item">
                         <div class="panel-group" id="subAccordion2b" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="sub2HeadingTwo" role="button" data-toggle="collapse" data-parent="#subAccordion2b" href="#sub2CollapseTwo" aria-expanded="false" aria-controls="sub2CollapseTwo">
-                                    <span style="font-size: 15px;">Q: How can I view the different graphs?</span>
+                                    <span style="font-size: 15px;">Q: How is the average calculated?</span>
                                 </div>
                                 <div id="sub2CollapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sub2HeadingTwo">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: Use the toggle buttons to display the data you want.</li>
+                                        <li class="list-group-item">A: The average of a day's data is simply the average of your mood from the 2 sets of data. It changes with the time scale of the x-axis, for example in the years view, the average would be the average of the days in each month, etc.</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
                     </li>
                 </ul>
             </div>
         </div>
 
+        <!-- section 3: Compare -->
         <div class="panel panel-default">
             <div class="myPanel text-center" role="tab" id="headingThree" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <span style="font-size: 18px;" href="./compare">Comparing Data</span> 
+                <span style="font-size: 18px;" href="./compare">Comparing data</span> 
             </div>
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <ul class="list-group">
-                    <li class="list-group-item">
 
+                    <!-- question 1 -->
+                    <li class="list-group-item">
                         <div class="panel-group" id="subAccordion3a" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="sub3HeadingOne" role="button" data-toggle="collapse" data-parent="#subAccordion3a" href="#sub3CollapseOne" aria-expanded="false" aria-controls="sub3CollapseOne">
-                                    <span style="font-size: 15px;">Q: How do I compare data?</span>
+                                    <span style="font-size: 15px;">Q: Whose data am i filtering through?</span>
                                 </div>
                                 <div id="sub3CollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingThree">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: Use the selectors to filter the results you want and click "Get data".</li>
+                                        <li class="list-group-item">A: Your data will be a result of filtering through a set of global data. Meaning a certain number of sets of data from the global data base that best fit your selected filters.</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
                     </li>
-                    <li class="list-group-item">
 
+                    <!-- question 2 -->
+                    <li class="list-group-item">
                         <div class="panel-group" id="subAccordion3b" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="sub3HeadingTwo" role="button" data-toggle="collapse" data-parent="#subAccordion3b" href="#sub3CollapseTwo" aria-expanded="false" aria-controls="sub3CollapseTwo">
-                                    <span style="font-size: 15px;">Q: Why can I only filter for two categories?</span>
+                                    <span style="font-size: 15px;">Q: Will everyone's identity be anonymous when his or her data is shown?</span>
                                 </div>
                                 <div id="sub3CollapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sub3HeadingTwo">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: The idea is to use two categories that match your desired choice and the third would be used for you to compare your data to.</li>
+                                        <li class="list-group-item">A: Yes. Everyone is only listed as #1, #2, #3 and so on. There will be no mention of names of use of personal information, the same applies to you.</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                    </li>
 
+                    <!-- question 3 -->
+                    <li class="list-group-item">
+                        <div class="panel-group" id="subAccordion3c" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-center" role="tab" id="sub3HeadingThree" role="button" data-toggle="collapse" data-parent="#subAccordion3c" href="#sub3CollapseThree" aria-expanded="false" aria-controls="sub3CollapseThree">
+                                    <span style="font-size: 15px;">Q: What is the point of filtering through other's data?</span>
+                                </div>
+                                <div id="sub3CollapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sub3HeadingThree">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">A: We believe peer motivation is an effective way to motivate you to be healthy and maintain good sleep habits. When you see others' data, we hope you can see a trend of other people's habits who are achieving or have achieved your goals.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- question 4 -->
+                    <li class="list-group-item">
+                        <div class="panel-group" id="subAccordion3d" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-center" role="tab" id="sub3HeadingFour" role="button" data-toggle="collapse" data-parent="#subAccordion3d" href="#sub3CollapseFour" aria-expanded="false" aria-controls="sub3CollapseFour">
+                                    <span style="font-size: 15px;">Q: What is most effective way to use the compare page?</span>
+                                </div>
+                                <div id="sub3CollapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sub3HeadingFour">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">A: The best way to utilize this function is to decide what data are you interested in seeing the most. You can either have 1 piece of data that you are interested in, or 2. But you need to use at least 1 filter to guide the search. For example, if you want to know the average sleep and wake time of people whose's happiness level is 5, then you would input 5 and leave the other 2 fields blank, the result will show a list of users whose's happiness levels are at 5 and their sleep and wake times. The same can be done with 2 given data and 1 data of interest and vice versa.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
 
+        <!-- section 4: Alarm -->
         <div class="panel panel-default">
             <div class="myPanel text-center" role="tab" id="headingFour" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                <span style="font-size: 18px;" href="./alarm">Alarm Clock</span> 
+                <span style="font-size: 18px;" href="./alarm">Alarm</span> 
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <ul class="list-group">
-                    <li class="list-group-item">
 
+                    <!-- question 1 -->
+                    <li class="list-group-item">
                         <div class="panel-group" id="subAccordion4a" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="sub4HeadingOne" role="button" data-toggle="collapse" data-parent="#subAccordion4a" href="#sub4CollapseOne" aria-expanded="false" aria-controls="sub4CollapseOne">
-                                    <span style="font-size: 15px;">Q: How do I add a new alarm clock?</span>
+                                    <span style="font-size: 15px;">Q: What is special about this alarm?</span>
                                 </div>
                                 <div id="sub4CollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sub4HeadingOne">
                                     <ul class="list-group">
-                                        <li class="list-group-item">A: Press the plus button next to "Alarm" in the page header.</li>
+                                        <li class="list-group-item">A: It's just like any other alarm unless we can figure out how the math function will work. :)</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
-                    </li>
-                    <li class="list-group-item">
-
-                        <div class="panel-group" id="subAccordion4b" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading text-center" role="tab" id="sub4HeadingTwo" role="button" data-toggle="collapse" data-parent="#subAccordion4b" href="#sub4CollapseTwo" aria-expanded="false" aria-controls="sub4CollapseTwo">
-                                    <span style="font-size: 15px;">Q: How do I delete an alarm clock?</span>
-                                </div>
-                                <div id="sub4CollapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sub4HeadingTwo">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">A: Press the trash can next to an alarm and click "Yes" when the warning pop-up appears.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
                     </li>
                 </ul>
             </div>
         </div>
-    <div><br>
+    <div>
 
+    <br>
     <div class="container" align="center">
         <a class="btn btn-default" href="./index">Home</a>
     </div>
     <br>
+
     <style>
         .myPanel {
             width: 100%;
