@@ -73,9 +73,9 @@ window.onload = function() {
         cancelButton.attr("onclick", "location='/index'");
 
         $("#cancelAlert").hide();
-        setTimeout(function() {
-            $("#setAlert").fadeOut();
-        }, 2000);
+        // setTimeout(function() {
+        //     $("#setAlert").fadeOut();
+        // }, 2000);
 
         // ----- EDITING LAYOUT ENDS HERE -----
 
