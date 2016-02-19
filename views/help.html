@@ -44,11 +44,12 @@
     </div>
 
     <div>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> -->
+    <div class="panel-group btn-group-vertical center-block" id="accordion" role="tablist" aria-multiselectable="true" style="margin-top: 10%; display: table; width: 80%;">
 
         <!-- section 1: Sleep and wake -->
-        <div class="panel panel-default">
-            <div class="myPanel text-center" role="tab" id="headingOne" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <div class="myPanel panel-default" style="border-bottom: 0" >
+            <div class="panel-default text-center" role="tab" id="headingOne" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 <span style="font-size: 18px;">Logging sleep and wake data</span>
             </div>
             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
@@ -56,7 +57,7 @@
 
                     <!-- question 1: -->
                     <li class="list-group-item">
-                        <div class="panel-group myPanel" id="subAccordion1a" role="tablist" aria-multiselectable="true">
+                        <div class="panel-group" id="subAccordion1a" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="subHeadingOne" role="button" data-toggle="collapse" data-parent="#subAccordion1a" href="#subCollapseOne" aria-expanded="false" aria-controls="subCollapseOne">
                                     <span style="font-size: 15px;">Q: What is the point of logging my data?</span>
@@ -72,7 +73,7 @@
 
                     <!-- question 2 -->
                     <li class="list-group-item">
-                        <div class="panel-group myPanel" id="subAccordion1b" role="tablist" aria-multiselectable="true">
+                        <div class="panel-group" id="subAccordion1b" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="subHeadingTwo" role="button" data-toggle="collapse" data-parent="#subAccordion1b" href="#subCollapseTwo" aria-expanded="false" aria-controls="subCollapseTwo">
                                     <span style="font-size: 15px;">Q: How many times can I log my data in a given day?</span>
@@ -88,7 +89,7 @@
 
                     <!-- question 3 -->
                     <li class="list-group-item">
-                        <div class="panel-group myPanel" id="subAccordion1c" role="tablist" aria-multiselectable="true">
+                        <div class="panel-group" id="subAccordion1c" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center" role="tab" id="subHeadingThree" role="button" data-toggle="collapse" data-parent="#subAccordion1c" href="#subCollapseThree" aria-expanded="false" aria-controls="subCollapseThree">
                                     <span style="font-size: 15px;">Q:How do I fill in missing data or modify my data?</span>
@@ -106,8 +107,8 @@
         </div>
 
         <!-- section 2: Progress -->
-        <div class="panel panel-default">
-            <div class="myPanel text-center" role="tab" id="headingTwo" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <div class="myPanel panel-default" style="border-bottom: 0">
+            <div class="panel-default text-center" role="tab" id="headingTwo" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <span style="font-size: 18px;" href="./happinessHistory">Tracking progress</span> 
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
@@ -149,8 +150,8 @@
         </div>
 
         <!-- section 3: Compare -->
-        <div class="panel panel-default">
-            <div class="myPanel text-center" role="tab" id="headingThree" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <div class="myPanel panel-default" style="border-bottom: 0">
+            <div class="panel-default text-center" role="tab" id="headingThree" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                 <span style="font-size: 18px;" href="./compare">Comparing data</span> 
             </div>
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
@@ -224,8 +225,8 @@
         </div>
 
         <!-- section 4: Alarm -->
-        <div class="panel panel-default">
-            <div class="myPanel text-center" role="tab" id="headingFour" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        <div class="myPanel panel-default" style="border-bottom: 0">
+            <div class="panel-default text-center" role="tab" id="headingFour" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                 <span style="font-size: 18px;" href="./alarm">Alarm</span> 
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
@@ -251,7 +252,7 @@
         </div>
     <div>
 
-    <br>
+    <br><br>
     <div class="container" align="center">
         <a class="btn btn-default" href="./index">Home</a>
     </div>
@@ -262,8 +263,7 @@
             width: 100%;
             padding-top: 10px;
             padding-bottom: 10px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            border-bottom: 0;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
         }
     </style>
 
