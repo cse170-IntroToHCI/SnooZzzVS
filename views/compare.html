@@ -59,7 +59,7 @@
     <table>
         <tbody>
 			<tr>
-				<td class="mytds">Average Wake Time</td>
+				<td class="mytds" style="text-align: center">Average Wake Time</td>
 				<td id="avgWakeTime" class="avgTimes">
 					<div class="btn-group-wrap">
 						<div class="btn-toolbar" role="toolbar" aria-label="...">
@@ -108,7 +108,7 @@
 				</td>
 			</tr>
             <tr>
-				<td class="mytds">Average Sleep Time</td>
+				<td class="mytds" style="text-align: center">Average Sleep Time</td>
 				<td id="avgSleepTime" class="avgTimes">
 					<div class="btn-group-wrap">
 						<div class="btn-toolbar" role="toolbar" aria-label="...">
@@ -157,7 +157,7 @@
 				</td>
             </tr>
             <tr>
-				<td class="mytds">Average Happiness</td>
+				<td class="mytds" style="text-align: center">Average Happiness</td>
 				<td id="avgHappiness">
 					<div class="btn-group-wrap">
 						<div class="btn-toolbar" role="toolbar" aria-label="...">
@@ -182,7 +182,7 @@
 	</div>
 	<br>
 	<div class="container" align="center">
-		<button id="filterBtn" class="btn btn-primary" data-toggle="button">Compare!</button>
+		<button id="compareButton" class="btn btn-primary" data-toggle="button">Compare!</button>
 	</div>
 	<br>
 
@@ -197,7 +197,8 @@
 				<!-- Filled in by javascript -->
     		</tbody>
     	</table>
-    </div><br>
+    </div>
+	<br>
 
 	<style>
 		.mytds {
@@ -215,13 +216,12 @@
 	</style>
 
 	<script>
+		var boolWakeFilter = 0;
+		var boolSleepFilter = 0;
+		var boolHappinessFilter = 0;
+
 		// for displaying the "i" icon bubble text
 		$('#infoIcon').tooltip();
-
-		// for displaying the table
-		$("#filterBtn").click(function() {
-			$("#compareTable").show("medium");
-		});
 
 		function requireFieldInputs(arg2, arg3) {
 			if($(arg2).val() === "") {
@@ -238,14 +238,24 @@
 		}
 
 		function fillFieldInputs(arg1, arg2, arg3) {
-			//arg1 -> the 'clicked' field
+			var key = $(arg1).attr("id");
 			if($(arg1).val() === "" && $(arg2).val() === "" && $(arg3).val() === "") {
 				$(arg1).css("box-shadow", "");
 				$(arg2).css("box-shadow", "");
 				$(arg3).css("box-shadow", "");
+				if(key.indexOf("wake")) {
+					boolWakeFilter = 0;
+				} else {
+					boolSleepFilter = 0;
+				}
 			} else {
 				$(arg1).css("box-shadow", "");
 				$(arg1).change(requireFieldInputs(arg2, arg3));
+				if(key.indexOf("wake")) {
+					boolWakeFilter = 1;
+				} else {
+					boolSleepFilter = 1;
+				}
 			}
 		}
 
@@ -275,12 +285,16 @@
 			fillFieldInputs(arg1, arg2, arg3);
 		});
 
+		// for monitoring the "happinessFilter"
+		$("#avgHappinessSelect").change(function() {
+			if($(this).val() === "") {
+				boolHappinessFilter = 0;
+			} else {
+				boolHappinessFilter = 1;
+			}
+		});
+
 		// script to auto generate random data for the compare table
-//		<tr>
-//		<td>00:00PM</td> // sleep
-//		<td>00:00AM</td> // wake
-//		<td>5</td>		 // average happiness
-//		</tr>
 		function generateRandomTableData() {
 			var myTbody = document.getElementById("mytbody");
 			// use append(text);
@@ -324,7 +338,26 @@
 
 		window.onload = function() {
 			generateRandomTableData();
-		}
+		};
+
+		// for displaying the compare table
+		$("#compareButton").click(function() {
+			// IDEA:
+			// if filters are empty then don't produce table
+			// else produce table based on filters.
+			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
+				// TODO - display an alert
+				// alert message : "Must fill at least 1 row of fields to Compare"
+			} else {
+				//IDEA:
+				// grab the filter fields
+				// run checks to see which fields are filled in
+				// filter the table based on those fields.
+
+				// for displaying the table
+				$("#compareTable").show("medium");
+			}
+		});
 	</script>
 
 </body>
