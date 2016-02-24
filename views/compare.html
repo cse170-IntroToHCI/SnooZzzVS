@@ -51,18 +51,20 @@
 	  <h1>Let's Compare!</h1>
 	</div>
 
-	<h4 align="center">Filter data by:</h4><br>
+	<h4 align="center"><i id="infoIcon" class='glyphicon glyphicon-info-sign' title="Use at most 2 filters.
+	The unselected filters would be the data of interest, then click 'Compare!'" style="color: #428bca;"></i> Filter data by:</h4>
+	<br>
 
 	<div class="container" align="center">
     <table>
         <tbody>
 			<tr>
-				<td class="mytds">Average Wake Time&nbsp;&nbsp;</td>
-				<td>
+				<td class="mytds">Average Wake Time</td>
+				<td id="avgWakeTime" class="avgTimes">
 					<div class="btn-group-wrap">
 						<div class="btn-toolbar" role="toolbar" aria-label="...">
-							<div class="chart-toggles btn-group">
-								<select id="ex1" class="hB enabled btn btn-default active">
+							<div id="avgWakeTimeDiv" class="chart-toggles btn-group">
+								<select id="avgWakeHourSelect" class="hB enabled btn btn-default">
 									<option>&nbsp;</option>
 									<option>1</option>
 									<option>2</option>
@@ -77,7 +79,7 @@
 									<option>11</option>
 									<option>12</option>
 								</select>
-								<select id="ex2" class="sB enabled btn btn-default active">
+								<select id="avgWakeMinuteSelect" class="sB enabled btn btn-default">
 									<option>&nbsp;</option>
 									<option>00</option><option>01</option><option>02</option><option>03</option>
 									<option>04</option><option>05</option><option>06</option><option>07</option>
@@ -95,7 +97,7 @@
 									<option>52</option><option>53</option><option>54</option><option>55</option>
 									<option>56</option><option>57</option><option>58</option><option>59</option>
 								</select>
-								<select id="ex3" class="aB enabled btn btn-default active">
+								<select id="avgWakeMeridiemSelect" class="aB enabled btn btn-default">
 									<option>&nbsp;</option>
 									<option>AM</option>
 									<option>PM</option>
@@ -107,11 +109,11 @@
 			</tr>
             <tr>
 				<td class="mytds">Average Sleep Time</td>
-				<td>
+				<td id="avgSleepTime" class="avgTimes">
 					<div class="btn-group-wrap">
 						<div class="btn-toolbar" role="toolbar" aria-label="...">
 							<div class="chart-toggles btn-group">
-								<select id="ex1" class="hB enabled btn btn-default active">
+								<select id="avgSleepHourSelect" class="hB enabled btn btn-default">
 									<option>&nbsp;</option>
 									<option>1</option>
 									<option>2</option>
@@ -126,7 +128,7 @@
 									<option>11</option>
 									<option>12</option>
 								</select>
-								<select id="ex2" class="sB enabled btn btn-default active">
+								<select id="avgSleepMinuteSelect" class="sB enabled btn btn-default">
 									<option>&nbsp;</option>
 									<option>00</option><option>01</option><option>02</option><option>03</option>
 									<option>04</option><option>05</option><option>06</option><option>07</option>
@@ -144,7 +146,7 @@
 									<option>52</option><option>53</option><option>54</option><option>55</option>
 									<option>56</option><option>57</option><option>58</option><option>59</option>
 								</select>
-								<select id="ex3" class="aB enabled btn btn-default active">
+								<select id="avgSleepMeridiemSelect" class="aB enabled btn btn-default">
 									<option>&nbsp;</option>
 									<option>AM</option>
 									<option>PM</option>
@@ -156,12 +158,12 @@
             </tr>
             <tr>
 				<td class="mytds">Average Happiness</td>
-				<td>
+				<td id="avgHappiness">
 					<div class="btn-group-wrap">
 						<div class="btn-toolbar" role="toolbar" aria-label="...">
 							<div class="chart-toggles btn-group">
-								<select id="ex1" class="hB enabled btn btn-default active">
-									<option>&nbsp;&nbsp;&nbsp;&nbsp;</option>
+								<select id="avgHappinessSelect" class="hB enabled btn btn-default">
+									<option>&nbsp;</option>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -175,56 +177,24 @@
 					</div>
 				</td>
             </tr>
-			<tr>
-				<td class="mytds">Average Hours of Sleep&nbsp;&nbsp;</td>
-				<td>
-					<div class="btn-group-wrap">
-						<div class="btn-toolbar" role="toolbar" aria-label="...">
-							<div class="chart-toggles btn-group">
-								<select id="ex1" class="hB enabled btn btn-default active">
-									<option>&nbsp;</option>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-									<option>11</option>
-									<option>12</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</td>
-			</tr>
         </tbody>
     </table>
 	</div>
 	<br>
 	<div class="container" align="center">
-		<button id="filterBtn" class="btn btn-primary" onclick="showResults()" data-toggle="button">Compare!</button>
+		<button id="filterBtn" class="btn btn-primary" data-toggle="button">Compare!</button>
 	</div>
 	<br>
 
     <div class="container" id="dataResults">
-    	<table class="table">
+    	<table id="compareTable" class="table">
     		<thead>
-    			<th>#</th>
-    			<th>Sleep</th>
-    			<th>Wake</th>
-    			<th>Happiness</th>
+    			<th class="myths">Sleep</th>
+    			<th class="myths">Wake</th>
+    			<th class="myths">Happiness</th>
     		</thead>
-    		<tbody>
-    			<tr>
-    				<td>1</td>
-    				<td>00:00AM</td>
-    				<td>00:00AM</td>
-    				<td>0</td>
-    			</tr>
+    		<tbody id="mytbody">
+				<!-- Filled in by javascript -->
     		</tbody>
     	</table>
     </div><br>
@@ -233,10 +203,128 @@
 		.mytds {
 			width: 30%;
 		}
+
+		.myths {
+			text-align: center;
+			background-color: lightgrey;
+		}
+
+		#mytbody {
+			text-align: center;
+		}
 	</style>
 
 	<script>
-		var a = $("#ex1").val(); // equal to the empty string -> ""
+		// for displaying the "i" icon bubble text
+		$('#infoIcon').tooltip();
+
+		// for displaying the table
+		$("#filterBtn").click(function() {
+			$("#compareTable").show("medium");
+		});
+
+		function requireFieldInputs(arg2, arg3) {
+			if($(arg2).val() === "") {
+				$(arg2).css("box-shadow", "1px 1px 5px red");
+			} else {
+				$(arg2).css("box-shadow", "");
+			}
+
+			if($(arg3).val() === "") {
+				$(arg3).css("box-shadow", "1px 1px 5px red");
+			} else {
+				$(arg3).css("box-shadow", "");
+			}
+		}
+
+		function fillFieldInputs(arg1, arg2, arg3) {
+			//arg1 -> the 'clicked' field
+			if($(arg1).val() === "" && $(arg2).val() === "" && $(arg3).val() === "") {
+				$(arg1).css("box-shadow", "");
+				$(arg2).css("box-shadow", "");
+				$(arg3).css("box-shadow", "");
+			} else {
+				$(arg1).css("box-shadow", "");
+				$(arg1).change(requireFieldInputs(arg2, arg3));
+			}
+		}
+
+		// THE IDEA:
+		// get closest 'select' id to click event
+		// pass the other two 'select' id's as arg2 and arg3
+		$(".avgTimes").click(function(e) {
+			var parent = $(e.target).closest("select").parent();
+			var parentArray = parent.children(); //length 3
+
+			var arg1 = $(e.target).closest("select");//.attr("id");
+			var arg2;
+			var arg3;
+			for(var i = 0; i < parentArray.length; ++i) {
+				if(arg1.attr("id") === parentArray[i].id) {
+//					alert("finally");
+				} else {
+					if(arg2 === undefined) {
+						arg2 = parentArray[i];
+					} else {
+						arg3 = parentArray[i];
+					}
+				}
+			}
+			// verify that the arguments are set correctly
+			console.log(arg1.attr("id") +"\n" + arg2.id+"\n" + arg3.id);
+			fillFieldInputs(arg1, arg2, arg3);
+		});
+
+		// script to auto generate random data for the compare table
+//		<tr>
+//		<td>00:00PM</td> // sleep
+//		<td>00:00AM</td> // wake
+//		<td>5</td>		 // average happiness
+//		</tr>
+		function generateRandomTableData() {
+			var myTbody = document.getElementById("mytbody");
+			// use append(text);
+			for(var i = 0; i < 20; ++i) {
+				// AVERAGE SLEEP
+				// # from 1 through 12
+				var sleepHour = Math.floor((Math.random() * 12) + 1);
+				// # from 0 through 59
+				var sleepMinute = Math.floor(Math.random() * 59);
+				if(sleepMinute.toString().length === 1) {
+					sleepMinute = "0" + sleepMinute;
+				}
+				var sleepMeridiem = " PM";
+				var sleepTime = sleepHour+":"+sleepMinute+sleepMeridiem;
+
+				// AVERAGE WAKE
+				// # from 1 through 12
+				var wakeHour = Math.floor((Math.random() * 12) + 1);
+				// # from 0 through 59
+				var wakeMinute = Math.floor(Math.random() * 59);
+				if(wakeMinute.toString().length === 1) {
+					wakeMinute = "0" + wakeMinute;
+				}
+				var wakeMeridiem = " AM";
+				var wakeTime = wakeHour+":"+wakeMinute+wakeMeridiem;
+
+				// AVERAGE HAPPINESS
+				// # from 1 through 7
+				var happiness = Math.floor(Math.random() * 7) + 1;
+
+				// HTML TO APPEND
+				var newHtml =
+						"<tr>" +
+							"<td>"+sleepTime+"</td>" +
+							"<td>"+wakeTime+"</td>" +
+							"<td>"+happiness+"</td>" +
+						"</tr>";
+				$("#mytbody").append(newHtml);
+			}
+		}
+
+		window.onload = function() {
+			generateRandomTableData();
+		}
 	</script>
 
 </body>
