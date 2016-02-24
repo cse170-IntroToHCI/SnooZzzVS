@@ -296,9 +296,7 @@
 
 		// script to auto generate random data for the compare table
 		function generateRandomTableData() {
-			var myTbody = document.getElementById("mytbody");
-			// use append(text);
-			for(var i = 0; i < 20; ++i) {
+			for(var i = 0; i < 10; ++i) {
 				// AVERAGE SLEEP
 				// # from 1 through 12
 				var sleepHour = Math.floor((Math.random() * 12) + 1);
@@ -336,9 +334,10 @@
 			}
 		}
 
-		window.onload = function() {
-			generateRandomTableData();
-		};
+		// possibly delete this. instead auto generate random data under the "#compareButton".click
+//		window.onload = function() {
+//			generateRandomTableData();
+//		};
 
 		// for displaying the compare table
 		$("#compareButton").click(function() {
@@ -354,6 +353,45 @@
 				// run checks to see which fields are filled in
 				// filter the table based on those fields.
 
+				if(boolHappinessFilter) {
+					// TEMPORARY SOLUTION. DO NOT KEEP THIS FOR-LOOP
+					for(var i = 0; i < 10; ++i) {
+						// AVERAGE SLEEP
+						// # from 1 through 12
+						var sleepHour = Math.floor((Math.random() * 12) + 1);
+						// # from 0 through 59
+						var sleepMinute = Math.floor(Math.random() * 59);
+						if(sleepMinute.toString().length === 1) {
+							sleepMinute = "0" + sleepMinute;
+						}
+						var sleepMeridiem = " PM";
+						var sleepTime = sleepHour+":"+sleepMinute+sleepMeridiem;
+
+						// AVERAGE WAKE
+						// # from 1 through 12
+						var wakeHour = Math.floor((Math.random() * 12) + 1);
+						// # from 0 through 59
+						var wakeMinute = Math.floor(Math.random() * 59);
+						if(wakeMinute.toString().length === 1) {
+							wakeMinute = "0" + wakeMinute;
+						}
+						var wakeMeridiem = " AM";
+						var wakeTime = wakeHour+":"+wakeMinute+wakeMeridiem;
+
+						// AVERAGE HAPPINESS
+						// # from 1 through 7
+						var happiness = $("#avgHappinessSelect").val();
+
+						// HTML TO APPEND
+						var newHtml =
+								"<tr>" +
+								"<td>"+sleepTime+"</td>" +
+								"<td>"+wakeTime+"</td>" +
+								"<td>"+happiness+"</td>" +
+								"</tr>";
+						$("#mytbody").append(newHtml);
+					}
+				}
 				// for displaying the table
 				$("#compareTable").show("medium");
 			}
