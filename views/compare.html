@@ -182,7 +182,9 @@
 	</div>
 	<br>
 	<div class="container" align="center">
-		<button id="compareButton" class="btn btn-primary" data-toggle="button">Compare!</button>
+		<button id="compareButton" class="btn btn-primary" data-toggle="button" data-toggle="tooltip"
+				title="Must fill at least 1 row of fields to Compare">Compare!</i>
+		</button>
 	</div>
 	<br>
 
@@ -224,17 +226,43 @@
 		$('#infoIcon').tooltip();
 
 		function requireFieldInputs(arg2, arg3) {
+			var boolarg2 = 0;
+			var boolarg3 = 0;
+
 			if($(arg2).val() === "") {
 				$(arg2).css("box-shadow", "1px 1px 5px red");
+				boolarg2 = 0;
 			} else {
 				$(arg2).css("box-shadow", "");
+				boolarg2 = 1;
 			}
 
 			if($(arg3).val() === "") {
 				$(arg3).css("box-shadow", "1px 1px 5px red");
+				boolarg3 = 0;
 			} else {
 				$(arg3).css("box-shadow", "");
+				boolarg3 = 1;
 			}
+
+			if(boolarg2 && boolarg3) {
+				if($(arg2).attr("id").indexOf("Wake") > 0) {
+//					console.log("Wake up mutha fucka!");
+//					console.log($(arg2).attr("id"));
+					boolWakeFilter = 1;
+				} else {
+//					console.log("Go to sleep bitch!");
+					boolSleepFilter = 1;
+				}
+			} else {
+				if($(arg2).attr("id").indexOf("Wake") > 0) {
+					boolWakeFilter = 0;
+				} else {
+					boolSleepFilter = 0;
+				}
+			}
+
+//			console.log(boolarg2 && boolarg3 + "\nBOOLWAKE = " + boolWakeFilter);
 		}
 
 		function fillFieldInputs(arg1, arg2, arg3) {
@@ -243,7 +271,7 @@
 				$(arg1).css("box-shadow", "");
 				$(arg2).css("box-shadow", "");
 				$(arg3).css("box-shadow", "");
-				if(key.indexOf("wake")) {
+				if(key.indexOf("Wake") > 0) {
 					boolWakeFilter = 0;
 				} else {
 					boolSleepFilter = 0;
@@ -251,11 +279,6 @@
 			} else {
 				$(arg1).css("box-shadow", "");
 				$(arg1).change(requireFieldInputs(arg2, arg3));
-				if(key.indexOf("wake")) {
-					boolWakeFilter = 1;
-				} else {
-					boolSleepFilter = 1;
-				}
 			}
 		}
 
@@ -296,32 +319,54 @@
 
 		// script to auto generate random data for the compare table
 		function generateRandomTableData() {
+			// Clear the compare table
+			$("#mytbody").html("");
+
+			// Populate the compare table
 			for(var i = 0; i < 10; ++i) {
 				// AVERAGE SLEEP
-				// # from 1 through 12
-				var sleepHour = Math.floor((Math.random() * 12) + 1);
-				// # from 0 through 59
-				var sleepMinute = Math.floor(Math.random() * 59);
-				if(sleepMinute.toString().length === 1) {
-					sleepMinute = "0" + sleepMinute;
+				var sleepHour, sleepMinute, sleepMeridiem;
+				if(boolSleepFilter) {
+					sleepHour = $("#avgSleepHourSelect").val();
+					sleepMinute = $("#avgSleepMinuteSelect").val();
+					sleepMeridiem = $("#avgSleepMeridiemSelect").val();
+				} else {
+					// # from 1 through 12
+					sleepHour = Math.floor((Math.random() * 12) + 1);
+					// # from 0 through 59
+					sleepMinute = Math.floor(Math.random() * 59);
+					sleepMinute = (sleepMinute.toString().length === 1) ? "0"+sleepMinute : sleepMinute;
+					sleepMeridiem = " PM";
 				}
-				var sleepMeridiem = " PM";
 				var sleepTime = sleepHour+":"+sleepMinute+sleepMeridiem;
 
+
 				// AVERAGE WAKE
-				// # from 1 through 12
-				var wakeHour = Math.floor((Math.random() * 12) + 1);
-				// # from 0 through 59
-				var wakeMinute = Math.floor(Math.random() * 59);
-				if(wakeMinute.toString().length === 1) {
-					wakeMinute = "0" + wakeMinute;
+				var wakeHour, wakeMinute, wakeMeridiem;
+				console.log("-> "+boolWakeFilter);
+				if(boolWakeFilter) {
+					wakeHour = $("#avgWakeHourSelect").val();
+					wakeMinute = $("#avgWakeMinuteSelect").val();
+					wakeMeridiem = $("#avgWakeMeridiemSelect").val();
+				} else {
+					// # from 1 through 12
+					wakeHour = Math.floor((Math.random() * 12) + 1);
+					// # from 0 through 59
+					wakeMinute = Math.floor(Math.random() * 59);
+					wakeMinute = (wakeMinute.toString().length === 1) ? "0"+wakeMinute : wakeMinute;
+					wakeMeridiem = " AM";
 				}
-				var wakeMeridiem = " AM";
 				var wakeTime = wakeHour+":"+wakeMinute+wakeMeridiem;
 
+
 				// AVERAGE HAPPINESS
-				// # from 1 through 7
-				var happiness = Math.floor(Math.random() * 7) + 1;
+				var happiness;
+				if(boolHappinessFilter) {
+					// # from 1 through 7
+					 happiness = $("#avgHappinessSelect").val();
+				} else {
+					happiness = Math.floor(Math.random() * 7) + 1;
+				}
 
 				// HTML TO APPEND
 				var newHtml =
@@ -334,64 +379,21 @@
 			}
 		}
 
-		// possibly delete this. instead auto generate random data under the "#compareButton".click
-//		window.onload = function() {
-//			generateRandomTableData();
-//		};
-
 		// for displaying the compare table
 		$("#compareButton").click(function() {
 			// IDEA:
 			// if filters are empty then don't produce table
 			// else produce table based on filters.
 			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
-				// TODO - display an alert
-				// alert message : "Must fill at least 1 row of fields to Compare"
+				$("#compareButton").tooltip('show');
 			} else {
 				//IDEA:
 				// grab the filter fields
 				// run checks to see which fields are filled in
 				// filter the table based on those fields.
 
-				if(boolHappinessFilter) {
-					// TEMPORARY SOLUTION. DO NOT KEEP THIS FOR-LOOP
-					for(var i = 0; i < 10; ++i) {
-						// AVERAGE SLEEP
-						// # from 1 through 12
-						var sleepHour = Math.floor((Math.random() * 12) + 1);
-						// # from 0 through 59
-						var sleepMinute = Math.floor(Math.random() * 59);
-						if(sleepMinute.toString().length === 1) {
-							sleepMinute = "0" + sleepMinute;
-						}
-						var sleepMeridiem = " PM";
-						var sleepTime = sleepHour+":"+sleepMinute+sleepMeridiem;
+				generateRandomTableData();
 
-						// AVERAGE WAKE
-						// # from 1 through 12
-						var wakeHour = Math.floor((Math.random() * 12) + 1);
-						// # from 0 through 59
-						var wakeMinute = Math.floor(Math.random() * 59);
-						if(wakeMinute.toString().length === 1) {
-							wakeMinute = "0" + wakeMinute;
-						}
-						var wakeMeridiem = " AM";
-						var wakeTime = wakeHour+":"+wakeMinute+wakeMeridiem;
-
-						// AVERAGE HAPPINESS
-						// # from 1 through 7
-						var happiness = $("#avgHappinessSelect").val();
-
-						// HTML TO APPEND
-						var newHtml =
-								"<tr>" +
-								"<td>"+sleepTime+"</td>" +
-								"<td>"+wakeTime+"</td>" +
-								"<td>"+happiness+"</td>" +
-								"</tr>";
-						$("#mytbody").append(newHtml);
-					}
-				}
 				// for displaying the table
 				$("#compareTable").show("medium");
 			}
