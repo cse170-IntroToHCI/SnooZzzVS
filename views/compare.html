@@ -416,6 +416,7 @@
 //					"boolHappinessFilter = " + boolHappinessFilter + "\n");
 			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
 				$(this).attr("data-original-title", "Make sure that at least 1 row of filters are filled out in order to Compare.");
+//				$(this).attr('data-delay', '{"show":"2000", "hide":"3000"}');
 				$(this).tooltip('show');
 			} else if(boolSleepFilter && boolWakeFilter && boolHappinessFilter) {
 				$(this).attr("data-original-title", "Make sure that at most 2 rows of filters are applied.");
