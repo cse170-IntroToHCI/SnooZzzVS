@@ -59,6 +59,55 @@
     <table>
         <tbody>
 			<tr>
+				<td class="mytds" style="text-align: center">Average Sleep Time</td>
+				<td id="avgSleepTime" class="avgTimes">
+					<div class="btn-group-wrap">
+						<div class="btn-toolbar" role="toolbar" aria-label="...">
+							<div class="chart-toggles btn-group">
+								<select id="avgSleepHourSelect" class="hB enabled btn btn-default">
+									<option>&nbsp;</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+								</select>
+								<select id="avgSleepMinuteSelect" class="sB enabled btn btn-default">
+									<option>&nbsp;</option>
+									<option>00</option><option>01</option><option>02</option><option>03</option>
+									<option>04</option><option>05</option><option>06</option><option>07</option>
+									<option>08</option><option>09</option><option>10</option><option>11</option>
+									<option>12</option><option>13</option><option>14</option><option>15</option>
+									<option>16</option><option>17</option><option>18</option><option>19</option>
+									<option>20</option><option>21</option><option>22</option><option>23</option>
+									<option>24</option><option>25</option><option>26</option><option>27</option>
+									<option>28</option><option>29</option><option>30</option><option>31</option>
+									<option>32</option><option>33</option><option>34</option><option>35</option>
+									<option>36</option><option>37</option><option>38</option><option>39</option>
+									<option>40</option><option>41</option><option>42</option><option>43</option>
+									<option>44</option><option>45</option><option>46</option><option>47</option>
+									<option>48</option><option>49</option><option>50</option><option>51</option>
+									<option>52</option><option>53</option><option>54</option><option>55</option>
+									<option>56</option><option>57</option><option>58</option><option>59</option>
+								</select>
+								<select id="avgSleepMeridiemSelect" class="aB enabled btn btn-default">
+									<option>&nbsp;</option>
+									<option>AM</option>
+									<option>PM</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
 				<td class="mytds" style="text-align: center">Average Wake Time</td>
 				<td id="avgWakeTime" class="avgTimes">
 					<div class="btn-group-wrap">
@@ -107,55 +156,6 @@
 					</div>
 				</td>
 			</tr>
-            <tr>
-				<td class="mytds" style="text-align: center">Average Sleep Time</td>
-				<td id="avgSleepTime" class="avgTimes">
-					<div class="btn-group-wrap">
-						<div class="btn-toolbar" role="toolbar" aria-label="...">
-							<div class="chart-toggles btn-group">
-								<select id="avgSleepHourSelect" class="hB enabled btn btn-default">
-									<option>&nbsp;</option>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-									<option>11</option>
-									<option>12</option>
-								</select>
-								<select id="avgSleepMinuteSelect" class="sB enabled btn btn-default">
-									<option>&nbsp;</option>
-									<option>00</option><option>01</option><option>02</option><option>03</option>
-									<option>04</option><option>05</option><option>06</option><option>07</option>
-									<option>08</option><option>09</option><option>10</option><option>11</option>
-									<option>12</option><option>13</option><option>14</option><option>15</option>
-									<option>16</option><option>17</option><option>18</option><option>19</option>
-									<option>20</option><option>21</option><option>22</option><option>23</option>
-									<option>24</option><option>25</option><option>26</option><option>27</option>
-									<option>28</option><option>29</option><option>30</option><option>31</option>
-									<option>32</option><option>33</option><option>34</option><option>35</option>
-									<option>36</option><option>37</option><option>38</option><option>39</option>
-									<option>40</option><option>41</option><option>42</option><option>43</option>
-									<option>44</option><option>45</option><option>46</option><option>47</option>
-									<option>48</option><option>49</option><option>50</option><option>51</option>
-									<option>52</option><option>53</option><option>54</option><option>55</option>
-									<option>56</option><option>57</option><option>58</option><option>59</option>
-								</select>
-								<select id="avgSleepMeridiemSelect" class="aB enabled btn btn-default">
-									<option>&nbsp;</option>
-									<option>AM</option>
-									<option>PM</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</td>
-            </tr>
             <tr>
 				<td class="mytds" style="text-align: center">Average Happiness</td>
 				<td id="avgHappiness">
@@ -247,11 +247,8 @@
 
 			if(boolarg2 && boolarg3) {
 				if($(arg2).attr("id").indexOf("Wake") > 0) {
-//					console.log("Wake up mutha fucka!");
-//					console.log($(arg2).attr("id"));
 					boolWakeFilter = 1;
 				} else {
-//					console.log("Go to sleep bitch!");
 					boolSleepFilter = 1;
 				}
 			} else {
@@ -261,8 +258,6 @@
 					boolSleepFilter = 0;
 				}
 			}
-
-//			console.log(boolarg2 && boolarg3 + "\nBOOLWAKE = " + boolWakeFilter);
 		}
 
 		function fillFieldInputs(arg1, arg2, arg3) {
@@ -304,7 +299,7 @@
 				}
 			}
 			// verify that the arguments are set correctly
-			console.log(arg1.attr("id") +"\n" + arg2.id+"\n" + arg3.id);
+			// console.log(arg1.attr("id") +"\n" + arg2.id+"\n" + arg3.id);
 			fillFieldInputs(arg1, arg2, arg3);
 		});
 
@@ -324,6 +319,7 @@
 
 			// Populate the compare table
 			for(var i = 0; i < 10; ++i) {
+
 				// AVERAGE SLEEP
 				var sleepHour, sleepMinute, sleepMeridiem;
 				if(boolSleepFilter) {
@@ -331,32 +327,53 @@
 					sleepMinute = $("#avgSleepMinuteSelect").val();
 					sleepMeridiem = $("#avgSleepMeridiemSelect").val();
 				} else {
-					// # from 1 through 12
-					sleepHour = Math.floor((Math.random() * 12) + 1);
+					if(boolWakeFilter) {
+						// # based on Average Wake Time
+						var timeAwoken = Math.floor(Math.random() * (8 - 2 + 1)) + 2;
+						var wakeHour = $("#avgWakeHourSelect").val();
+						sleepHour = (parseInt(wakeHour) + parseInt(timeAwoken))%12;
+						sleepHour = (sleepHour === 0) ? 12 : sleepHour;
+						var hoursOfSleep = (12 - parseInt(sleepHour)) + parseInt(wakeHour);
+						if(hoursOfSleep > 12) {
+							sleepMeridiem = "AM";
+						} else {
+							sleepMeridiem = "PM";
+						}
+					} else {
+						// # from 1 through 12
+						sleepHour = Math.floor((Math.random() * 12) + 1);
+					}
 					// # from 0 through 59
 					sleepMinute = Math.floor(Math.random() * 59);
 					sleepMinute = (sleepMinute.toString().length === 1) ? "0"+sleepMinute : sleepMinute;
-					sleepMeridiem = " PM";
 				}
-				var sleepTime = sleepHour+":"+sleepMinute+sleepMeridiem;
+				var sleepTime = sleepHour+":"+sleepMinute+" "+sleepMeridiem;
 
 
 				// AVERAGE WAKE
 				var wakeHour, wakeMinute, wakeMeridiem;
-				console.log("-> "+boolWakeFilter);
 				if(boolWakeFilter) {
 					wakeHour = $("#avgWakeHourSelect").val();
 					wakeMinute = $("#avgWakeMinuteSelect").val();
 					wakeMeridiem = $("#avgWakeMeridiemSelect").val();
 				} else {
 					// # from 1 through 12
-					wakeHour = Math.floor((Math.random() * 12) + 1);
+					var timeSlept = Math.floor(Math.random() * (10 - 4 + 1)) + 4;
+					wakeHour = (parseInt(sleepHour) + parseInt(timeSlept))%12;
+					wakeHour = (wakeHour === 0) ? 12 : wakeHour;
+
 					// # from 0 through 59
 					wakeMinute = Math.floor(Math.random() * 59);
 					wakeMinute = (wakeMinute.toString().length === 1) ? "0"+wakeMinute : wakeMinute;
-					wakeMeridiem = " AM";
+
+					var hoursOfSleep = (12 - parseInt(sleepHour)) + parseInt(wakeHour);
+					if(hoursOfSleep > 12 && wakeHour !== 12) {
+						wakeMeridiem = "PM";
+					} else {
+						wakeMeridiem = "AM";
+					}
 				}
-				var wakeTime = wakeHour+":"+wakeMinute+wakeMeridiem;
+				var wakeTime = wakeHour+":"+wakeMinute+" "+wakeMeridiem;
 
 
 				// AVERAGE HAPPINESS
@@ -365,17 +382,25 @@
 					// # from 1 through 7
 					 happiness = $("#avgHappinessSelect").val();
 				} else {
-					happiness = Math.floor(Math.random() * 7) + 1;
+					var hoursOfSleep = parseInt((12 - parseInt(sleepHour)) + parseInt(wakeHour)) % 12;
+					if(hoursOfSleep > 8) {
+						happiness = Math.floor(Math.random() * (6 - 4 + 1)) + 4;
+					} else if(hoursOfSleep > 5) {
+						happiness = Math.floor(Math.random() * (7 - 5 + 1)) + 5;
+					} else {
+						happiness = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+					}
+//					happiness = Math.floor(Math.random() * 7) + 1;
 				}
 
 				// HTML TO APPEND
-				var newHtml =
+				var tableDataStructure =
 						"<tr>" +
 							"<td>"+sleepTime+"</td>" +
 							"<td>"+wakeTime+"</td>" +
 							"<td>"+happiness+"</td>" +
 						"</tr>";
-				$("#mytbody").append(newHtml);
+				$("#mytbody").append(tableDataStructure);
 			}
 		}
 
