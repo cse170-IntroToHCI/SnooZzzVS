@@ -58,7 +58,7 @@ window.onload = function() {
 		var newTimeHTML = "<h3><span class='label label-info'>"+hourValue+":"+minuteValue+" "+meridiemValue+"</span></h3>";
 
 		$("#calendarContainer").html(newCalendarHTML);
-		$("#wakingUpAtH4").html("You woke up at:");
+		$("#wakingUpAtH4").html("You went to sleep at:");
 		$("#clockContainer").html(newTimeHTML);
 		$("#iAmFeelingH4").html("");
 		$("#sliderContainer").html("");
