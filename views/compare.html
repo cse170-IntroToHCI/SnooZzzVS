@@ -182,8 +182,7 @@
 	</div>
 	<br>
 	<div class="container" align="center">
-		<button id="compareButton" class="btn btn-primary" data-toggle="button" data-toggle="tooltip"
-				title="Must fill at least 1 row of fields to Compare">Compare!</i>
+		<button id="compareButton" class="btn btn-primary" data-toggle="button" data-toggle="tooltip">Compare!
 		</button>
 	</div>
 	<br>
@@ -230,18 +229,18 @@
 			var boolarg3 = 0;
 
 			if($(arg2).val() === "") {
-				$(arg2).css("box-shadow", "1px 1px 5px red");
+//				$(arg2).css("box-shadow", "1px 1px 5px red");
 				boolarg2 = 0;
 			} else {
-				$(arg2).css("box-shadow", "");
+//				$(arg2).css("box-shadow", "");
 				boolarg2 = 1;
 			}
 
 			if($(arg3).val() === "") {
-				$(arg3).css("box-shadow", "1px 1px 5px red");
+//				$(arg3).css("box-shadow", "1px 1px 5px red");
 				boolarg3 = 0;
 			} else {
-				$(arg3).css("box-shadow", "");
+//				$(arg3).css("box-shadow", "");
 				boolarg3 = 1;
 			}
 
@@ -342,6 +341,7 @@
 					} else {
 						// # from 1 through 12
 						sleepHour = Math.floor((Math.random() * 12) + 1);
+						sleepMeridiem = "PM";
 					}
 					// # from 0 through 59
 					sleepMinute = Math.floor(Math.random() * 59);
@@ -409,8 +409,17 @@
 			// IDEA:
 			// if filters are empty then don't produce table
 			// else produce table based on filters.
+
+			// to DEBUG row filters
+//			console.log("boolSleepFilter = " + boolSleepFilter + "\n" +
+//					"boolWakeFilter = " + boolWakeFilter + "\n" +
+//					"boolHappinessFilter = " + boolHappinessFilter + "\n");
 			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
-				$("#compareButton").tooltip('show');
+				$(this).attr("data-original-title", "Make sure that at least 1 row of filters are filled out in order to Compare.");
+				$(this).tooltip('show');
+			} else if(boolSleepFilter && boolWakeFilter && boolHappinessFilter) {
+				$(this).attr("data-original-title", "Make sure that at most 2 rows of filters are applied.");
+				$(this).tooltip('show');
 			} else {
 				//IDEA:
 				// grab the filter fields
@@ -420,6 +429,7 @@
 				generateRandomTableData();
 
 				// for displaying the table
+				$("#compareButton").tooltip('hide');
 				$("#compareTable").show("medium");
 			}
 		});
