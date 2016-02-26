@@ -2,7 +2,7 @@
 // default Form values
 var today = new Date();
 var theDay = (today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear();
-var theHour = today.getHours(); // scale = [0 - 23]. (13 = 1pm)
+var theHour = today.getHours() % 12; // scale = [0 - 23]. (13 = 1pm)
 var theMinute = today.getMinutes();
 var theMeridiem = today.getHours();
 
