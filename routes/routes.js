@@ -47,6 +47,10 @@ router.get('/compare', function(req, res) {
     res.render('compare');
 });
 
+router.get('/compare2', function(req, res) {
+    res.render('compare2');
+});
+
 router.get('/alarm', function(req, res) {
     res.render('alarm');
 });
