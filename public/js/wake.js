@@ -68,11 +68,11 @@ window.onload = function() {
         setButton.attr("type", "button");
         setButton.attr("onclick", "location='/wake'");
 
-        var cancelButton = $("#btnShow");
-        cancelButton.html("Home");
-        cancelButton.attr("onclick", "location='/index'");
+        // var cancelButton = $("#btnShow");
+        // cancelButton.html("Home");
+        // cancelButton.attr("onclick", "location='/index'");
 
-        $("#cancelAlert").hide();
+        $("#btnShow").hide();
         // setTimeout(function() {
         //     $("#setAlert").fadeOut();
         // }, 2000);
