@@ -431,6 +431,8 @@
 //			console.log("boolSleepFilter = " + boolSleepFilter + "\n" +
 //					"boolWakeFilter = " + boolWakeFilter + "\n" +
 //					"boolHappinessFilter = " + boolHappinessFilter + "\n");
+			ga("send", "event", "Compare", "Click");
+
 			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
 				$(this).attr("data-original-title", "Make sure that at least 1 row of filters are filled out in order to Compare.");
 //				var dataDelayArg = "{\"show\":300, \"hide\":1000}";
