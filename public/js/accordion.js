@@ -13,7 +13,12 @@ $(document).ready(function () {
 	});
 
 	$("#b3").click(function () {
-		window.location.href = "/compare";
+		// for google analytics
+		if(Math.random() > 0.5) {
+			window.location.href = "/compare2";
+		} else {
+			window.location.href = "/compare";
+		}
 	});
 
 	$("#b4").click(function () {
