@@ -193,6 +193,7 @@
     <div class="container" id="dataResults">
     	<table id="compareTable" class="table">
     		<thead>
+    			<th class="myths">Anonymous User</th>
     			<th class="myths">Sleep</th>
     			<th class="myths">Wake</th>
     			<th class="myths">Mood</th>
@@ -330,6 +331,10 @@
 			// Populate the compare table
 			for(var i = 0; i < 10; ++i) {
 
+				//ANONYMOUS USERS
+				var user = i+1;
+				// user = Math.random();
+
 				// AVERAGE SLEEP
 				var sleepHour, sleepMinute, sleepMeridiem;
 				if(boolSleepFilter) {
@@ -407,6 +412,7 @@
 				// HTML TO APPEND
 				var tableDataStructure =
 						"<tr>" +
+							"<td>"+"Anon User #" + user +"</td>" +
 							"<td>"+sleepTime+"</td>" +
 							"<td>"+wakeTime+"</td>" +
 							"<td>"+happiness+"</td>" +
