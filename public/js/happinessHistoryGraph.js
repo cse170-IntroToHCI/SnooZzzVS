@@ -1,6 +1,7 @@
 var ex1ToggleCount = 0;
 var ex2ToggleCount = 0;
 var ex3ToggleCount = 0;
+var ex4ToggleCount = 0;
 
 var options = {
     animation: false,
@@ -116,6 +117,17 @@ function fillData() {
     //}
 }
 
+function turnOffSample() {
+    $("#ex4").css("background-color", "");
+    $("#ex4").css("color", "");
+}
+
+function turnOffUserGraph() {
+    ex1ToggleCount++;
+    ex2ToggleCount++;
+    ex3ToggleCount++;
+}
+
 $(document).ready(function() {
     fillData();
     var ctx = document.getElementById("LineChart").getContext("2d");
@@ -196,6 +208,8 @@ $(document).ready(function() {
         toggleLine(this);
         if(ex1ToggleCount % 2 === 1) {
             $(this).css("background-color", "rgba(255, 215, 0, 0.7)");
+
+            turnOffSample();
         } else {
             $(this).css("background-color", "");
         }
@@ -207,6 +221,8 @@ $(document).ready(function() {
         toggleLine(this);
         if(ex2ToggleCount % 2 === 1) {
             $(this).css("background-color", "rgba(173, 216, 230, 0.7)");
+
+            turnOffSample();
         } else {
             $(this).css("background-color", "");
         }
@@ -218,9 +234,27 @@ $(document).ready(function() {
         toggleLine(this);
         if(ex3ToggleCount % 2 === 1) {
             $(this).css("background-color", "rgba(0, 128, 0, 0.7)");
+
+            turnOffSample();
         } else {
             $(this).css("background-color", "");
         }
         ++ex3ToggleCount;
+    };
+
+    var theSampleB = document.getElementById("ex4");
+    theSampleB.onclick = function() {
+        toggleLine(this);
+        if(ex4ToggleCount % 2 === 1) {
+            $(this).css("background-color", "");
+            $(this).css("color", "");
+        } else {
+            // clicked "sample" data
+            $(this).css("background-color", "rgba(0, 0, 0, 0.7)");
+            $(this).css("color", "white");
+
+            //turnOffUserGraph();
+        }
+        ++ex4ToggleCount;
     };
 });

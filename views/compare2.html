@@ -421,7 +421,6 @@
 					} else {
 						happiness = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
 					}
-//					happiness = Math.floor(Math.random() * 7) + 1;
 				}
 
 				// HTML TO APPEND
@@ -438,29 +437,22 @@
 
 		// for displaying the compare table
 		$("#compareButton").click(function() {
-			// IDEA:
-			// if filters are empty then don't produce table
-			// else produce table based on filters.
-
 			// to DEBUG row filters
-//			console.log("boolSleepFilter = " + boolSleepFilter + "\n" +
-//					"boolWakeFilter = " + boolWakeFilter + "\n" +
-//					"boolHappinessFilter = " + boolHappinessFilter + "\n");
-			ga("send", "event", "Compare", "Click");
+			//console.log("boolSleepFilter = " + boolSleepFilter + "\n" +
+			//		"boolWakeFilter = " + boolWakeFilter + "\n" +
+			//		"boolHappinessFilter = " + boolHappinessFilter + "\n");
+			ga("send", "event", "compare", "click", "compare clicked");
 
 			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
+				ga("send", "event", "compare-failure", "click", "failure");
 				$(this).attr("data-original-title", "Make sure that at least 1 row of filters are filled out in order to Compare.");
-//				var dataDelayArg = "{\"show\":300, \"hide\":1000}";
-//				$(this).attr("data-delay", dataDelayArg);
 				$(this).tooltip('show');
 			} else if(boolSleepFilter && boolWakeFilter && boolHappinessFilter) {
+				ga("send", "event", "compare-failure", "click", "failure");
 				$(this).attr("data-original-title", "Make sure that at most 2 rows of filters are applied.");
 				$(this).tooltip('show');
 			} else {
-				//IDEA:
-				// grab the filter fields
-				// run checks to see which fields are filled in
-				// filter the table based on those fields.
+				ga("send", "event", "compare-success", "click", "success");
 
 				generateRandomTableData();
 

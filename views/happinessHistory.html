@@ -44,7 +44,13 @@
     <!-- Chart.js -->
     <div style="text-align: center;">
         <div id="yAxisTitle" style="display: inline-block; height: 300px; vertical-align: top; width: 30px">
-            <span style="font-weight: bold;"><br><br><br>M<br><br>o<br><br>o<br><br>d<br><br></span>
+            <span style="font-weight: bold;">
+                <br><br><br><br><br>
+                M<br>
+                o<br>
+                o<br>
+                d<br><br>
+            </span>
         </div>
         <canvas id="LineChart" height="300"></canvas>
     </div>
@@ -58,6 +64,7 @@
                 <button id="ex1" class="hB enabled btn btn-default active" data-toggle="button">Wake Up</button>
                 <button id="ex2" class="sB enabled btn btn-default active" data-toggle="button">Sleep</button>
                 <button id="ex3" class="aB enabled btn btn-default active" data-toggle="button">Average</button>
+                <button id="ex4" class="sampleB enabled btn btn-default active" data-toggle="button">Sample</button>
             </div>
         </div>
     </div>
@@ -109,20 +116,9 @@
             width: inherit;
             display: inline-block;
         }
-        .smileys {
-            height: 17px;
-        }
 
-        .ex1Highlight {
-            background-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .ex2Highlight {
-            background-color: rgba(173,216,230, 0.4);
-        }
-
-        .ex3Highlight {
-            background-color: rgba(0, 128, 0, 0.4);
+        #ex1, #ex2, #ex3, #ex4 {
+            font-weight: bold;
         }
     </style>
     
