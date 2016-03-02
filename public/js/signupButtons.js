@@ -71,7 +71,7 @@ submitButton.onclick = function() {
         // if all checks pass then redirect
         $.ajax({
             type: 'POST',
-            url: 'signup',
+            url: '/user',
             data: {
                 "firstName": firstName,
                 "lastName": lastName,

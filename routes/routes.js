@@ -5,7 +5,8 @@ var router = express.Router();
 var wakeData = require('./wake');
 var sleepData = require('./sleep');
 var alarmData = require('./alarm');
-var user = require('./login');
+var users = require('./login');
+var user = require('./user/user');
 
 router.get('/', function(req, res) {
     res.render('login');
@@ -89,7 +90,10 @@ router.get('/getAllSleepData', sleepData.getAll);
 router.post('/postAlarmData', alarmData.addAlarmData);
 router.get('/getAllAlarmData', alarmData.getAll);
 
-router.post('/login', user.checkLoginCredentials);
-router.post('/signup', user.addUser);
+router.post('/login', users.checkLoginCredentials);
+router.post('/signup', users.addUser);
+
+// FOR MONGODB
+router.post('/user', user.POST);
 
 module.exports = router;
