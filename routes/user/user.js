@@ -1,9 +1,8 @@
-// Make DB calls here
-// Make CRUD calls here
-var db = require('../../db');
 
+var db = require('../../db');
 module.exports.user = {};
 
+// for grabbing data on "Account" page
 module.exports.GET = function(req, res) {
     // TODO
 };
@@ -18,14 +17,48 @@ module.exports.POST = function(req, res) {
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
-        "password": password
+        "password": password,
+        "sleepObjectId": "1",
+        "wakeObjectId": "2",
+        "session": req.session
     };
 
-    console.log(newUser);
+    console.log(req.session);
+    console.log("\n");
+    console.log(req.session.id);
     // db call to add new user
-    //db.db.collection('users').insertOne(newUser);
-    var collection = db.get().collection('users');
-    collection.insertOne(newUser);
+    var usersCollection = db.get().collection('users');
+    usersCollection.insertOne(newUser);
 
     res.status(200).end();
+};
+
+module.exports.DELETE = function(req, res) {
+    req.logout;
+    return res.status(200);
+};
+
+
+
+// USER LOGIN
+module.exports.loginPOST = function(req, res) {
+    var email = req.body.email;
+    var password = req.body.password;
+    var usersCollection = db.get().collection('users');
+
+    return usersCollection.find().toArray(function(err, users) {
+        if(err) {
+            console.log("error: " + err);
+            return res.status(400).end();
+        } else {
+            for(var user_i = 0; user_i < users.length; ++user_i) {
+                if(users[user_i].email === email) {
+                    if(users[user_i].password === password) {
+                        return res.status(200).end();
+                    }
+                }
+            }
+            return res.status(400).end();
+        }
+    });
 };

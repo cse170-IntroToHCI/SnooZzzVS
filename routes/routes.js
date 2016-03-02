@@ -95,5 +95,8 @@ router.post('/signup', users.addUser);
 
 // FOR MONGODB
 router.post('/user', user.POST);
+router.delete('/user', user.DELETE);
+
+router.post('/user/login', user.loginPOST);
 
 module.exports = router;

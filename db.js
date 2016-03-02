@@ -29,14 +29,6 @@ module.exports.get = function() {
     return state.db;
 };
 
-/*
-module.exports.close = function() {
-    if(state.db) {
-        state.db.close(function(err, result) {
-            state.db = null;
-            state.mode = null;
-            done(err);
-        })
-    }
+module.exports.getURI = function() {
+    return mongoURI;
 };
-*/

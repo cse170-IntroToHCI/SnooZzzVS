@@ -1,29 +1,27 @@
 var express = require('express');
-var MongoStore = require('connect-mongo')(express);
+//var redis = require('redis');
+//var cookieParser = require('cookie-parser');
+var session = require('express-session');
+//var RedisStore = require('connect-redis')(session);
+//var mongoStore = require('connect-mongodb');
+//var MongoStore = require('connect-mongostore')(session);
+var MongoStore = require('connect-mongo/es5')(session);
+//var mongoose = require('mongoose');
 var path = require('path');
 var bodyParser = require('body-parser');
 // setup connection to mongo database
-var db = require('./db').connect();
+var db = require('./db');
+db.connect();
 // line responsible for getting our app started
 var app = express();
-var routes = require('./routes/routes');
 
-// Taken from
-// http://stackoverflow.com/questions/16711328/how-to-create-session-using-mongodb-in-node-js
-// required to handle session cookies
-/*app.use(express.cookieParser());
-app.use(express.session({
-    secret: 'MY_SECRET',
-    cookie: {
-        maxAge : 100000
-    },
-    store : new MongoStore({
-        db: 'sessionstore'
-    })
-}));*/
 app.use(session({
-    secret: 'foo',
-    store: new MongoStore({ db: db})
+    store: new MongoStore({
+        url: db.getURI()
+    }),
+    secret: 'joke2',
+    saveUninitialized: true,
+    resave: true
 }));
 
 // setting our default views to the views directory
@@ -39,6 +37,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+var routes = require('./routes/routes');
 app.use('/', routes);
 
 module.exports = app;
