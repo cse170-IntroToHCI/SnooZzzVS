@@ -420,6 +420,9 @@
 			}
 		}
 
+		// Google Analytic Counters
+		var gaCounter = 0;
+
 		// for displaying the compare table
 		$("#compareButton").click(function() {
 			// to DEBUG row filters
@@ -428,18 +431,27 @@
 			//		"boolHappinessFilter = " + boolHappinessFilter + "\n");
 
 
-			ga("send", "event", "compare", "click", "compare clicked");
-			
+			ga("send", "event", "compareClick", "click", "compareClicked");
+
 			if(!boolSleepFilter && !boolWakeFilter && !boolHappinessFilter) {
-				ga("send", "event", "compare-failure", "click", "failure");
+				if(gaCounter === 0) {
+					++gaCounter;
+					ga("send", "event", "compareClickFailure", "click", "compareFailure");
+				}
 				$(this).attr("data-original-title", "Make sure that at least 1 row of filters are filled out in order to Compare.");
 				$(this).tooltip('show');
 			} else if(boolSleepFilter && boolWakeFilter && boolHappinessFilter) {
-				ga("send", "event", "compare-failure", "click", "failure");
+				if(gaCounter === 0) {
+					++gaCounter;
+					ga("send", "event", "compareClickFailure", "click", "compareFailure");
+				}
 				$(this).attr("data-original-title", "Make sure that at most 2 rows of filters are applied.");
 				$(this).tooltip('show');
 			} else {
-				ga("send", "event", "compare-success", "click", "success");
+				if(gaCounter === 0) {
+					++gaCounter;
+					ga("send", "event", "compareClickSuccess", "click", "compareSuccess");
+				}
 
 				generateRandomTableData();
 

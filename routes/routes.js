@@ -43,18 +43,6 @@ router.get('/wakeData', function(req, res) {
     res.render('wakeData');
 });
 
-
-// var random_num = Math.random();
-
-// router.get('/compare', function(req, res) {
-//     if (random_num > 0.5) {
-//         res.render('compare');
-//     } else {
-//         res.render('compare2');
-//     }
-    
-// });
-
 router.get('/compare', function(req, res) {
     res.render('compare');
 });
