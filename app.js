@@ -15,15 +15,6 @@ db.connect();
 // line responsible for getting our app started
 var app = express();
 
-app.use(session({
-    store: new MongoStore({
-        url: db.getURI()
-    }),
-    secret: 'joke2',
-    saveUninitialized: true,
-    resave: true
-}));
-
 // setting our default views to the views directory
 app.set('views', path.join(__dirname, 'views'));
 // set the view engine
@@ -37,6 +28,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+app.use(session({
+    store: new MongoStore({
+        url: db.getURI()
+    }),
+    secret: 'supposedToBeASecret',
+    saveUninitialized: true,
+    resave: true
+}));
+
+var user = require('./routes/user/user');
+app.post('/user', user.POST);
+app.get('/user', user.GET);
+app.put('/user', user.PUT);
+app.delete('/user', user.DELETE);
+// Login route
+app.post('/user/login', user.loginPOST);
+// Logout route
+app.post('/user/logout', user.logoutPOST);
 
 var routes = require('./routes/routes');
 app.use('/', routes);
