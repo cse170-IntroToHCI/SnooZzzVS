@@ -30,7 +30,7 @@
 					<li><a href="./index">Home</a></li>
 					<li><a href="./account">Account</a></li>
 					<li><a href="./help">Help</a></li>
-					<li><a href="./login">Logout</a></li>
+					<li><a id="logoutButton">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -74,5 +74,21 @@
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 		}
 	</style>
+
+	<script>
+		var logoutButton = document.getElementById('logoutButton');
+		logoutButton.onclick = function() {
+			console.log("logging out");
+			$.ajax({
+				type: 'GET',
+				url: '/user/logout',
+				data: {},
+				success: function() {
+					window.location = './';
+				}
+			});
+			console.log("Finished\n");
+		}
+	</script>
 </body>
 </html>
