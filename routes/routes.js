@@ -20,6 +20,14 @@ var authenticate = function(req, res, next) {
     }
 };
 
+var stillLoggedIn = function(req, res, next) {
+    if(req.session.email) {
+        return res.status(200).redirect('/index');
+    } else {
+        return next();
+    }
+};
+
 /*
  *  Routes
  */
@@ -27,11 +35,11 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
-router.get('/', function(req, res) {
+router.get('/', stillLoggedIn, function(req, res) {
     res.render('login');
 });
 
-router.get('/login', function(req, res) {
+router.get('/login', stillLoggedIn, function(req, res) {
     res.render('login');
 });
 
