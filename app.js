@@ -31,7 +31,7 @@ app.use(session({
     resave: false
 }));
 
-//app.post('/user', user.POST);
+// User Create Route
 app.post('/user', function(req, res) {
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
@@ -41,8 +41,8 @@ app.post('/user', function(req, res) {
 
     sess.firstName = firstName;
     sess.email = email;
-    sess.sleepObjectId = db.randomObjectId();
-    sess.wakeObjectId = db.randomObjectId();
+    //sess.sleepObjectId = db.randomObjectId();
+    //sess.wakeObjectId = db.randomObjectId();
 
     var newUser = {
         "firstName": firstName,
@@ -50,11 +50,10 @@ app.post('/user', function(req, res) {
         "email": email,
         "password": password,
         "sleepObjectId": sess.sleepObjectId,
-        "wakeObjectId": sess.wakeObjectId,
-        "session": sess
+        "wakeObjectId": sess.wakeObjectId
     };
 
-    console.log("req.session: ");
+    console.log("req.session:");
     console.log(req.session);
     console.log("\n");
     console.log("req.session.id: "+req.session.id);
@@ -65,13 +64,52 @@ app.post('/user', function(req, res) {
     res.status(200).json(newUser).end();
 });
 
+// User Get Route
 app.get('/user', user.GET);
+// User Update Route
 app.put('/user', user.PUT);
+// User Delete Route
 app.delete('/user', user.DELETE);
+
 // Login route
-app.post('/user/login', user.loginPOST);
+app.post('/user/login', function(req, res) {
+    var email = req.body.email;
+    var password = req.body.password;
+    var sess = req.session;
+
+    var usersCollection = db.get().collection('users');
+
+    return usersCollection.find().toArray(function(err, users) {
+        if(err) {
+            console.log("Error-Login Failure: " + err);
+            return res.status(400).end();
+        } else {
+            for(var user_i = 0; user_i < users.length; ++user_i) {
+                if(users[user_i].email === email) {
+                    if(users[user_i].password === password) {
+                        sess.email = email;
+                        console.log("Login Success");
+                        return res.status(200).end();
+                    }
+                }
+            }
+            return res.status(400).end();
+        }
+    });
+});
+
 // Logout route
-app.post('/user/logout', user.logoutPOST);
+app.get('/user/logout', function(req, res) {
+    req.session.destroy(function(err) {
+        if(err) {
+            console.log("Error-logout Failure: " + err);
+            return res.status(400).end();
+        } else {
+            console.log("Logout Success");
+            return res.status(200).end();
+        }
+    });
+});
 
 var routes = require('./routes/routes');
 app.use('/', routes);

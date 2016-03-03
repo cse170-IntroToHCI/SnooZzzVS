@@ -80,7 +80,7 @@
 		logoutButton.onclick = function() {
 			console.log("logging out");
 			$.ajax({
-				type: 'POST',
+				type: 'GET',
 				url: '/user/logout',
 				data: {},
 				success: function() {
