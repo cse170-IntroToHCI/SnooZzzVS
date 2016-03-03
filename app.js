@@ -114,17 +114,15 @@ app.delete('/user', function(req, res) {
     wakeDataCollection.remove({_id: ObjectId(wakeObjectId)});
     usersCollection.remove({email: email});
 
-    console.log("Delete User Success");
-    return res.status(200).end();
-    //req.session.destroy(function(err) {
-    //    if(err) {
-    //        console.log("Error-Delete User Failure: " + err);
-    //        return res.status(400).end();
-    //    } else {
-    //        console.log("User Deleted Success");
-    //        return res.status(200).end();
-    //    }
-    //});
+    req.session.destroy(function(err) {
+        if(err) {
+            console.log("Error-Delete User Failure: " + err);
+            return res.status(400).end();
+        } else {
+            console.log("Delete User Success");
+            return res.status(200).end();
+        }
+    });
 });
 
 // Login route
