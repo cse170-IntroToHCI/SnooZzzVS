@@ -18,9 +18,10 @@ module.exports.POST = function(req, res) {
         "session": req.session
     };
 
+    console.log("req.session: ");
     console.log(req.session);
     console.log("\n");
-    console.log(req.session.id);
+    console.log("req.session.id: "+req.session.id);
     // db call to add new user
     var usersCollection = db.get().collection('users');
     usersCollection.insertOne(newUser);

@@ -5,41 +5,66 @@ var session = require('express-session');
 //var RedisStore = require('connect-redis')(session);
 //var mongoStore = require('connect-mongodb');
 //var MongoStore = require('connect-mongostore')(session);
-var MongoStore = require('connect-mongo/es5')(session);
+//var MongoStore = require('connect-mongo/es5')(session);
 //var mongoose = require('mongoose');
 var path = require('path');
 var bodyParser = require('body-parser');
-// setup connection to mongo database
 var db = require('./db');
-db.connect();
-// line responsible for getting our app started
 var app = express();
+var user = require('./routes/user/user');
+db.connect();
 
-// setting our default views to the views directory
 app.set('views', path.join(__dirname, 'views'));
-// set the view engine
 app.set('view engine', 'html');
-// this allows me to use .html (instead of .ejs files) for html rendering
 app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-// to support URL-encoded bodies
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-    store: new MongoStore({
-        url: db.getURI()
-    }),
+    //store: new MongoStore({
+    //    url: db.getURI()
+    //}),
     secret: 'supposedToBeASecret',
     saveUninitialized: true,
-    resave: true
+    resave: false
 }));
 
-var user = require('./routes/user/user');
-app.post('/user', user.POST);
+//app.post('/user', user.POST);
+app.post('/user', function(req, res) {
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var email = req.body.email;
+    var password = req.body.password;
+    var sess = req.session;
+
+    sess.firstName = firstName;
+    sess.email = email;
+    sess.sleepObjectId = db.randomObjectId();
+    sess.wakeObjectId = db.randomObjectId();
+
+    var newUser = {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": password,
+        "sleepObjectId": sess.sleepObjectId,
+        "wakeObjectId": sess.wakeObjectId,
+        "session": sess
+    };
+
+    console.log("req.session: ");
+    console.log(req.session);
+    console.log("\n");
+    console.log("req.session.id: "+req.session.id);
+    // db call to add new user
+    var usersCollection = db.get().collection('users');
+    usersCollection.insertOne(newUser);
+
+    res.status(200).json(newUser).end();
+});
+
 app.get('/user', user.GET);
 app.put('/user', user.PUT);
 app.delete('/user', user.DELETE);
