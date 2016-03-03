@@ -27,7 +27,7 @@ module.exports.POST   = function(req, res) {
     return res.status(200).end();
 };
 
-module.exports.GET    = function(req, res) {
+module.exports.GET = function(req, res) {
     var email = req.session.email;
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.find({email: email}).toArray(function(err, sleepData) {

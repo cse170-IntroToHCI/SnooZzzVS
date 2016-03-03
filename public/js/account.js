@@ -84,22 +84,13 @@ submitButton.onclick = function() {
     }
 };
 
-// function deleteAccount() {
-//     $('.btnDelete').on('click', function (e) {
-//         e.preventDefault();
-//         var id = $(this).closest('tr').data('id');
-//         $('#myModal').data('id', id).modal('show');
-//     });
-
-//     $('#btnDeleteYes').click(function () {
-//         var id = $('#myModal').data('id');
-//         $('[data-id=' + id + ']').remove();
-//         $('#myModal').modal('hide');
-//     });
-// }
-
-// window.onload = function() {
-
-//     deleteAccount();
-
-// }
+$("#yesDeleteAccount").click(function() {
+    $.ajax({
+        type: 'DELETE',
+        url: '/user',
+        success: function() {
+            // send user to login page
+            window.location = './';
+        }
+    });
+});

@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var db = require('./db');
 var app = express();
 var user = require('./routes/user/user');
+var ObjectId = require('mongodb').ObjectID;
 db.connect();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -100,7 +101,31 @@ app.get('/user', user.GET);
 // User - Update User Route
 app.put('/user', user.PUT);
 // User - Delete User Route
-app.delete('/user', user.DELETE);
+app.delete('/user', function(req, res) {
+    var email = req.session.email;
+    var sleepObjectId = req.session.sleepObjectId;
+    var wakeObjectId = req.session.wakeObjectId;
+    var usersCollection = db.get().collection('users');
+    var sleepDataCollection = db.get().collection('sleepData');
+    var wakeDataCollection = db.get().collection('wakeData');
+
+    // delete sleep/wake data tied to the email
+    sleepDataCollection.remove({_id: ObjectId(sleepObjectId)});
+    wakeDataCollection.remove({_id: ObjectId(wakeObjectId)});
+    usersCollection.remove({email: email});
+
+    console.log("Delete User Success");
+    return res.status(200).end();
+    //req.session.destroy(function(err) {
+    //    if(err) {
+    //        console.log("Error-Delete User Failure: " + err);
+    //        return res.status(400).end();
+    //    } else {
+    //        console.log("User Deleted Success");
+    //        return res.status(200).end();
+    //    }
+    //});
+});
 
 // Login route
 app.post('/user/login', function(req, res) {
