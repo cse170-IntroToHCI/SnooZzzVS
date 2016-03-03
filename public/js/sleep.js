@@ -49,6 +49,7 @@ window.onload = function() {
 		var hourValue = $("#selectHour").val();
 		var minuteValue = $("#selectMinute").val();
 		var meridiemValue = $("#selectMeridiem").val();
+		var moodValue = mySlider.getValue();
 
 		$("#setAlert").show('medium');
 
@@ -56,12 +57,13 @@ window.onload = function() {
 
 		var newCalendarHTML = "<h3><span class='label label-info'>"+dayValue+"</span></h3>";
 		var newTimeHTML = "<h3><span class='label label-info'>"+hourValue+":"+minuteValue+" "+meridiemValue+"</span></h3>";
+		var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
 
 		$("#calendarContainer").html(newCalendarHTML);
 		$("#wakingUpAtH4").html("You went to sleep at:");
 		$("#clockContainer").html(newTimeHTML);
-		$("#iAmFeelingH4").html("");
-		$("#sliderContainer").html("");
+		$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
+		
 
 		var setButton = $("#setBtn");
 		setButton.html("Edit");
