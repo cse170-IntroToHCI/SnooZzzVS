@@ -21,17 +21,13 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(session({
-    //store: new MongoStore({
-    //    url: db.getURI()
-    //}),
     secret: 'supposedToBeASecret',
     saveUninitialized: true,
     resave: false
 }));
 
-// User Create Route
+// User - Create User Route
 app.post('/user', function(req, res) {
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
@@ -39,36 +35,69 @@ app.post('/user', function(req, res) {
     var password = req.body.password;
     var sess = req.session;
 
-    sess.firstName = firstName;
-    sess.email = email;
-    //sess.sleepObjectId = db.randomObjectId();
-    //sess.wakeObjectId = db.randomObjectId();
-
-    var newUser = {
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": email,
-        "password": password,
-        "sleepObjectId": sess.sleepObjectId,
-        "wakeObjectId": sess.wakeObjectId
+    var newUserSleepData = {
+        "sleepData": []
+    };
+    var newUserWakeData = {
+        "wakeData": []
     };
 
-    console.log("req.session:");
-    console.log(req.session);
-    console.log("\n");
-    console.log("req.session.id: "+req.session.id);
-    // db call to add new user
-    var usersCollection = db.get().collection('users');
-    usersCollection.insertOne(newUser);
-
-    res.status(200).json(newUser).end();
+    // Layer 1 - Insert empty array for sleep data
+    var sleepCollection = db.get().collection('sleepData');
+    sleepCollection.insertOne(newUserSleepData, function(err, newSleepDoc) {
+        if(err) {
+            console.log("Error-Account Creation@sleepCollection: " + err);
+            console.log("Signup Failure");
+            return res.status(400).end();
+        } else {
+            // Layer 2 - Insert empty array for wake data
+            var wakeCollection  = db.get().collection('wakeData');
+            var userWakeDoc = wakeCollection.insertOne(newUserWakeData, function(err, newWakeDoc) {
+                if(err) {
+                    console.log("Error-Account Creation@wakeCollection: " + err);
+                    console.log("Signup Failure");
+                    return res.status(400).end();
+                } else {
+                    var newUser = {
+                        "firstName": firstName,
+                        "lastName": lastName,
+                        "email": email,
+                        "password": password,
+                        "sleepObjectId": newSleepDoc.ops[0]._id,
+                        "wakeObjectId": newWakeDoc.ops[0]._id
+                    };
+                    // Layer 3 - Check if email exists in DB
+                    var usersCollection = db.get().collection('users');
+                    usersCollection.find({email: email}).toArray(function(err, duplicateEmail) {
+                        if(err) {
+                            console.log("Error-Email Duplication: " + err);
+                            console.log("Signup Failure");
+                            return res.status(400).end();
+                        } else if(duplicateEmail.length > 0) {
+                            console.log("Error-Email Duplication: Email already registered");
+                            console.log(duplicateEmail[0].email);
+                            console.log("Signup Failure");
+                            return res.status(400).end();
+                        } else {
+                            // Layer 4 - Signup Success
+                            // Create session token
+                            usersCollection.insertOne(newUser);
+                            sess.email = email;
+                            console.log("Signup Success");
+                            return res.status(200).end();
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
-// User Get Route
+// User - Get User Route
 app.get('/user', user.GET);
-// User Update Route
+// User - Update User Route
 app.put('/user', user.PUT);
-// User Delete Route
+// User - Delete User Route
 app.delete('/user', user.DELETE);
 
 // Login route

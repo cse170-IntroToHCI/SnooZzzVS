@@ -80,6 +80,13 @@ submitButton.onclick = function() {
             },
             success: function() {
                 window.location = "./index";
+            },
+            error: function() {
+                $("#email").attr("data-original-title", "Email is already registered");
+                $("#email").tooltip('show');
+                setTimeout(function() {
+                    $("#email").tooltip('hide');
+                }, 2000);
             }
         });
     }

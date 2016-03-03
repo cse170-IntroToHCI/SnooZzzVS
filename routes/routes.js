@@ -31,7 +31,7 @@ var stillLoggedIn = function(req, res, next) {
 /*
  *  Routes
  */
-router.get('/signup', function(req, res) {
+router.get('/signup', stillLoggedIn, function(req, res) {
     res.render('signup');
 });
 
