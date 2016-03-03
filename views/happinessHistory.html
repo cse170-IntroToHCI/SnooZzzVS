@@ -9,6 +9,7 @@
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/snooZzzvs.png">
     <meta charset="UTF-8">
     <title>Happiness History</title>
@@ -57,7 +58,9 @@
 
     <hr>
     <!-- Nav for Chart -->
-    <div align="center"><h4><strong>Toggle Graphs</strong><small> (y-axis)</small></h4></div>
+    <div align="center">
+        <h4 align="center"><i id="infoIcon" class='glyphicon glyphicon-info-sign' title="Toggle between the buttons and see the mood level for each category that corresponds to the color on the graph" style="color: #428bca;"></i><strong>&nbsp;Toggle Graphs</strong><small> (y-axis)</small></h4>
+    </div>
     <div class="btn-group-wrap">
         <div class="btn-toolbar" role="toolbar" aria-label="...">
             <div class="chart-toggles btn-group">
@@ -125,5 +128,6 @@
     <!-- Chart -->
     <script src="js/happinessHistoryButtons.js" type="text/javascript"></script>
     <script src="js/happinessHistoryGraph.js" type="text/javascript"></script>
+
 </body>
 </html>

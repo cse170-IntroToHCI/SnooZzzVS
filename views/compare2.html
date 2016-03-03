@@ -246,7 +246,7 @@
 			$('#infoIcon').tooltip('show');
 			setTimeout(function() {
 				$('#infoIcon').tooltip('hide');
-				$('#infoIcon').attr("data-original-title", "Use at most 2 filters. The unselected filters would be the data of interest, then click 'Compare!'");
+				$('#infoIcon').attr("data-original-title", "Fill out at most 2 rows. The unfilled row(s) would be the data of interest, then click 'Compare!'");
 			}, 850);
 		});
 		$('#infoIcon').tooltip();
@@ -453,14 +453,14 @@
 					++gaCounter;
 					ga("send", "event", "compareClickFailure", "click", "compareFailure");
 				}
-				$(this).attr("data-original-title", "Make sure that at least 1 row of filters are filled out in order to Compare.");
+				$(this).attr("data-original-title", "Make sure that at least 1 row of filters is completely filled out in order to Compare.");
 				$(this).tooltip('show');
 			} else if(boolSleepFilter && boolWakeFilter && boolHappinessFilter) {
 				if(gaCounter === 0) {
 					++gaCounter;
 					ga("send", "event", "compareClickFailure", "click", "compareFailure");
 				}
-				$(this).attr("data-original-title", "Make sure that at most 2 rows of filters are applied.");
+				$(this).attr("data-original-title", "Make sure that at most 2 rows of filters are applied. 1 row should be left blank.");
 				$(this).tooltip('show');
 			} else {
 				if(gaCounter === 0) {

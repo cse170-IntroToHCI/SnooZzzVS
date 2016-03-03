@@ -1,3 +1,4 @@
+$('#infoIcon').tooltip();
 
 $('#weekButton').click(function (e) {
     $('#monthButton').removeClass('active');
