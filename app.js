@@ -97,9 +97,29 @@ app.post('/user', function(req, res) {
 });
 
 // User - Get User Route
-app.get('/user', user.GET);
+app.get('/user', function(req, res) {
+    var email = req.session.email;
+    var usersCollection = db.get().collection('users');
+    return usersCollection.find({email: email}).toArray(function(err, user) {
+        if(err) {
+            console.log("Error-Get User Failure: " + err);
+            return res.status(400).end();
+        } else {
+            console.log("Fetching User Data...");
+            var userStrippedInfo = {
+                firstName: user[0].firstName,
+                lastName: user[0].lastName,
+                email: user[0].email
+            };
+
+            return res.status(200).json(userStrippedInfo).end();
+        }
+    })
+});
+
 // User - Update User Route
 app.put('/user', user.PUT);
+
 // User - Delete User Route
 app.delete('/user', function(req, res) {
     var email = req.session.email;

@@ -3,7 +3,7 @@ var db = require('../../db');
 var ObjectId = require('mongodb').ObjectID;
 module.exports.sleepData = {};
 
-module.exports.POST   = function(req, res) {
+module.exports.POST = function(req, res) {
     var date        = req.body.date;
     var hour        = req.body.hour;
     var minute      = req.body.minute;
@@ -35,7 +35,7 @@ module.exports.GET = function(req, res) {
             console.log("Error-Sleep Data Error@GET: " + err);
             return res.status(400).end();
         } else {
-            console.log("Fetching Data...");
+            console.log("Fetching SleepData...");
             return res.status(200).end();
         }
     });

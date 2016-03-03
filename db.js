@@ -32,12 +32,3 @@ module.exports.get = function() {
 module.exports.getURI = function() {
     return mongoURI;
 };
-
-module.exports.randomObjectId = function() {
-    var objectId = mongodb.ObjectID;
-    return new objectId();
-};
-
-module.exports.ObjectId = function(arg) {
-    return ObjectId(arg);
-}
