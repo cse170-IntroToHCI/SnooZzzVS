@@ -2,11 +2,8 @@
 
 var express = require('express');
 var router = express.Router();
-var wakeData = require('./wake');
-var sleepData = require('./sleep');
-var alarmData = require('./alarm');
-var users = require('./login');
-var user = require('./user/user');
+var sleepData = require('./sleepData/sleepData');
+//var wakeData = require('./wakeData/wakeData');
 
 /*
 *  Helper Functions
@@ -29,7 +26,7 @@ var stillLoggedIn = function(req, res, next) {
 };
 
 /*
- *  Routes
+ *  Public Routes
  */
 router.get('/signup', stillLoggedIn, function(req, res) {
     res.render('signup');
@@ -79,21 +76,18 @@ router.get('/help', authenticate, function(req, res) {
     res.render('help');
 });
 
-// FOR DB "JSON"
-router.post('/postWakeData', wakeData.addWakeData);
-router.get('/getAllWakeData', wakeData.getAll);
+/*
+ *  MongoDB Routes
+ */
+router.post('/sleepData', sleepData.POST);
+router.get('/sleepData', sleepData.GET);
+router.put('/sleepData', sleepData.PUT);
+router.delete('/sleepData', sleepData.DELETE);
 
-router.post('/postSleepData', sleepData.addSleepData);
-router.get('/getAllSleepData', sleepData.getAll);
-
-router.post('/postAlarmData', alarmData.addAlarmData);
-router.get('/getAllAlarmData', alarmData.getAll);
-
-router.post('/login', users.checkLoginCredentials);
-router.post('/signup', users.addUser);
-
-// FOR MONGODB
-
+//router.post('/wakeData', wakeData.POST);
+//router.get('/wakeData', wakeData.GET);
+//router.put('/wakeData', wakeData.PUT);
+//router.delete('/wakeData', wakeData.DELETE);
 
 /*
 *  Routes/pages that we didn't have time to implement
@@ -113,14 +107,6 @@ router.get('/addAlarm', function(req, res) {
 
 router.get('/enterGoals', function(req, res) {
     res.render('enterGoals');
-});
-
-router.get('/sleepData', function(req, res) {
-    res.render('sleepData');
-});
-
-router.get('/wakeData', function(req, res) {
-    res.render('wakeData');
 });
 
 // ------------- eof ---------------

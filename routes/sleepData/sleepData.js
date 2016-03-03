@@ -1,6 +1,7 @@
 
 var db = require('../../db');
-module.exports.sleep = {};
+var ObjectId = require('mongodb').ObjectID;
+module.exports.sleepData = {};
 
 module.exports.POST   = function(req, res) {
     var date        = req.body.date;
@@ -8,6 +9,7 @@ module.exports.POST   = function(req, res) {
     var minute      = req.body.minute;
     var meridiem    = req.body.meridiem;
     var sleepFeeling = req.body.sleepFeeling;
+    var sess = req.session;
 
     var newSleepData = {
         "date": date,
@@ -18,7 +20,10 @@ module.exports.POST   = function(req, res) {
     };
 
     var sleepDataCollection = db.get().collection('sleepData');
-    sleepDataCollection.insertOne(newSleepData);
+    sleepDataCollection.update(
+        {_id: ObjectId(sess.sleepObjectId)},
+        {$push: {sleepData: newSleepData}}
+    );
     return res.status(200).end();
 };
 
@@ -27,11 +32,11 @@ module.exports.GET    = function(req, res) {
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.find({email: email}).toArray(function(err, sleepData) {
         if(err) {
-            console.log("Error-Sleep Data Error: " + err);
+            console.log("Error-Sleep Data Error@GET: " + err);
             return res.status(400).end();
         } else {
             console.log("Fetching Data...");
-            return res.status(200).json(sleepData).end();
+            return res.status(200).end();
         }
     });
 };

@@ -42,7 +42,7 @@ app.post('/user', function(req, res) {
         "wakeData": []
     };
 
-    // Layer 1 - Insert empty array for sleep data
+    // Layer 1 - Insert empty array for sleepData data
     var sleepCollection = db.get().collection('sleepData');
     sleepCollection.insertOne(newUserSleepData, function(err, newSleepDoc) {
         if(err) {
@@ -83,6 +83,8 @@ app.post('/user', function(req, res) {
                             // Create session token
                             usersCollection.insertOne(newUser);
                             sess.email = email;
+                            sess.sleepObjectId = newSleepDoc.ops[0]._id;
+                            sess.wakeObjectId = newWakeDoc.ops[0]._id;
                             console.log("Signup Success");
                             return res.status(200).end();
                         }
@@ -117,6 +119,8 @@ app.post('/user/login', function(req, res) {
                 if(users[user_i].email === email) {
                     if(users[user_i].password === password) {
                         sess.email = email;
+                        sess.sleepObjectId = users[user_i].sleepObjectId;
+                        sess.wakeObjectId = users[user_i].wakeObjectId;
                         console.log("Login Success");
                         return res.status(200).end();
                     }

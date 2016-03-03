@@ -85,7 +85,7 @@ function fillData() {
         }
     }
 
-    // fill sleep feeling data
+    // fill sleepData feeling data
     for(var i = sleepLength - 1, j = 6; i > sleepLength - sleepCount; --i, --j) {
         sleepData[j] = extractSleepData[i].sleepFeeling;
         if(night === 1) {
