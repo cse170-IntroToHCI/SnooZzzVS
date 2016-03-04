@@ -14,11 +14,12 @@ $(document).ready(function () {
 
 	$("#b3").click(function () {
 		// for google analytics
-		if(Math.random() > 0.5) {
-			window.location.href = "/compare2";
-		} else {
-			window.location.href = "/compare";
-		}
+		// if(Math.random() > 0.5) {
+		// 	window.location.href = "/compare2";
+		// } else {
+		// 	window.location.href = "/compare";
+		// }
+		window.location.href = "/compare2";
 	});
 
 	$("#b4").click(function () {
