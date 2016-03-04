@@ -3,7 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var sleepData = require('./sleepData/sleepData');
-//var wakeData = require('./wakeData/wakeData');
+var wakeData = require('./wakeData/wakeData');
 
 /*
 *  Helper Functions
@@ -84,10 +84,10 @@ router.get('/sleepData', sleepData.GET);
 router.put('/sleepData', sleepData.PUT);
 router.delete('/sleepData', sleepData.DELETE);
 
-//router.post('/wakeData', wakeData.POST);
-//router.get('/wakeData', wakeData.GET);
-//router.put('/wakeData', wakeData.PUT);
-//router.delete('/wakeData', wakeData.DELETE);
+router.post('/wakeData', wakeData.POST);
+router.get('/wakeData', wakeData.GET);
+router.put('/wakeData', wakeData.PUT);
+router.delete('/wakeData', wakeData.DELETE);
 
 /*
 *  Routes/pages that we didn't have time to implement

@@ -11,7 +11,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var db = require('./db');
 var app = express();
-var user = require('./routes/user/user');
 var ObjectId = require('mongodb').ObjectID;
 db.connect();
 
@@ -119,7 +118,7 @@ app.get('/user', function(req, res) {
 });
 
 // User - Update User Route
-app.put('/user', user.PUT);
+//app.put('/user', user.PUT);
 
 // User - Delete User Route
 app.delete('/user', function(req, res) {

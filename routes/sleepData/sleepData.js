@@ -37,7 +37,6 @@ module.exports.GET = function(req, res) {
         } else {
             console.log("Fetching SleepData...");
             var sleepData = sleepDataObject[0].sleepData;
-            console.log(sleepData);
             return res.status(200).send(sleepData).end();
         }
     });

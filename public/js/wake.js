@@ -83,7 +83,7 @@ window.onload = function() {
         // Post data to JSON
         $.ajax({
             type: 'POST',
-            url: '/postWakeData',
+            url: '/wakeData',
             data: {
                 "date": dayValue,
                 "hour": hourValue,

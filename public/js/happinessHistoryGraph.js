@@ -20,17 +20,50 @@ var dateLabel = [];
 
 function fillData(userSleepData, userWakeData) {
     var userSleepDataLength = userSleepData.length;
-    var userSleepDataLength = userSleepData.length;
+    var userWakeDataLength = userWakeData.length;
 
     // fill sleep data
     for(var i = 0; i < userSleepDataLength; ++i) {
-        sleepData[6 - i] = userSleepData[i].sleepFeeling;
+        var sleepDate_i = userSleepData[userSleepDataLength - i - 1].date.substring(1, 5);
+        if(sleepDate_i === dateLabel[6 - i]) {
+            sleepData[6 - i] = userSleepData[userSleepDataLength - i - 1].sleepFeeling;
+        }
+    }
+console.log("wakedatalength: "+userWakeDataLength);
+    // fill wake data
+    for(var i = 0; i < userWakeDataLength; ++i) {
+        var wakeDate_i = userWakeData[userWakeDataLength - i - 1].date.substring(1, 5);
+        console.log("{");
+        console.log("\twakeDate_i     = " + wakeDate_i);
+        console.log("\tdateLabel[6-"+i+"] = " + dateLabel[6-i]);
+        console.log("}");
+        if(wakeDate_i === dateLabel[6 - i]) {
+            console.log("match");
+            wakeData[6 - i] = userWakeData[userWakeDataLength - i - 1].wakeFeeling;
+        } else if((6 - (i + 1)) >= 0) {
+            // start j one index more than i
+            for(var j = 0; j < userWakeDataLength; ++j) {
+                var t1 = (6 - (i + 1)) - j;
+                console.log("t1: " + t1);
+                console.log("wD: " + wakeDate_i);
+                console.log("dL: " + dateLabel[t1]);
+                if(wakeDate_i === dateLabel[(6 - (i + 1)) - j]) {
+                    console.log("in @ i: " + i);
+                    console.log("-----------");
+                    wakeData[(6 - (i + 1)) - j] = userWakeData[(userWakeDataLength - (i + 1)) - j].wakeFeeling;
+                    //++i;
+                    break;
+                }
+            }
+        }
     }
 
-    // fill wake data
-    //for(var i = 0; i < userWakeDataLength; ++i) {
-    //    wakeData[i] = userWakeData[i].wakeFeeling;
-    //}
+    // fill average data
+    for(var i = 0; i < 0; ++i) {
+
+    }
+
+    // todo - maybe we'll clean up the data here
 }
 
 function fillDateLabel() {
@@ -58,9 +91,18 @@ function fillDateLabel() {
                 } else {
                     day_i = 31 - j++;
                 }
+
+                // concatentate "0" if single digit
+                if(day_i.toString().length === 1) {
+                    day_i = "0" + day_i;
+                }
                 dateLabel[6 - i] = month+"/"+day_i;
             }
         } else {
+            // concatentate "0" if single digit
+            if(day_i.toString().length === 1) {
+                day_i = "0" + day_i;
+            }
             dateLabel[6 - i] = month+"/"+day_i;
         }
     }
@@ -72,28 +114,31 @@ $.ajax({
     url: '/sleepData',
     async: false,
     success: function(req) {
-        console.log("Finished fetching Sleep Data");
         for(var k = 0; k < req.length; k++) {
             sleepDataArray[k] = req[k];
         }
+        console.log("Finished fetching Sleep Data");
     }
 });
 
-//var wakeDataArray = $.ajax({
-//    type: 'GET',
-//    url: '/wakeData',
-//    async: false,
-//    success: function() {
-//        console.log("Finished fetching Wake Data");
-//    }
-//}).responseText;
+var wakeDataArray = [];
+$.ajax({
+    type: 'GET',
+    url: '/wakeData',
+    async: false,
+    success: function(req) {
+        for(var k = 0; k < req.length; k++) {
+            wakeDataArray[k] = req[k];
+        }
+        console.log("Finished fetching Wake Data");
+    }
+});
 
 $(document).ready(function() {
-    //fillData(sleepDataArray, wakeDataArray);
-    fillData(sleepDataArray, [1,2]);
     fillDateLabel();
-    var ctx = document.getElementById("LineChart").getContext("2d");
+    fillData(sleepDataArray, wakeDataArray);
 
+    var ctx = document.getElementById("LineChart").getContext("2d");
     var enableCheck = function() {
         wakeButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
         sleepButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
