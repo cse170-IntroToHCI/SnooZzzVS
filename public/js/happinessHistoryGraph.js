@@ -117,30 +117,24 @@ function fillData() {
     //}
 }
 
-function turnOffSample() {
-    $("#ex4").css("background-color", "");
-    $("#ex4").css("color", "");
-}
-
-function turnOffUserGraph() {
-    ex1ToggleCount++;
-    ex2ToggleCount++;
-    ex3ToggleCount++;
-}
-
 $(document).ready(function() {
     fillData();
     var ctx = document.getElementById("LineChart").getContext("2d");
 
     var enableCheck = function() {
-        happyButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
-        sadButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
+        wakeButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
+        sleepButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
         avgButton = document.getElementsByClassName('aB')[0].className.indexOf('enabled') != -1;
-        if (!(happyButton)) {
-            happyChart = {};
+        sampleButton = document.getElementsByClassName('sampleB')[0].className.indexOf('enabled') != -1;
+        if (!(wakeButton)) {
+            ex1ToggleCount = 0;
+            $("#ex1").css("background-color", "");
+            wakeChart = {};
         } else {
-            happyChart = {
-                label: "Happiness History Graph",
+            ex1ToggleCount = 1;
+            $("#ex1").css("background-color", "rgba(255, 215, 0, 0.7)");
+            wakeChart = {
+                label: "Wake Mood Trend",
                 strokeColor: "gold",
                 pointColor: "gold",
                 pointStrokeColor: "black",
@@ -148,11 +142,15 @@ $(document).ready(function() {
                 data: wakeData
             };
         }
-        if (!(sadButton)) {
-            sadChart = {};
+        if (!(sleepButton)) {
+            ex2ToggleCount = 0;
+            $("#ex2").css("background-color", "");
+            sleepChart = {};
         } else {
-            sadChart = {
-                label: "Sad History Graph",
+            ex2ToggleCount = 1;
+            $("#ex2").css("background-color", "rgba(173, 216, 230, 0.7)");
+            sleepChart = {
+                label: "Sleep Mood Trend",
                 strokeColor: "lightblue",
                 pointColor: "lightblue",
                 pointStrokeColor: "black",
@@ -161,10 +159,14 @@ $(document).ready(function() {
             };
         }
         if (!(avgButton)) {
+            ex3ToggleCount = 0;
+            $("#ex3").css("background-color", "");
             averageChart = {};
         } else {
+            ex3ToggleCount = 1;
+            $("#ex3").css("background-color", "rgba(0, 128, 0, 0.7)");
             averageChart = {
-                label: "Average Happiness History",
+                label: "Average Mood Trend",
                 strokeColor: "green",
                 pointColor: "green",
                 pointStrokeColor: "black",
@@ -172,13 +174,60 @@ $(document).ready(function() {
                 data: averageData
             };
         }
+        if ((sampleButton)) {
+            ex4ToggleCount = 0;
+            $("#ex4").css("background-color", "");
+            $("#ex4").css("color", "");
+            sampleChart1 = {};
+            sampleChart2 = {};
+            sampleChart3 = {};
+        } else {
+            ex4ToggleCount = 1;
+            $("#ex4").css("background-color", "rgba(0, 0, 0, 0.7)");
+            $("#ex4").css("color", "white");
+            // Sample Trends of Wake, Sleep and Average Feeling
+            sampleChart1 = {
+                label: "Sample Sleep Trend",
+                strokeColor: "red",
+                pointColor: "red",
+                pointStrokeColor: "black",
+                fillColor: "transparent",
+                data: [2, 3, 6, 4, 1, 5, 1]
+            };
+            sampleChart2 = {
+                label: "Sample Wake Trend",
+                strokeColor: "grey",
+                pointColor: "grey",
+                pointStrokeColor: "black",
+                fillColor: "transparent",
+                data: [1, 7, 1, 7, 1, 7, 1]
+            };
+            sampleChart3 = {
+                label: "Sample Average Graph",
+                strokeColor: "purple",
+                pointColor: "purple",
+                pointStrokeColor: "black",
+                fillColor: "transparent",
+                data: [1.5, 5, 3.5, 5.5, 1, 6, 1]
+            };
+            wakeChart = {};
+            sleepChart = {};
+            averageChart = {};
+        }
     };
 
 
     enableCheck();
     data = {
         labels: dateLabel,
-        datasets: [ sadChart, averageChart, happyChart ]
+        datasets: [
+            sleepChart,
+            averageChart,
+            wakeChart,
+            sampleChart1,
+            sampleChart2,
+            sampleChart3
+        ]
     };
     baseChart = new Chart(ctx).Line(data, options);
     currentChart = baseChart;
@@ -193,7 +242,14 @@ $(document).ready(function() {
         enableCheck();
         data = {
             labels: dateLabel,
-            datasets: [ sadChart, averageChart, happyChart ]
+            datasets: [
+                sleepChart,
+                averageChart,
+                wakeChart,
+                sampleChart1,
+                sampleChart2,
+                sampleChart3
+            ]
         };
         newChart = new Chart(ctx).Line(data, options);
         currentChart = newChart;
@@ -206,55 +262,52 @@ $(document).ready(function() {
     var theHB = document.getElementById("ex1");
     theHB.onclick = function() {
         toggleLine(this);
-        if(ex1ToggleCount % 2 === 1) {
+// equal to 1
+        /*if(ex1ToggleCount) {
             $(this).css("background-color", "rgba(255, 215, 0, 0.7)");
-
-            turnOffSample();
         } else {
             $(this).css("background-color", "");
-        }
-        ++ex1ToggleCount;
+        }*/
     };
 
     var theSB = document.getElementById("ex2");
     theSB.onclick = function() {
         toggleLine(this);
-        if(ex2ToggleCount % 2 === 1) {
+        /*if(ex2ToggleCount) {
             $(this).css("background-color", "rgba(173, 216, 230, 0.7)");
-
-            turnOffSample();
         } else {
             $(this).css("background-color", "");
-        }
-        ++ex2ToggleCount;
+        }*/
     };
 
     var theAB = document.getElementById("ex3");
     theAB.onclick = function() {
         toggleLine(this);
-        if(ex3ToggleCount % 2 === 1) {
+        /*if(ex3ToggleCount) {
             $(this).css("background-color", "rgba(0, 128, 0, 0.7)");
-
-            turnOffSample();
         } else {
             $(this).css("background-color", "");
-        }
-        ++ex3ToggleCount;
+        }*/
     };
 
     var theSampleB = document.getElementById("ex4");
     theSampleB.onclick = function() {
         toggleLine(this);
-        if(ex4ToggleCount % 2 === 1) {
-            $(this).css("background-color", "");
-            $(this).css("color", "");
-        } else {
-            // clicked "sample" data
+        /*if(ex4ToggleCount) {
+            // clicked "sample" data button
             $(this).css("background-color", "rgba(0, 0, 0, 0.7)");
             $(this).css("color", "white");
 
-            //turnOffUserGraph();
-        }
-        ++ex4ToggleCount;
+            $("#ex1").css("background-color", "");
+            $("#ex2").css("background-color", "");
+            $("#ex3").css("background-color", "");
+        } else {
+            $(this).css("background-color", "");
+            $(this).css("color", "");
+
+            //ex1ToggleCount = 0;
+            //ex2ToggleCount = 0;
+            //ex3ToggleCount = 0;
+        }*/
     };
 });
