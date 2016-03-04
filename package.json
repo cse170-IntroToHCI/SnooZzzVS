@@ -5,6 +5,10 @@
   "scripts": {
     "start": "node ./bin/www"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cse170-IntroToHCI/SnooZzzVS.git"
+  },
   "dependencies": {
     "body-parser": "^1.14.2",
     "bootstrap-slider": "^6.0.16",
