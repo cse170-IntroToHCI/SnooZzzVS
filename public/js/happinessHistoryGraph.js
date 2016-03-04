@@ -21,15 +21,25 @@ var dateLabel = [];
 function fillData(userSleepData, userWakeData) {
     var userSleepDataLength = userSleepData.length;
     var userWakeDataLength = userWakeData.length;
+    var userAvgDataLength = (userSleepDataLength > userWakeDataLength) ? userWakeDataLength : userSleepDataLength;
+    var secondFrontMostPointForAverage = 0;
 
     // fill sleep data
     for(var i = 0; i < userSleepDataLength; ++i) {
         var sleepDate_i = userSleepData[userSleepDataLength - i - 1].date.substring(1, 5);
         if(sleepDate_i === dateLabel[6 - i]) {
             sleepData[6 - i] = userSleepData[userSleepDataLength - i - 1].sleepFeeling;
+        } else if((6 - (i + 1)) >= 0) {
+            // start j one index more than i
+            for(var j = 0; j < userSleepDataLength; ++j) {
+                if(sleepDate_i === dateLabel[(6 - (i + 1)) - j]) {
+                    sleepData[(6 - (i + 1)) - j] = userSleepData[(userSleepDataLength - (i + 1)) - j].sleepFeeling;
+                    break;
+                }
+            }
         }
     }
-console.log("wakedatalength: "+userWakeDataLength);
+
     // fill wake data
     for(var i = 0; i < userWakeDataLength; ++i) {
         var wakeDate_i = userWakeData[userWakeDataLength - i - 1].date.substring(1, 5);
@@ -49,21 +59,53 @@ console.log("wakedatalength: "+userWakeDataLength);
                 console.log("dL: " + dateLabel[t1]);
                 if(wakeDate_i === dateLabel[(6 - (i + 1)) - j]) {
                     console.log("in @ i: " + i);
+                    var t2 = (userWakeDataLength - (i + 1)) - j;
+                    console.log("t2: " + t2);
                     console.log("-----------");
                     wakeData[(6 - (i + 1)) - j] = userWakeData[(userWakeDataLength - (i + 1)) - j].wakeFeeling;
                     //++i;
+                    secondFrontMostPointForAverage = (secondFrontMostPointForAverage > ((6 - (i + 1)) - j))
+                        ? secondFrontMostPointForAverage : ((6 - (i + 1)) - j);
+                    console.log("====> " + secondFrontMostPointForAverage);
                     break;
                 }
             }
         }
     }
 
-    // fill average data
-    for(var i = 0; i < 0; ++i) {
-
+    // clean up sleepData array
+    for(var k = 0; k < (7 - userSleepDataLength); ++k) {
+        if(sleepData[k] === null || sleepData[k] === undefined || sleepData[k] === 0) {
+            sleepData[k] = null;
+        }
     }
 
-    // todo - maybe we'll clean up the data here
+    // clean up wakeData array
+    for(var k = 0; k < (7 - userWakeDataLength); ++k) {
+        if(wakeData[k] === null || wakeData[k] === undefined || wakeData[k] === 0) {
+            wakeData[k] = null;
+        }
+    }
+console.log("{");
+    // fill average data
+    for(var k = 0; k < userAvgDataLength; ++k) {
+        var sleepData_k = parseInt(sleepData[secondFrontMostPointForAverage-k]);
+        var wakeData_k = parseInt(wakeData[secondFrontMostPointForAverage-k]);
+        if(sleepData_k === null || wakeData_k === null) {
+            continue;
+        } else {
+            console.log("\t"+averageData[secondFrontMostPointForAverage-k]);
+            averageData[secondFrontMostPointForAverage-k] = (sleepData_k + wakeData_k)/2;
+        }
+    }
+    console.log("}");
+
+    // clean up averageData array
+    for(var k = 0; k < 7; ++k) {
+        if(averageData[k] === null || averageData[k] === undefined || averageData[k] === 0) {
+            averageData[k] = null;
+        }
+    }
 }
 
 function fillDateLabel() {
