@@ -30,13 +30,15 @@ module.exports.POST = function(req, res) {
 module.exports.GET = function(req, res) {
     var email = req.session.email;
     var sleepDataCollection = db.get().collection('sleepData');
-    sleepDataCollection.find({email: email}).toArray(function(err, sleepData) {
+    sleepDataCollection.find({_id: ObjectId(req.session.sleepObjectId)}).toArray(function(err, sleepDataObject) {
         if(err) {
             console.log("Error-Sleep Data Error@GET: " + err);
             return res.status(400).end();
         } else {
             console.log("Fetching SleepData...");
-            return res.status(200).end();
+            var sleepData = sleepDataObject[0].sleepData;
+            console.log(sleepData);
+            return res.status(200).send(sleepData).end();
         }
     });
 };
