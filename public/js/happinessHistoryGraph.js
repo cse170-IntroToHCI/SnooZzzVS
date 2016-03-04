@@ -216,6 +216,15 @@ $(document).ready(function() {
         }
     };
 
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1;
+    // fill the x-axis
+    for(var i = 0; i < 7; ++i) {
+        var day_i = day + i;
+        dateLabel[i] = month+"/"+day_i
+    }
+    dateLabel[0] = month+"/"+day;
 
     enableCheck();
     data = {
@@ -262,52 +271,20 @@ $(document).ready(function() {
     var theHB = document.getElementById("ex1");
     theHB.onclick = function() {
         toggleLine(this);
-// equal to 1
-        /*if(ex1ToggleCount) {
-            $(this).css("background-color", "rgba(255, 215, 0, 0.7)");
-        } else {
-            $(this).css("background-color", "");
-        }*/
     };
 
     var theSB = document.getElementById("ex2");
     theSB.onclick = function() {
         toggleLine(this);
-        /*if(ex2ToggleCount) {
-            $(this).css("background-color", "rgba(173, 216, 230, 0.7)");
-        } else {
-            $(this).css("background-color", "");
-        }*/
     };
 
     var theAB = document.getElementById("ex3");
     theAB.onclick = function() {
         toggleLine(this);
-        /*if(ex3ToggleCount) {
-            $(this).css("background-color", "rgba(0, 128, 0, 0.7)");
-        } else {
-            $(this).css("background-color", "");
-        }*/
     };
 
     var theSampleB = document.getElementById("ex4");
     theSampleB.onclick = function() {
         toggleLine(this);
-        /*if(ex4ToggleCount) {
-            // clicked "sample" data button
-            $(this).css("background-color", "rgba(0, 0, 0, 0.7)");
-            $(this).css("color", "white");
-
-            $("#ex1").css("background-color", "");
-            $("#ex2").css("background-color", "");
-            $("#ex3").css("background-color", "");
-        } else {
-            $(this).css("background-color", "");
-            $(this).css("color", "");
-
-            //ex1ToggleCount = 0;
-            //ex2ToggleCount = 0;
-            //ex3ToggleCount = 0;
-        }*/
     };
 });
