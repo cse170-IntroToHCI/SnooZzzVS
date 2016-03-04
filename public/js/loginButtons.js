@@ -14,7 +14,7 @@ loginButton.onclick = function() {
     // Post data to JSON
     $.ajax({
         type: 'POST',
-        url: 'login',
+        url: '/user/login',
         data: {
             "email": $("#email").val(),
             "password": $("#password").val()

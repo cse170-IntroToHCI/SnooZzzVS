@@ -60,7 +60,7 @@ window.onload = function() {
 		var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
 
 		$("#calendarContainer").html(newCalendarHTML);
-		$("#wakingUpAtH4").html("You went to sleep at:");
+		$("#wakingUpAtH4").html("You went to sleepData at:");
 		$("#clockContainer").html(newTimeHTML);
 		$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
 		
@@ -84,13 +84,16 @@ window.onload = function() {
 		// Post data to JSON
 		$.ajax({
 			type: 'POST',
-			url: '/postSleepData',
+			url: '/sleepData',
 			data: {
 				"date": dayValue,
 				"hour": hourValue,
 				"minute": minuteValue,
 				"meridiem": meridiemValue,
 				"sleepFeeling": mySlider.getValue()
+			},
+			success: function() {
+
 			}
 		});
 

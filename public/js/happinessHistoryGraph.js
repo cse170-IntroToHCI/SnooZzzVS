@@ -3,6 +3,20 @@ var ex2ToggleCount = 0;
 var ex3ToggleCount = 0;
 var ex4ToggleCount = 0;
 
+                            /// TEST BOX
+
+var test1;
+$.ajax({
+    type: 'GET',
+    url: '/sleepData',
+    success: function(req) {
+        console.log("req= "+req);
+        test1 = req;
+    }
+});
+
+                            /// END TEST BOX
+
 var options = {
     animation: false,
     responsive: false,
@@ -85,7 +99,7 @@ function fillData() {
         }
     }
 
-    // fill sleep feeling data
+    // fill sleepData feeling data
     for(var i = sleepLength - 1, j = 6; i > sleepLength - sleepCount; --i, --j) {
         sleepData[j] = extractSleepData[i].sleepFeeling;
         if(night === 1) {
@@ -96,28 +110,13 @@ function fillData() {
             day = 0;
         }
     }
-
-    /*
-    TODO - (1) redo average. (2) fix logic b/c too many for-loops. (3) x-axis buttons
-     */
-
-    //if(wakeLength > sleepLength) {
-    //    dateLabel = temp;
-    //    for(var i = 0; i < sleepLength; ++i) {
-    //        // strip year
-    //        dateLabel[i] = dateLabel[i].slice(0, 5);
-    //        //averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
-    //    }
-    //} else {
-    //    for(var i = 0; i < wakeLength; ++i) {
-    //        // strip year
-    //        dateLabel[i] = dateLabel[i].slice(0, 5);
-    //        //averageData[i] = (parseInt(sleepData[i]) + parseInt(wakeData[i])) / 2;
-    //    }
-    //}
 }
 
 $(document).ready(function() {
+    setTimeout(function() {
+        console.log("test1= "+test1);
+    }, 2500);
+
     fillData();
     var ctx = document.getElementById("LineChart").getContext("2d");
 

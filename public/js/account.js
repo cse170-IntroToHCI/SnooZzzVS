@@ -1,17 +1,18 @@
-
-var submitButton = document.getElementById("submitButton");
-submitButton.onclick = function() {
+var updateButton = document.getElementById("updateButton");
+updateButton.onclick = function() {
 
     // boolean variables
-    var fN = 0, lN = 0, eM = 0, pW = 0, cP = 0, cB = 0;
+    var fN = 0, lN = 0, eM = 0, pW = 0, cP = 0;
 
     // first name validation
     var firstName = $("#firstName").val();
     if(firstName.search(/^\s*$/) !== -1) {
         $("#firstNameFieldset").attr("class", "form-group has-error");
+        console.log("1");
         fN = 0;
     } else {
         $("#firstNameFieldset").attr("class", "form-group");
+        console.log("2");
         fN = 1;
     }
 
@@ -55,44 +56,48 @@ submitButton.onclick = function() {
         cP = 1;
     }
 
-    // accept the agreement
-    var checkbox = $("#checkbox").prop("checked");
-    if(!checkbox) {
-        $("#checkboxFieldset").attr("class", "checkbox text-center has-error");
-        $("#checkboxLabel").css("font-weight", "bold");
-        cB = 0;
-    } else {
-        $("#checkboxFieldset").attr("class", "checkbox text-center");
-        $("#checkboxLabel").css("font-weight", "");
-        cB = 1;
-    }
-
-    if(fN && lN && eM && pW && cP && cB) {
+    if(fN && lN && eM && pW && cP) {
+        console.log("updating");
         // if all checks pass then redirect
-        $.ajax({
-            type: 'POST',
-            url: '/user',
-            data: {
-                "firstName": firstName,
-                "lastName": lastName,
-                "email": email,
-                "password": password
-            },
-            success: function() {
-                window.location = "./index";
-            },
-            error: function() {
-                $("#email").attr("data-original-title", "Email is already registered");
-                $("#email").tooltip('show');
-                setTimeout(function() {
-                    $("#email").tooltip('hide');
-                }, 2000);
-            }
-        });
+        //$.ajax({
+        //    type: 'PUT',
+        //    url: '/user',
+        //    data: {
+        //        "firstName": firstName,
+        //        "lastName": lastName,
+        //        "email": email,
+        //        "password": password
+        //    },
+        //    success: function() {
+        //        window.location = "./index";
+        //    }
+        //});
     }
 };
 
-var loginButton = document.getElementById("loginButton");
-loginButton.onclick = function() {
-    window.location = "./login";
-};
+$("#yesDeleteAccount").click(function() {
+    $.ajax({
+        type: 'DELETE',
+        url: '/user',
+        success: function() {
+            // send user to login page
+            window.location = './';
+        }
+    });
+});
+
+$(document).ready(function() {
+    $.ajax({
+        type: 'GET',
+        url: '/user',
+        success: function(req) {
+            var firstName = req.firstName;
+            var lastName = req.lastName;
+            var email = req.email;
+
+            $("#firstName").val(firstName);
+            $("#lastName").val(lastName);
+            $("#email").val(email);
+        }
+    });
+});
