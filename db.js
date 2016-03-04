@@ -3,7 +3,6 @@ module.exports.db = {};
 
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
-//var mongoURI = require('./.env.json').MONGODB_URI;
 var config = require('./config');
 
 var state = {

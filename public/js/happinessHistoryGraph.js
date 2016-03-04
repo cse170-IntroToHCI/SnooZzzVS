@@ -3,20 +3,6 @@ var ex2ToggleCount = 0;
 var ex3ToggleCount = 0;
 var ex4ToggleCount = 0;
 
-                            /// TEST BOX
-
-var test1;
-$.ajax({
-    type: 'GET',
-    url: '/sleepData',
-    success: function(req) {
-        console.log("req= "+req);
-        test1 = req;
-    }
-});
-
-                            /// END TEST BOX
-
 var options = {
     animation: false,
     responsive: false,
@@ -27,97 +13,85 @@ var options = {
     scaleSteps: 6
 };
 
-function showGetWakeResult(name) {
-    var result = null;
-    var scriptUrl = "/getAllWakeData?name=" + name;
-    $.ajax({
-        url: scriptUrl,
-        type: 'get',
-        dataType: 'json',
-        async: false,
-        success: function(data) {
-            result = data;
-        }
-    });
-    return result;
-}
-
-function showGetSleepResult(name) {
-    var result = null;
-    var scriptUrl = "/getAllSleepData?name=" + name;
-    $.ajax({
-        url: scriptUrl,
-        type: 'get',
-        dataType: 'json',
-        async: false,
-        success: function(data) {
-            result = data;
-        }
-    });
-    return result;
-}
-
-var extractWakeData = showGetWakeResult("");
-var extractSleepData = showGetSleepResult("");
-var wakeLength = extractWakeData.length;
-var sleepLength = extractSleepData.length;
-var wakeCount = 8;
-var sleepCount = 8;
-
 var wakeData  = [];
 var sleepData = [];
 var averageData = [];
 var dateLabel = [];
 
-// booleans to determine which dataset has more data points
-var night = 1, day = 0;
+function fillData(userSleepData, userWakeData) {
+    var userSleepDataLength = userSleepData.length;
+    var userSleepDataLength = userSleepData.length;
 
-function fillData() {
-
-    if(wakeLength < 8) {
-        wakeCount = wakeLength;
-    }
-    if(sleepLength < 8) {
-        sleepCount = sleepLength;
+    // fill sleep data
+    for(var i = 0; i < userSleepDataLength; ++i) {
+        sleepData[6 - i] = userSleepData[i].sleepFeeling;
     }
 
-    // check which dataset has more data points
-    if(wakeLength > sleepLength) {
-        day = 1;
-        night = 0;
-    }
+    // fill wake data
+    //for(var i = 0; i < userWakeDataLength; ++i) {
+    //    wakeData[i] = userWakeData[i].wakeFeeling;
+    //}
+}
 
-    // fill wake feeling data
-    for(var i = wakeLength - 1, j = 6; i > wakeLength - wakeCount; --i, --j) {
-        wakeData[j]  = extractWakeData[i].wakeFeeling;
-        if(day === 1) {
-            dateLabel[j] = extractWakeData[i].date;
-            dateLabel[j] = dateLabel[j].slice(0, 5);
-            // fill average feeling data based on wakeLength
-            averageData[j] = (parseInt(sleepData[j]) + parseInt(wakeData[j]))/2;
-            night = 0;
-        }
-    }
-
-    // fill sleepData feeling data
-    for(var i = sleepLength - 1, j = 6; i > sleepLength - sleepCount; --i, --j) {
-        sleepData[j] = extractSleepData[i].sleepFeeling;
-        if(night === 1) {
-            dateLabel[j] = extractSleepData[i].date;
-            dateLabel[j] = dateLabel[j].slice(0, 5);
-            // fill average feeling data based on sleepLength
-            averageData[j] = (parseInt(sleepData[j]) + parseInt(wakeData[j]))/2;
-            day = 0;
+function fillDateLabel() {
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    // fill the x-axis labels with dates
+    for(var i = 0; i < 7; ++i) {
+        var day_i = day - i;
+        if((day_i) <= 0) {
+            if(--month === 0) {
+                month = 12;
+            }
+            for(var j = 0; i < 7; ++i) {
+                if(month === 4 || month === 6 || month === 9 || month === 11) {
+                    day_i = 30 - j++;
+                } else if(month === 2) {
+                    // account for leap year
+                    if((year % 4) === 0) {
+                        day_i = 29 - j++;
+                    } else {
+                        day_i = 28 - j++;
+                    }
+                } else {
+                    day_i = 31 - j++;
+                }
+                dateLabel[6 - i] = month+"/"+day_i;
+            }
+        } else {
+            dateLabel[6 - i] = month+"/"+day_i;
         }
     }
 }
 
-$(document).ready(function() {
-    setTimeout(function() {
-        console.log("test1= "+test1);
-    }, 2500);
+var sleepDataArray = [];
+$.ajax({
+    type: 'GET',
+    url: '/sleepData',
+    async: false,
+    success: function(req) {
+        console.log("Finished fetching Sleep Data");
+        for(var k = 0; k < req.length; k++) {
+            sleepDataArray[k] = req[k];
+        }
+    }
+});
 
-    fillData();
+//var wakeDataArray = $.ajax({
+//    type: 'GET',
+//    url: '/wakeData',
+//    async: false,
+//    success: function() {
+//        console.log("Finished fetching Wake Data");
+//    }
+//}).responseText;
+
+$(document).ready(function() {
+    //fillData(sleepDataArray, wakeDataArray);
+    fillData(sleepDataArray, [1,2]);
+    fillDateLabel();
     var ctx = document.getElementById("LineChart").getContext("2d");
 
     var enableCheck = function() {
@@ -214,16 +188,6 @@ $(document).ready(function() {
             averageChart = {};
         }
     };
-
-    var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth() + 1;
-    // fill the x-axis
-    for(var i = 0; i < 7; ++i) {
-        var day_i = day + i;
-        dateLabel[i] = month+"/"+day_i
-    }
-    dateLabel[0] = month+"/"+day;
 
     enableCheck();
     data = {

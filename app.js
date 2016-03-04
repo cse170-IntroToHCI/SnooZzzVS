@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'supposedToBeASecret',
+    maxAge: new Date(Date.now() + (10 * 60 * 60 * 1000)), // 10 hours
     saveUninitialized: true,
     resave: false
 }));
