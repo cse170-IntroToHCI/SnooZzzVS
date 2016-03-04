@@ -4,6 +4,7 @@ module.exports.db = {};
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var mongoURI = require('./.env.json').MONGODB_URI;
+var config = require('./config');
 
 var state = {
     db: null
@@ -12,7 +13,7 @@ var state = {
 module.exports.connect = function(url, done) {
     if(state.db) return done;
 
-    MongoClient.connect(mongoURI, function(err, db) {
+    MongoClient.connect(config.mongoDBURI, function(err, db) {
         if(err) {
             console.log("it's going to be a loooong night");
             console.log("This is the err:\n" + err);
@@ -30,5 +31,5 @@ module.exports.get = function() {
 };
 
 module.exports.getURI = function() {
-    return mongoURI;
+    return config.mongoDBURI;
 };
