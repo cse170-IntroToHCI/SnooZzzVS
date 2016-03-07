@@ -18,6 +18,7 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(yScale)
+    .ticks(1)
     .orient("left");
 
 var line = d3.svg.line()
@@ -100,7 +101,7 @@ d3.json("/sleepData").get(function(err, data) {
             height = parseInt(d3.select("#graph").style("height")) - margin*2;
 
         xScale.range([0, width]).nice(d3.time.day);
-        yScale.range([height, 0]).nice();
+        yScale.range([height, 0]).nice().domain([1,7]);
 
         if (width < 300 && height < 80) {
             graph.select('.x.axis').style("display", "none");
@@ -149,10 +150,10 @@ d3.json("/sleepData").get(function(err, data) {
             .data(data)
             .enter()
             .append("circle")
-            .attr("r", 2)
+            .attr("r", 5)
             .attr("cx", function(dd){return xScale(dd.date)})
             .attr("cy", function(dd){return yScale(dd.sleepFeeling)})
-            .attr("fill", "red")
+            .attr("fill", "rgba(173, 216, 230, 0.701961)")
             .attr("stroke", "black");
     }
 
