@@ -3,10 +3,10 @@
 // Data notice the structure
 //************************************************************
 var data = 	[
-    [{'x':'01/01','y':0},{'x':'01/02','y':5},{'x':'01/03','y':1},{'x':'01/04','y':0},{'x':'0/05','y':6},{'x':'01/06','y':1},{'x':'01/07','y':5}],
-    [{'x':'01/01','y':1},{'x':'01/02','y':6},{'x':'01/03','y':2},{'x':'01/04','y':1},{'x':'0/05','y':7},{'x':'01/06','y':2},{'x':'01/07','y':6}]
+    [{'x':'01/01/2016','y':0},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':0},{'x':'0/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
+    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'0/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}]
 ];
-data.push([{'x':'01/01','y':2},{'x':'01/02','y':7},{'x':'01/03','y':3},{'x':'01/04','y':2},{'x':'01/05','y':5},{'x':'01/06','y':3},{'x':'01/07','y':7}]
+data.push([{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
 );
 var colors = [
     'steelblue',
@@ -14,7 +14,12 @@ var colors = [
     'red',
     'purple'
 ];
-
+for(var i = 0; i < data.length; ++i) {
+    data[i].forEach(function (d) {
+        d.x = d3.time.format("%x").parse(d.x);
+        d.y = +d.y;
+    });
+}
 
 //************************************************************
 // Create Margins and Axis and hook our zoom function
@@ -23,9 +28,19 @@ var margin = {top: 20, right: 30, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
+// -------------------------
 //var xScale = d3.scale.linear()
 //    .domain([0, 8])
 //    .range([0, width]);
+// -------------------------
+//var xScale = d3.time.scale()
+//    .domain(d3.extent(data, function(d) {
+//        for(var i = 0; i < data.length; ++i) {
+//            return d[i].x;
+//        }
+//    }))
+//    .range([0, width]);
+
 var xScale = d3.time.scale()
     .range([0, width]);
 
@@ -38,8 +53,6 @@ var xAxis = d3.svg.axis()
     //.tickSize(-height) // gives me the horizontal grid lines
     .tickPadding(10)
     //.tickSubdivide(true)
-    //.ticks(data[0].length)
-    //.tickValues([0,1,3,4])
     //.ticks(1)
     .tickFormat(d3.time.format("%x"))
     .orient("bottom");
@@ -160,7 +173,7 @@ function zoomed() {
 //************************************************************
 // GET request
 //************************************************************
-d3.json("/sleepData").get(function(err, data) {
+/*d3.json("/sleepData").get(function(err, data) {
     if (err) {
         console.log("Error: ");
         console.log(err);
@@ -172,8 +185,8 @@ d3.json("/sleepData").get(function(err, data) {
     });
 
     //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
-}); // end get request
-//xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
+});*/ // end get request
+//xScale.domain(d3.extent(data, function(d) { return d.x; }));
 
 
 //************************************************************
