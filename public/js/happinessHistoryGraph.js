@@ -25,11 +25,17 @@ var line = d3.svg.line()
     .x(function(d) { return xScale(d.date); })
     .y(function(d) { return yScale(d.sleepFeeling); });
 
+var zoom = d3.behavior.zoom()
+    .x(xScale)
+    .scaleExtent([1,10])
+    .on("zoom", zoomed);
+
 var graph = d3.select("#graph")
     .attr("width", width + margin*2)
     .attr("height", height + margin*2)
     .append("g")
-    .attr("transform", "translate(" + margin + "," + margin + ")");
+    .attr("transform", "translate(" + margin + "," + margin + ")")
+    .call(zoom);
 
 d3.json("/sleepData").get(function(err, data) {
     if(err) {
@@ -157,9 +163,7 @@ d3.json("/sleepData").get(function(err, data) {
             .attr("fill", "rgba(173, 216, 230, 0.701961)")
             .attr("stroke", "black");
 
-        graph.append("g")
-            .attr("class", "y axis")
-            .call(yAxis);
+        // create y label
         graph.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y",0-margin)
@@ -168,9 +172,25 @@ d3.json("/sleepData").get(function(err, data) {
             .style("text-anchor", "middle")
             .style("font-weight", "bold")
             .text("Mood Values");
+
+        //d3.behavior.zoom()
+        //    .x(xScale)
+        //    .on('zoom', function() {
+        //        if(true) {
+        //
+        //        }
+        //        redrawChart();
+        //    })
     }
 
     d3.select(window).on('resize', resize);
 
     resize();
-});
+}); // end get request
+
+function zoomed() {
+    graph.select(".x.axis").call(xAxis);
+    graph.selectAll("path.line").attr("d", line);
+
+
+}
