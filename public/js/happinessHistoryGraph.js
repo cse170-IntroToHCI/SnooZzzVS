@@ -3,10 +3,10 @@
 // Data notice the structure
 //************************************************************
 var data = 	[
-    [{'x':1,'y':0},{'x':2,'y':5},{'x':3,'y':1},{'x':4,'y':0},{'x':5,'y':6},{'x':6,'y':1},{'x':7,'y':5},{'x':8,'y':4},{'x':9,'y':1},{'x':10,'y':2}],
-    [{'x':1,'y':1},{'x':2,'y':6},{'x':3,'y':2},{'x':4,'y':1},{'x':5,'y':7},{'x':6,'y':2},{'x':7,'y':6},{'x':8,'y':3},{'x':9,'y':2},{'x':10,'y':3}],
+    [{'x':'01/01','y':0},{'x':'01/02','y':5},{'x':'01/03','y':1},{'x':'01/04','y':0},{'x':'0/05','y':6},{'x':'01/06','y':1},{'x':'01/07','y':5}],
+    [{'x':'01/01','y':1},{'x':'01/02','y':6},{'x':'01/03','y':2},{'x':'01/04','y':1},{'x':'0/05','y':7},{'x':'01/06','y':2},{'x':'01/07','y':6}]
 ];
-data.push([{'x':1,'y':2},{'x':2,'y':7},{'x':3,'y':3},{'x':4,'y':2},{'x':5,'y':5},{'x':6,'y':3},{'x':7,'y':7},{'x':8,'y':2},{'x':9,'y':4},{'x':10,'y':7}]
+data.push([{'x':'01/01','y':2},{'x':'01/02','y':7},{'x':'01/03','y':3},{'x':'01/04','y':2},{'x':'01/05','y':5},{'x':'01/06','y':3},{'x':'01/07','y':7}]
 );
 var colors = [
     'steelblue',
@@ -23,8 +23,10 @@ var margin = {top: 20, right: 30, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var xScale = d3.scale.linear()
-    .domain([0, 12])
+//var xScale = d3.scale.linear()
+//    .domain([0, 8])
+//    .range([0, width]);
+var xScale = d3.time.scale()
     .range([0, width]);
 
 var yScale = d3.scale.linear()
@@ -38,8 +40,8 @@ var xAxis = d3.svg.axis()
     //.tickSubdivide(true)
     //.ticks(data[0].length)
     //.tickValues([0,1,3,4])
-    //.ticks(data[0].length)
-    //.tickFormat(d3.time.format("%x"))
+    //.ticks(1)
+    .tickFormat(d3.time.format("%x"))
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
@@ -88,19 +90,6 @@ svg.append("clipPath")
     .append("rect")
     .attr("width", width)
     .attr("height", height);
-
-
-d3.json("/sleepData").get(function(err, data) {
-    if (err) {
-        console.log("Error: ");
-        console.log(err);
-    }
-
-    data.forEach(function (d) {
-        d.date = d3.time.format("%x").parse(d.date);
-        d.sleepFeeling = +d.sleepFeeling;
-    });
-}); // end get request
 
 
 //************************************************************
@@ -155,10 +144,6 @@ points.selectAll('.dot')
     );
 
 
-
-//xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
-
-
 //************************************************************
 // Zoom specific updates
 //************************************************************
@@ -171,6 +156,24 @@ function zoomed() {
         return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
     );
 }
+
+//************************************************************
+// GET request
+//************************************************************
+d3.json("/sleepData").get(function(err, data) {
+    if (err) {
+        console.log("Error: ");
+        console.log(err);
+    }
+
+    data.forEach(function (d) {
+        d.date = d3.time.format("%x").parse(d.date);
+        d.sleepFeeling = +d.sleepFeeling;
+    });
+
+    //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
+}); // end get request
+//xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
 
 
 //************************************************************
