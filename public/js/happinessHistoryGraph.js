@@ -1,107 +1,154 @@
-InitChart();
+var margin = 60,
+    width = parseInt(d3.select("#graph").style("width")) - margin*2,
+    height = parseInt(d3.select("#graph").style("height")) - margin*2;
 
-function InitChart() {
+var xScale = d3.time.scale()
+    .range([0, width])
+    .nice(d3.time.year);
 
-    var lineData = [{
-        'x': 1,
-        'y': 5
-    }, {
-        'x': 20,
-        'y': 20
-    }, {
-        'x': 40,
-        'y': 10
-    }, {
-        'x': 60,
-        'y': 40
-    }, {
-        'x': 80,
-        'y': 5
-    }, {
-        'x': 100,
-        'y': 60
-    }];
+var yScale = d3.scale.linear()
+    .range([height, 0])
+    .nice();
 
-    var vis = d3.select("#visualisation"),
-        WIDTH = 1000,
-        HEIGHT = 500,
-        MARGINS = {
-            top: 20,
-            right: 20,
-            bottom: 20,
-            left: 50
-        },
-        xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function (d) {
-            return d.x;
-        }),
-            d3.max(lineData, function (d) {
-                return d.x;
-            })
-        ]),
+var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
 
-        yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function (d) {
-            return d.y;
-        }),
-            d3.max(lineData, function (d) {
-                return d.y;
-            })
-        ]),
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
 
-        xAxis = d3.svg.axis()
-            .scale(xRange)
-            .tickSize(5)
-            .tickSubdivide(true),
+var line = d3.svg.line()
+    .x(function(d) { return xScale(d.date); })
+    .y(function(d) { return yScale(d.close); });
 
-        yAxis = d3.svg.axis()
-            .scale(yRange)
-            .tickSize(5)
-            .orient("left")
-            .tickSubdivide(true)
-        ; // ----- end var vis
+var graph = d3.select("#graph")
+    .attr("width", width + margin*2)
+    .attr("height", height + margin*2)
+    .append("g")
+    .attr("transform", "translate(" + margin + "," + margin + ")");
 
-    vis.append("svg:g")
+d3.json("/sleepData").get(function(error, data) {
+    if(error) {
+        console.log("Error: " + error);
+    }
+    console.log(data[0]);
+    console.log(data);
+    data.forEach(function(d) {
+        console.log(d);
+        //d.date = d3.time.format("%x").parse(d.date);
+        console.log("d.date = "+d.date);
+        d.sleepFeeling = +d.sleepFeeling;
+        console.log(d.sleepFeeling);
+    });
+
+    xScale.domain(d3.extent(data, function(d) { return d.date; }));
+    yScale.domain(d3.extent(data, function(d) { return d.close; }));
+
+    graph.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
-    vis.append("svg:g")
+    graph.append("g")
         .attr("class", "y axis")
-        .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-        .call(yAxis);
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Price ($)");
 
-    var lineFunc = d3.svg.line()
-        .x(function (d) {
-            return xRange(d.x);
-        })
-        .y(function (d) {
-            return yRange(d.y);
-        })
-        .interpolate('basis');
+    dataPerPixel = data.length/width;
+    dataResampled = data.filter(
+        function(d, i) { return i % Math.ceil(dataPerPixel) == 0; }
+    );
 
-    vis.append("svg:path")
-        .attr("d", lineFunc(lineData))
-        .attr("stroke", "red")
-        .attr("stroke-width", 20)
-        .attr("fill", "none")
-        .attr("id", "redLine");
-}
+    graph.append("path")
+        .datum(dataResampled)
+        .attr("class", "line")
+        .attr("d", line);
 
-var toggleGraphBoolean = 1;
+    var firstRecord = data[data.length-1],
+        lastRecord = data[0];
 
-function toogle() {
-    toggleGraphBoolean = (toggleGraphBoolean === 1) ? 0 : 1;
-    d3.select("#redLine")
-        .style("opacity", toggleGraphBoolean);
-}
+    var first = graph.append("g")
+        .attr("class", "first")
+        .style("display", "none");
 
-document.getElementById("ex1").onclick = toogle;
+    first.append("text")
+        .attr("x", -8)
+        .attr("y", 4)
+        .attr("text-anchor", "end")
+        .text("$" + firstRecord.close);
+    first.append("circle")
+        .attr("r", 4);
 
-// making graph responsive
-var chart = $("#visualisation"),
-    aspect = chart.width() / chart.height(),
-    container = chart.parent();
-$(window).on("resize", function() {
-    var targetWidth = container.width();
-    chart.attr("width", targetWidth);
-    chart.attr("height", Math.round(targetWidth / aspect));
-}).trigger("resize");
+
+    var last = graph.append("g")
+        .attr("class", "last")
+        .style("display", "none");
+
+    last.append("text")
+        .attr("x", 8)
+        .attr("y", 4)
+        .text("$" + lastRecord.close);
+    last.append("circle")
+        .attr("r", 4);
+
+    function resize() {
+        var width = parseInt(d3.select("#graph").style("width")) - margin*2,
+            height = parseInt(d3.select("#graph").style("height")) - margin*2;
+
+        xScale.range([0, width]).nice(d3.time.year);
+        yScale.range([height, 0]).nice();
+
+        if (width < 300 && height < 80) {
+            graph.select('.x.axis').style("display", "none");
+            graph.select('.y.axis').style("display", "none");
+
+            graph.select(".first")
+                .attr("transform", "translate(" + xScale(firstRecord.date) + "," + yScale(firstRecord.close) + ")")
+                .style("display", "initial");
+
+            graph.select(".last")
+                .attr("transform", "translate(" + xScale(lastRecord.date) + "," + yScale(lastRecord.close) + ")")
+                .style("display", "initial");
+        } else {
+            graph.select('.x.axis').style("display", "initial");
+            graph.select('.y.axis').style("display", "initial");
+            graph.select(".last")
+                .style("display", "none");
+            graph.select(".first")
+                .style("display", "none");
+        }
+
+        yAxis.ticks(Math.max(height/50, 2));
+        xAxis.ticks(Math.max(width/50, 2));
+
+        graph
+            .attr("width", width + margin*2)
+            .attr("height", height + margin*2)
+
+        graph.select('.x.axis')
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        graph.select('.y.axis')
+            .call(yAxis);
+
+        dataPerPixel = data.length/width;
+        dataResampled = data.filter(
+            function(d, i) { return i % Math.ceil(dataPerPixel) == 0; }
+        );
+
+        graph.selectAll('.line')
+            .datum(dataResampled)
+            .attr("d", line);
+    }
+
+    d3.select(window).on('resize', resize);
+
+    resize();
+});
