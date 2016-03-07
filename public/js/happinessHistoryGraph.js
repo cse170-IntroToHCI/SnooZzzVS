@@ -20,7 +20,7 @@ var yAxis = d3.svg.axis()
 
 var line = d3.svg.line()
     .x(function(d) { return xScale(d.date); })
-    .y(function(d) { return yScale(d.close); });
+    .y(function(d) { return yScale(d.sleepFeeling); });
 
 var graph = d3.select("#graph")
     .attr("width", width + margin*2)
@@ -32,18 +32,21 @@ d3.json("/sleepData").get(function(error, data) {
     if(error) {
         console.log("Error: " + error);
     }
-    console.log(data[0]);
-    console.log(data);
+    //console.log(data[0]);
+    //console.log(data);
     data.forEach(function(d) {
-        console.log(d);
-        //d.date = d3.time.format("%x").parse(d.date);
-        console.log("d.date = "+d.date);
+        //console.log("d: ");
+        //console.log(d);
+        //console.log("d3.time.format(x).parse(d.date): ");
+        //console.log(d3.time.format("%x").parse(d.date));
+        d.date = d3.time.format("%x").parse(d.date);
+        //console.log("d.date = "+d.date);
         d.sleepFeeling = +d.sleepFeeling;
-        console.log(d.sleepFeeling);
+        //console.log(d.sleepFeeling);
     });
 
     xScale.domain(d3.extent(data, function(d) { return d.date; }));
-    yScale.domain(d3.extent(data, function(d) { return d.close; }));
+    yScale.domain(d3.extent(data, function(d) { return d.sleepFeeling; }));
 
     graph.append("g")
         .attr("class", "x axis")
@@ -81,7 +84,7 @@ d3.json("/sleepData").get(function(error, data) {
         .attr("x", -8)
         .attr("y", 4)
         .attr("text-anchor", "end")
-        .text("$" + firstRecord.close);
+        .text("$" + firstRecord.sleepFeeling);
     first.append("circle")
         .attr("r", 4);
 
@@ -93,7 +96,7 @@ d3.json("/sleepData").get(function(error, data) {
     last.append("text")
         .attr("x", 8)
         .attr("y", 4)
-        .text("$" + lastRecord.close);
+        .text("$" + lastRecord.sleepFeeling);
     last.append("circle")
         .attr("r", 4);
 
@@ -109,11 +112,11 @@ d3.json("/sleepData").get(function(error, data) {
             graph.select('.y.axis').style("display", "none");
 
             graph.select(".first")
-                .attr("transform", "translate(" + xScale(firstRecord.date) + "," + yScale(firstRecord.close) + ")")
+                .attr("transform", "translate(" + xScale(firstRecord.date) + "," + yScale(firstRecord.sleepFeeling) + ")")
                 .style("display", "initial");
 
             graph.select(".last")
-                .attr("transform", "translate(" + xScale(lastRecord.date) + "," + yScale(lastRecord.close) + ")")
+                .attr("transform", "translate(" + xScale(lastRecord.date) + "," + yScale(lastRecord.sleepFeeling) + ")")
                 .style("display", "initial");
         } else {
             graph.select('.x.axis').style("display", "initial");
