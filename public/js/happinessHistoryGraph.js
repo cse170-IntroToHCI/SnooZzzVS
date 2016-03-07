@@ -3,11 +3,11 @@
 // Data notice the structure
 //************************************************************
 var data = 	[
-    [{'x':1,'y':0},{'x':2,'y':5},{'x':3,'y':10},{'x':4,'y':0},{'x':5,'y':6},{'x':6,'y':11},{'x':7,'y':9},{'x':8,'y':4},{'x':9,'y':11},{'x':10,'y':2}],
-    [{'x':1,'y':1},{'x':2,'y':6},{'x':3,'y':11},{'x':4,'y':1},{'x':5,'y':7},{'x':6,'y':12},{'x':7,'y':8},{'x':8,'y':3},{'x':9,'y':13},{'x':10,'y':3}],
-    [{'x':1,'y':2},{'x':2,'y':7},{'x':3,'y':12},{'x':4,'y':2},{'x':5,'y':8},{'x':6,'y':13},{'x':7,'y':7},{'x':8,'y':2},{'x':9,'y':4},{'x':10,'y':7}]
+    [{'x':1,'y':0},{'x':2,'y':5},{'x':3,'y':1},{'x':4,'y':0},{'x':5,'y':6},{'x':6,'y':1},{'x':7,'y':5},{'x':8,'y':4},{'x':9,'y':1},{'x':10,'y':2}],
+    [{'x':1,'y':1},{'x':2,'y':6},{'x':3,'y':2},{'x':4,'y':1},{'x':5,'y':7},{'x':6,'y':2},{'x':7,'y':6},{'x':8,'y':3},{'x':9,'y':2},{'x':10,'y':3}],
 ];
-
+data.push([{'x':1,'y':2},{'x':2,'y':7},{'x':3,'y':3},{'x':4,'y':2},{'x':5,'y':5},{'x':6,'y':3},{'x':7,'y':7},{'x':8,'y':2},{'x':9,'y':4},{'x':10,'y':7}]
+);
 var colors = [
     'steelblue',
     'green',
@@ -28,21 +28,26 @@ var xScale = d3.scale.linear()
     .range([0, width]);
 
 var yScale = d3.scale.linear()
-    .domain([-1, 16])
+    .domain([1, 7])
     .range([height, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(xScale)
-    .tickSize(-height)
+    //.tickSize(-height) // gives me the horizontal grid lines
     .tickPadding(10)
-    .tickSubdivide(true)
+    //.tickSubdivide(true)
+    //.ticks(data[0].length)
+    //.tickValues([0,1,3,4])
+    //.ticks(data[0].length)
+    //.tickFormat(d3.time.format("%x"))
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
     .scale(yScale)
-    .tickPadding(10)
-    .tickSize(-width)
+    //.tickPadding(10)
+    //.tickSize(-width)   // gives me the horizontal grid lines
     .tickSubdivide(true)
+    .ticks(7)
     .orient("left");
 
 var zoom = d3.behavior.zoom()
@@ -74,9 +79,9 @@ svg.append("g")
     .append("text")
     .attr("class", "axis-label")
     .attr("transform", "rotate(-90)")
-    .attr("y", (-margin.left) + 10)
+    .attr("y", (-margin.left) + 20)
     .attr("x", -height/2)
-    .text('Axis Label');
+    .text('Mood Level');
 
 svg.append("clipPath")
     .attr("id", "clip")
@@ -85,7 +90,17 @@ svg.append("clipPath")
     .attr("height", height);
 
 
+d3.json("/sleepData").get(function(err, data) {
+    if (err) {
+        console.log("Error: ");
+        console.log(err);
+    }
 
+    data.forEach(function (d) {
+        d.date = d3.time.format("%x").parse(d.date);
+        d.sleepFeeling = +d.sleepFeeling;
+    });
+}); // end get request
 
 
 //************************************************************
@@ -141,7 +156,7 @@ points.selectAll('.dot')
 
 
 
-
+//xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
 
 
 //************************************************************
@@ -158,64 +173,9 @@ function zoomed() {
 }
 
 
-////************************************************************
-//// Resizing updates
-////************************************************************
-//function resize() {
-//    var width = parseInt(d3.select("#graph").style("width")) - margin*2,
-//        height = parseInt(d3.select("#graph").style("height")) - margin*2;
-//
-//    xScale.range([0, width]).nice(d3.time.year);
-//    yScale.range([height, 0]).nice();
-//
-//    //if (width < 300 && height < 80) {
-//    //    svg.select('.x.axis').style("display", "none");
-//    //    svg.select('.y.axis').style("display", "none");
-//    //
-//    //    svg.select(".first")
-//    //        .attr("transform", "translate(" + xScale(firstRecord.date) + "," + yScale(firstRecord.close) + ")")
-//    //        .style("display", "initial");
-//    //
-//    //    svg.select(".last")
-//    //        .attr("transform", "translate(" + xScale(lastRecord.date) + "," + yScale(lastRecord.close) + ")")
-//    //        .style("display", "initial");
-//    //} else {
-//    //    svg.select('.x.axis').style("display", "initial");
-//    //    svg.select('.y.axis').style("display", "initial");
-//    //    svg.select(".last")
-//    //        .style("display", "none");
-//    //    svg.select(".first")
-//    //        .style("display", "none");
-//    //}
-//
-//    yAxis.ticks(Math.max(height/50, 2));
-//    xAxis.ticks(Math.max(width/50, 2));
-//
-//    svg
-//        .attr("width", width + margin*2)
-//        .attr("height", height + margin*2)
-//
-//    svg.select('.x.axis')
-//        .attr("transform", "translate(0," + height + ")")
-//        .call(xAxis);
-//
-//    svg.select('.y.axis')
-//        .call(yAxis);
-//
-//    //dataPerPixel = data.length/width;
-//    //dataResampled = data.filter(
-//    //    function(d, i) { return i % Math.ceil(dataPerPixel) == 0; }
-//    //);
-//
-//    svg.selectAll('.line')
-//        .datum(dataResampled)
-//        .attr("d", line);
-//}
-//
-//d3.select(window).on('resize', resize);
-//
-//resize();
-
+//************************************************************
+// Resizing updates
+//************************************************************
 var chart = $("#graph"),
     aspect = chart.width() / chart.height(),
     container = chart.parent();
