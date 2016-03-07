@@ -146,6 +146,7 @@ d3.json("/sleepData").get(function(err, data) {
             .datum(dataResampled)
             .attr("d", line);
 
+        // stroke points
         graph.append("g").selectAll("circle")
             .data(data)
             .enter()
@@ -155,6 +156,18 @@ d3.json("/sleepData").get(function(err, data) {
             .attr("cy", function(dd){return yScale(dd.sleepFeeling)})
             .attr("fill", "rgba(173, 216, 230, 0.701961)")
             .attr("stroke", "black");
+
+        graph.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+        graph.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y",0-margin)
+            .attr("x",0 - (height / 2))
+            .attr("dy", "3em")
+            .style("text-anchor", "middle")
+            .style("font-weight", "bold")
+            .text("Mood Values");
     }
 
     d3.select(window).on('resize', resize);
