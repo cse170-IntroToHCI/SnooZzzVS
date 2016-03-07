@@ -3,8 +3,8 @@ var margin = 60,
     height = parseInt(d3.select("#graph").style("height")) - margin*2;
 
 var xScale = d3.time.scale()
-    .range([0, width])
-    .nice(d3.time.year);
+    .range([0, width]);
+    //.nice(d3.time.day);
 
 var yScale = d3.scale.linear()
     .range([height, 0])
@@ -12,7 +12,9 @@ var yScale = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
     .scale(xScale)
-    .orient("bottom");
+    .orient("bottom")
+    .ticks(1)
+    .tickFormat(d3.time.format("%m/%d"));
 
 var yAxis = d3.svg.axis()
     .scale(yScale)
@@ -28,21 +30,15 @@ var graph = d3.select("#graph")
     .append("g")
     .attr("transform", "translate(" + margin + "," + margin + ")");
 
-d3.json("/sleepData").get(function(error, data) {
-    if(error) {
-        console.log("Error: " + error);
+d3.json("/sleepData").get(function(err, data) {
+    if(err) {
+        console.log("Error: ");
+        console.log(err);
     }
-    //console.log(data[0]);
-    //console.log(data);
+
     data.forEach(function(d) {
-        //console.log("d: ");
-        //console.log(d);
-        //console.log("d3.time.format(x).parse(d.date): ");
-        //console.log(d3.time.format("%x").parse(d.date));
         d.date = d3.time.format("%x").parse(d.date);
-        //console.log("d.date = "+d.date);
         d.sleepFeeling = +d.sleepFeeling;
-        //console.log(d.sleepFeeling);
     });
 
     xScale.domain(d3.extent(data, function(d) { return d.date; }));
@@ -60,8 +56,7 @@ d3.json("/sleepData").get(function(error, data) {
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Price ($)");
+        .style("text-anchor", "end");
 
     dataPerPixel = data.length/width;
     dataResampled = data.filter(
@@ -104,7 +99,7 @@ d3.json("/sleepData").get(function(error, data) {
         var width = parseInt(d3.select("#graph").style("width")) - margin*2,
             height = parseInt(d3.select("#graph").style("height")) - margin*2;
 
-        xScale.range([0, width]).nice(d3.time.year);
+        xScale.range([0, width]).nice(d3.time.day);
         yScale.range([height, 0]).nice();
 
         if (width < 300 && height < 80) {
@@ -149,6 +144,16 @@ d3.json("/sleepData").get(function(error, data) {
         graph.selectAll('.line')
             .datum(dataResampled)
             .attr("d", line);
+
+        graph.append("g").selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("r", 2)
+            .attr("cx", function(dd){return xScale(dd.date)})
+            .attr("cy", function(dd){return yScale(dd.sleepFeeling)})
+            .attr("fill", "red")
+            .attr("stroke", "black");
     }
 
     d3.select(window).on('resize', resize);
