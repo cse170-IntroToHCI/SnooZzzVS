@@ -5,9 +5,7 @@
 var data = 	[
     [{'x':1,'y':0},{'x':2,'y':5},{'x':3,'y':10},{'x':4,'y':0},{'x':5,'y':6},{'x':6,'y':11},{'x':7,'y':9},{'x':8,'y':4},{'x':9,'y':11},{'x':10,'y':2}],
     [{'x':1,'y':1},{'x':2,'y':6},{'x':3,'y':11},{'x':4,'y':1},{'x':5,'y':7},{'x':6,'y':12},{'x':7,'y':8},{'x':8,'y':3},{'x':9,'y':13},{'x':10,'y':3}],
-    [{'x':1,'y':2},{'x':2,'y':7},{'x':3,'y':12},{'x':4,'y':2},{'x':5,'y':8},{'x':6,'y':13},{'x':7,'y':7},{'x':8,'y':2},{'x':9,'y':4},{'x':10,'y':7}],
-    [{'x':1,'y':3},{'x':2,'y':8},{'x':3,'y':13},{'x':4,'y':3},{'x':5,'y':9},{'x':6,'y':14},{'x':7,'y':6},{'x':8,'y':1},{'x':9,'y':7},{'x':10,'y':9}],
-    [{'x':1,'y':4},{'x':2,'y':9},{'x':3,'y':14},{'x':4,'y':4},{'x':5,'y':10},{'x':6,'y':15},{'x':7,'y':5},{'x':8,'y':0},{'x':9,'y':8},{'x':10,'y':5}]
+    [{'x':1,'y':2},{'x':2,'y':7},{'x':3,'y':12},{'x':4,'y':2},{'x':5,'y':8},{'x':6,'y':13},{'x':7,'y':7},{'x':8,'y':2},{'x':9,'y':4},{'x':10,'y':7}]
 ];
 
 var colors = [
@@ -15,7 +13,7 @@ var colors = [
     'green',
     'red',
     'purple'
-]
+];
 
 
 //************************************************************
@@ -25,30 +23,30 @@ var margin = {top: 20, right: 30, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var x = d3.scale.linear()
+var xScale = d3.scale.linear()
     .domain([0, 12])
     .range([0, width]);
 
-var y = d3.scale.linear()
+var yScale = d3.scale.linear()
     .domain([-1, 16])
     .range([height, 0]);
 
 var xAxis = d3.svg.axis()
-    .scale(x)
+    .scale(xScale)
     .tickSize(-height)
     .tickPadding(10)
     .tickSubdivide(true)
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
-    .scale(y)
+    .scale(yScale)
     .tickPadding(10)
     .tickSize(-width)
     .tickSubdivide(true)
     .orient("left");
 
 var zoom = d3.behavior.zoom()
-    .x(x)
+    .x(xScale)
     .scaleExtent([1, 10])
     .on("zoom", zoomed);
 
@@ -95,8 +93,8 @@ svg.append("clipPath")
 //************************************************************
 var line = d3.svg.line()
     .interpolate("linear")
-    .x(function(d) { return x(d.x); })
-    .y(function(d) { return y(d.y); });
+    .x(function(d) { return xScale(d.x); })
+    .y(function(d) { return yScale(d.y); });
 
 svg.selectAll('.line')
     .data(data)
@@ -138,7 +136,7 @@ points.selectAll('.dot')
         return colors[d.index%colors.length];
     })
     .attr("transform", function(d) {
-        return "translate(" + x(d.point.x) + "," + y(d.point.y) + ")"; }
+        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
     );
 
 
@@ -155,6 +153,74 @@ function zoomed() {
     svg.selectAll('path.line').attr('d', line);
 
     points.selectAll('circle').attr("transform", function(d) {
-        return "translate(" + x(d.point.x) + "," + y(d.point.y) + ")"; }
+        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
     );
 }
+
+
+////************************************************************
+//// Resizing updates
+////************************************************************
+//function resize() {
+//    var width = parseInt(d3.select("#graph").style("width")) - margin*2,
+//        height = parseInt(d3.select("#graph").style("height")) - margin*2;
+//
+//    xScale.range([0, width]).nice(d3.time.year);
+//    yScale.range([height, 0]).nice();
+//
+//    //if (width < 300 && height < 80) {
+//    //    svg.select('.x.axis').style("display", "none");
+//    //    svg.select('.y.axis').style("display", "none");
+//    //
+//    //    svg.select(".first")
+//    //        .attr("transform", "translate(" + xScale(firstRecord.date) + "," + yScale(firstRecord.close) + ")")
+//    //        .style("display", "initial");
+//    //
+//    //    svg.select(".last")
+//    //        .attr("transform", "translate(" + xScale(lastRecord.date) + "," + yScale(lastRecord.close) + ")")
+//    //        .style("display", "initial");
+//    //} else {
+//    //    svg.select('.x.axis').style("display", "initial");
+//    //    svg.select('.y.axis').style("display", "initial");
+//    //    svg.select(".last")
+//    //        .style("display", "none");
+//    //    svg.select(".first")
+//    //        .style("display", "none");
+//    //}
+//
+//    yAxis.ticks(Math.max(height/50, 2));
+//    xAxis.ticks(Math.max(width/50, 2));
+//
+//    svg
+//        .attr("width", width + margin*2)
+//        .attr("height", height + margin*2)
+//
+//    svg.select('.x.axis')
+//        .attr("transform", "translate(0," + height + ")")
+//        .call(xAxis);
+//
+//    svg.select('.y.axis')
+//        .call(yAxis);
+//
+//    //dataPerPixel = data.length/width;
+//    //dataResampled = data.filter(
+//    //    function(d, i) { return i % Math.ceil(dataPerPixel) == 0; }
+//    //);
+//
+//    svg.selectAll('.line')
+//        .datum(dataResampled)
+//        .attr("d", line);
+//}
+//
+//d3.select(window).on('resize', resize);
+//
+//resize();
+
+var chart = $("#graph"),
+    aspect = chart.width() / chart.height(),
+    container = chart.parent();
+$(window).on("resize", function() {
+    var targetWidth = container.width();
+    chart.attr("width", targetWidth);
+    chart.attr("height", Math.round(targetWidth / aspect));
+}).trigger("resize");
