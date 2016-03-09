@@ -7,6 +7,7 @@
     <script src="js/jquery-1.12.0.min.js"></script>
     <script src="js/Chart.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -42,19 +43,15 @@
         <h1>Your Mood Trends!</h1>
     </div>
 
-    <!-- Chart.js -->
+    <!-- D3.js -->
     <div style="text-align: center;">
-        <div id="yAxisTitle" style="display: inline-block; height: 300px; vertical-align: top; width: 30px">
-            <span style="font-weight: bold;">
-                <br><br><br><br><br>
-                M<br>
-                o<br>
-                o<br>
-                d<br><br>
-            </span>
-        </div>
-        <canvas id="LineChart" height="300"></canvas>
+        <!--<svg id="graph" width="1920" height="955"></svg>-->
+        <svg id="graph" width="960" height="500"
+             viewBox="0 0 960 500"
+             preserveAspectRatio="xMidYMid meet">
+        </svg>
     </div>
+
 
     <hr>
     <!-- Nav for Chart -->
@@ -64,7 +61,7 @@
             <strong>&nbsp;Toggle Graphs</strong><small> (y-axis)</small>
         </h4>
     </div>
-    <div class="btn-group-wrap">
+    <div id="chartLegend" class="btn-group-wrap">
         <div class="btn-toolbar" role="toolbar" aria-label="...">
             <div class="chart-toggles btn-group">
                 <button id="ex1" class="hB enabled btn btn-default active" data-toggle="button">Wake Up</button>
@@ -113,6 +110,9 @@
     <!--</div>-->
 
     <style>
+        html, body {
+            /*overflow: auto;*/
+        }
         .btn-group-wrap {
             text-align: center;
         }
@@ -125,6 +125,85 @@
 
         #ex1, #ex2, #ex3, #ex4 {
             font-weight: bold;
+        }
+
+        #graph {
+            /*width: 100%;
+            height: 400px;
+            position: absolute;*/
+            z-index: 0;
+        }
+        body {
+            font-family: 'PT Sans', sans-serif;
+            font-size: 12px;
+            background-color: #fefefe;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+/*
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #555;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            fill: #555;
+        }
+
+        .line {
+            fill: none;
+            stroke: rgba(173, 216, 230, 0.701961);
+            stroke-width: 3px;
+        }*/
+    </style>
+    <style>
+        /*body {*/
+            /*font: 10px sans-serif;*/
+            /*margin: 50px;*/
+        /*}*/
+
+        .grid .tick {
+            stroke: lightgrey;
+            opacity: 0.7;
+            shape-rendering: crispEdges;
+        }
+
+        .grid path {
+            stroke-width: 0;
+        }
+
+        .axis path {
+            fill: none;
+            stroke: #bbb;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            fill: #555;
+        }
+
+        .axis line {
+            stroke: #e7e7e7;
+            shape-rendering: crispEdges;
+        }
+
+        .axis .axis-label {
+            font-size: 14px;
+        }
+
+        .line {
+            fill: none;
+            stroke-width: 1.5px;
+        }
+
+        .dot {
+            /* consider the stroke-with the mouse detect radius? */
+            stroke: transparent;
+            stroke-width: 10px;
+            cursor: pointer;
         }
     </style>
     

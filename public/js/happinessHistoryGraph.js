@@ -1,340 +1,238 @@
-var ex1ToggleCount = 0;
-var ex2ToggleCount = 0;
-var ex3ToggleCount = 0;
-var ex4ToggleCount = 0;
-
-var options = {
-    animation: false,
-    responsive: false,
-    scaleFontColor: "#000",
-    scaleOverride: true,
-    scaleStartValue: 1,
-    scaleStepWidth: 1,
-    scaleSteps: 6
-};
-
-var wakeData  = [];
-var sleepData = [];
-var averageData = [];
-var dateLabel = [];
-
-function fillData(userSleepData, userWakeData) {
-    var userSleepDataLength = userSleepData.length;
-    var userWakeDataLength = userWakeData.length;
-    var userAvgDataLength = (userSleepDataLength > userWakeDataLength) ? userWakeDataLength : userSleepDataLength;
-    var secondFrontMostPointForAverage = 0;
-
-    // fill sleep data
-    for(var i = 0; i < userSleepDataLength; ++i) {
-        var sleepDate_i = userSleepData[userSleepDataLength - i - 1].date.substring(1, 5);
-        if(sleepDate_i === dateLabel[6 - i]) {
-            sleepData[6 - i] = userSleepData[userSleepDataLength - i - 1].sleepFeeling;
-        } else if((6 - (i + 1)) >= 0) {
-            // start j one index more than i
-            for(var j = 0; j < userSleepDataLength; ++j) {
-                if(sleepDate_i === dateLabel[(6 - (i + 1)) - j]) {
-                    sleepData[(6 - (i + 1)) - j] = userSleepData[(userSleepDataLength - (i + 1)) - j].sleepFeeling;
-                    break;
-                }
-            }
-        }
-    }
-
-    // fill wake data
-    for(var i = 0; i < userWakeDataLength; ++i) {
-        var wakeDate_i = userWakeData[userWakeDataLength - i - 1].date.substring(1, 5);
-        console.log("{");
-        console.log("\twakeDate_i     = " + wakeDate_i);
-        console.log("\tdateLabel[6-"+i+"] = " + dateLabel[6-i]);
-        console.log("}");
-        if(wakeDate_i === dateLabel[6 - i]) {
-            console.log("match");
-            wakeData[6 - i] = userWakeData[userWakeDataLength - i - 1].wakeFeeling;
-        } else if((6 - (i + 1)) >= 0) {
-            // start j one index more than i
-            for(var j = 0; j < userWakeDataLength; ++j) {
-                var t1 = (6 - (i + 1)) - j;
-                console.log("t1: " + t1);
-                console.log("wD: " + wakeDate_i);
-                console.log("dL: " + dateLabel[t1]);
-                if(wakeDate_i === dateLabel[(6 - (i + 1)) - j]) {
-                    console.log("in @ i: " + i);
-                    var t2 = (userWakeDataLength - (i + 1)) - j;
-                    console.log("t2: " + t2);
-                    console.log("-----------");
-                    wakeData[(6 - (i + 1)) - j] = userWakeData[(userWakeDataLength - (i + 1)) - j].wakeFeeling;
-                    //++i;
-                    secondFrontMostPointForAverage = (secondFrontMostPointForAverage > ((6 - (i + 1)) - j))
-                        ? secondFrontMostPointForAverage : ((6 - (i + 1)) - j);
-                    console.log("====> " + secondFrontMostPointForAverage);
-                    break;
-                }
-            }
-        }
-    }
-
-    // clean up sleepData array
-    for(var k = 0; k < (7 - userSleepDataLength); ++k) {
-        if(sleepData[k] === null || sleepData[k] === undefined || sleepData[k] === 0) {
-            sleepData[k] = null;
-        }
-    }
-
-    // clean up wakeData array
-    for(var k = 0; k < (7 - userWakeDataLength); ++k) {
-        if(wakeData[k] === null || wakeData[k] === undefined || wakeData[k] === 0) {
-            wakeData[k] = null;
-        }
-    }
-console.log("{");
-    // fill average data
-    for(var k = 0; k < userAvgDataLength; ++k) {
-        var sleepData_k = parseInt(sleepData[secondFrontMostPointForAverage-k]);
-        var wakeData_k = parseInt(wakeData[secondFrontMostPointForAverage-k]);
-        if(sleepData_k === null || wakeData_k === null) {
-            continue;
-        } else {
-            console.log("\t"+averageData[secondFrontMostPointForAverage-k]);
-            averageData[secondFrontMostPointForAverage-k] = (sleepData_k + wakeData_k)/2;
-        }
-    }
-    console.log("}");
-
-    // clean up averageData array
-    for(var k = 0; k < 7; ++k) {
-        if(averageData[k] === null || averageData[k] === undefined || averageData[k] === 0) {
-            averageData[k] = null;
-        }
-    }
+var DEBUG = 0;
+var LINE_WIDTH = 6,
+    DOT_RADIUS = 9;
+//************************************************************
+// Data notice the structure
+//************************************************************
+var data = 	[ //[{'x': '', 'y': ''}]
+    [{'x':'01/01/2016','y':3},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':3},{'x':'01/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
+    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'01/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}],
+    [{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
+];
+data.push(
+);
+var colors = [
+    'gold',
+    'lightblue',
+    'lightgreen',
+    'purple'
+];
+for(var i = 0; i < data.length; ++i) {
+    data[i].forEach(function (d) {
+        d.x = d3.time.format("%m/%d/%Y").parse(d.x);
+        d.y = +d.y;
+    });
 }
 
-function fillDateLabel() {
-    var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth() + 1;
-    var year = today.getFullYear();
-    // fill the x-axis labels with dates
-    for(var i = 0; i < 7; ++i) {
-        var day_i = day - i;
-        if((day_i) <= 0) {
-            if(--month === 0) {
-                month = 12;
-            }
-            for(var j = 0; i < 7; ++i) {
-                if(month === 4 || month === 6 || month === 9 || month === 11) {
-                    day_i = 30 - j++;
-                } else if(month === 2) {
-                    // account for leap year
-                    if((year % 4) === 0) {
-                        day_i = 29 - j++;
-                    } else {
-                        day_i = 28 - j++;
-                    }
-                } else {
-                    day_i = 31 - j++;
-                }
+//************************************************************
+// Create Margins and Axis and hook our zoom function
+//************************************************************
+var margin = {top: 20, right: 30, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-                // concatentate "0" if single digit
-                if(day_i.toString().length === 1) {
-                    day_i = "0" + day_i;
-                }
-                dateLabel[6 - i] = month+"/"+day_i;
-            }
-        } else {
-            // concatentate "0" if single digit
-            if(day_i.toString().length === 1) {
-                day_i = "0" + day_i;
-            }
-            dateLabel[6 - i] = month+"/"+day_i;
+// -------------------------
+//var xScale = d3.scale.linear()
+//    .domain([0, 8])
+//    .range([0, width]);
+// -------------------------
+//var xScale = d3.time.scale()
+//    .domain(d3.extent(data, function(d) {
+//        for(var i = 0; i < data.length; ++i) {
+//            return d[i].x;
+//        }
+//    }))
+//    .range([0, width]);
+
+if(DEBUG) {
+    console.log("data[0][0]");
+    console.log(data[0][0]);
+    console.log(data[0][data[0].length-1].x);
+}
+var minDate = new Date( data[0][0].x );
+var maxDate = new Date( data[0][data[0].length-1].x );
+
+var xScale = d3.time.scale()
+    .nice(d3.time.day)
+    .domain([minDate,maxDate])
+    .range([0, width]);
+
+var yScale = d3.scale.linear()
+    .domain([0.5, 7.5])
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .tickSize(-height)        // gives me the vertical grid lines
+    .tickPadding(10)            // created padding from x-axis and label
+    //.tickSubdivide(true)
+    .ticks(d3.time.day, 1)
+    //.tickValues(d3.range(data[0][0].x, data[0][data[0].length-1].x))
+    .tickFormat(d3.time.format("%m/%d"))
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    //.tickPadding(10)
+    .tickSize(-width)   // gives me the horizontal grid lines
+    .tickSubdivide(true)
+    .ticks(7)
+    .orient("left");
+
+
+var zoom = d3.behavior.zoom()
+    .x(xScale)
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
+
+//************************************************************
+// Generate our SVG object
+//************************************************************
+var svg = d3.select("#graph")//.append("svg")
+    .call(zoom)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+if(DEBUG) {
+    console.log("BEFORE");
+    console.log(height);
+}
+svg.append("g")
+    .attr("class", "x axis")
+    //.attr("transform", "translate("+ZERO+"," + height + ")")
+    .attr("transform", "translate(0," + height + ")")
+    .style("stroke", "black")
+    //.style("stroke-width", 0)
+    .style("font-size", "15px")
+    .call(xAxis);
+
+svg.append("g")
+    .attr("class", "y axis")
+    .style("stroke", "black")
+    //.style("stroke-width", 0)
+    .style("font-size", "15px")
+    .call(yAxis);
+
+svg.append("g")
+    .attr("class", "y axis")
+    .append("text")
+    .attr("class", "axis-label")
+    .attr("transform", "rotate(-90)")
+    .attr("y", (-margin.left) + 20)
+    .attr("x", -height/2)
+    .style("stroke", "black")
+    //.style("stroke-width", 0)
+    .style("font-size", "15px")
+    .text('Mood Level');
+
+svg.append("clipPath")
+    .attr("id", "clip")
+    .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+
+//************************************************************
+// Create D3 line object and draw data on our SVG object
+//************************************************************
+var line = d3.svg.line()
+    .interpolate("linear")
+    .x(function(d) { return xScale(d.x); })
+    .y(function(d) { return yScale(d.y); });
+
+svg.selectAll('.line')
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("class", "line")
+    .attr("clip-path", "url(#clip)")
+    .attr('stroke', function(d,i){
+        return colors[i%colors.length];
+    })
+    .attr("d", line)
+    .style("stroke-width", LINE_WIDTH);
+
+
+//************************************************************
+// Draw points on SVG object based on the data given
+//************************************************************
+var points = svg.selectAll('.dots')
+    .data(data)
+    .enter()
+    .append("g")
+    .attr("class", "dots")
+    .attr("clip-path", "url(#clip)");
+
+points.selectAll('.dot')
+    .data(function(d, index){
+        var a = [];
+        d.forEach(function(point,i){
+            a.push({'index': index, 'point': point});
+        });
+        return a;
+    })
+    .enter()
+    .append('circle')
+    .attr('class','dot')
+    .attr("r", DOT_RADIUS)
+    .attr('fill', function(d,i){
+        return colors[d.index%colors.length];
+    })
+    .attr("transform", function(d) {
+        if(DEBUG) {
+            console.log("LOOK HERE");
+            console.log(d);
         }
-    }
+        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
+    )
+    .style("stroke", "black")
+    .style("stroke-width", 3);
+
+
+//************************************************************
+// Zoom specific updates
+//************************************************************
+function zoomed() {
+    svg.select(".x.axis").call(xAxis);
+    // svg.select(".y.axis").call(yAxis);
+    svg.selectAll('path.line').attr('d', line);
+
+    points.selectAll('circle').attr("transform", function(d) {
+        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
+    );
 }
 
-var sleepDataArray = [];
-$.ajax({
-    type: 'GET',
-    url: '/sleepData',
-    async: false,
-    success: function(req) {
-        for(var k = 0; k < req.length; k++) {
-            sleepDataArray[k] = req[k];
-        }
-        console.log("Finished fetching Sleep Data");
-    }
-});
+//************************************************************
+// GET request
+//************************************************************
+//d3.json("/sleepData").get(function(err, data) {
+//    console.log("Fetching Data ... ");
+//    console.log(data);
+//    if (err) {
+//        console.log("Error: ");
+//        console.log(err);
+//    }
+//
+//    data.forEach(function (d) {
+//        d.date = d3.time.format("%x").parse(d.date);
+//        d.sleepFeeling = +d.sleepFeeling;
+//    });
+//
+//    //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
+//}); // end get request
+//    //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
 
-var wakeDataArray = [];
-$.ajax({
-    type: 'GET',
-    url: '/wakeData',
-    async: false,
-    success: function(req) {
-        for(var k = 0; k < req.length; k++) {
-            wakeDataArray[k] = req[k];
-        }
-        console.log("Finished fetching Wake Data");
-    }
-});
 
-$(document).ready(function() {
-    fillDateLabel();
-    fillData(sleepDataArray, wakeDataArray);
-
-    var ctx = document.getElementById("LineChart").getContext("2d");
-    var enableCheck = function() {
-        wakeButton = document.getElementsByClassName('hB')[0].className.indexOf('enabled') != -1;
-        sleepButton = document.getElementsByClassName('sB')[0].className.indexOf('enabled') != -1;
-        avgButton = document.getElementsByClassName('aB')[0].className.indexOf('enabled') != -1;
-        sampleButton = document.getElementsByClassName('sampleB')[0].className.indexOf('enabled') != -1;
-        if (!(wakeButton)) {
-            ex1ToggleCount = 0;
-            $("#ex1").css("background-color", "");
-            wakeChart = {};
-        } else {
-            ex1ToggleCount = 1;
-            $("#ex1").css("background-color", "rgba(255, 215, 0, 0.7)");
-            wakeChart = {
-                label: "Wake Mood Trend",
-                strokeColor: "gold",
-                pointColor: "gold",
-                pointStrokeColor: "black",
-                fillColor: "transparent",
-                data: wakeData
-            };
-        }
-        if (!(sleepButton)) {
-            ex2ToggleCount = 0;
-            $("#ex2").css("background-color", "");
-            sleepChart = {};
-        } else {
-            ex2ToggleCount = 1;
-            $("#ex2").css("background-color", "rgba(173, 216, 230, 0.7)");
-            sleepChart = {
-                label: "Sleep Mood Trend",
-                strokeColor: "lightblue",
-                pointColor: "lightblue",
-                pointStrokeColor: "black",
-                fillColor: "transparent",
-                data: sleepData
-            };
-        }
-        if (!(avgButton)) {
-            ex3ToggleCount = 0;
-            $("#ex3").css("background-color", "");
-            averageChart = {};
-        } else {
-            ex3ToggleCount = 1;
-            $("#ex3").css("background-color", "rgba(0, 128, 0, 0.7)");
-            averageChart = {
-                label: "Average Mood Trend",
-                strokeColor: "green",
-                pointColor: "green",
-                pointStrokeColor: "black",
-                fillColor: "transparent",
-                data: averageData
-            };
-        }
-        if ((sampleButton)) {
-            ex4ToggleCount = 0;
-            $("#ex4").css("background-color", "");
-            $("#ex4").css("color", "");
-            sampleChart1 = {};
-            sampleChart2 = {};
-            sampleChart3 = {};
-        } else {
-            ex4ToggleCount = 1;
-            $("#ex4").css("background-color", "rgba(0, 0, 0, 0.7)");
-            $("#ex4").css("color", "white");
-            // Sample Trends of Wake, Sleep and Average Feeling
-            sampleChart1 = {
-                label: "Sample Sleep Trend",
-                strokeColor: "red",
-                pointColor: "red",
-                pointStrokeColor: "black",
-                fillColor: "transparent",
-                data: [2, 3, 6, 4, 1, 5, 1]
-            };
-            sampleChart2 = {
-                label: "Sample Wake Trend",
-                strokeColor: "grey",
-                pointColor: "grey",
-                pointStrokeColor: "black",
-                fillColor: "transparent",
-                data: [1, 7, 1, 7, 1, 7, 1]
-            };
-            sampleChart3 = {
-                label: "Sample Average Graph",
-                strokeColor: "purple",
-                pointColor: "purple",
-                pointStrokeColor: "black",
-                fillColor: "transparent",
-                data: [1.5, 5, 3.5, 5.5, 1, 6, 1]
-            };
-            wakeChart = {};
-            sleepChart = {};
-            averageChart = {};
-        }
-    };
-
-    enableCheck();
-    data = {
-        labels: dateLabel,
-        datasets: [
-            sleepChart,
-            averageChart,
-            wakeChart,
-            sampleChart1,
-            sampleChart2,
-            sampleChart3
-        ]
-    };
-    baseChart = new Chart(ctx).Line(data, options);
-    currentChart = baseChart;
-
-    function toggleLine(t) {
-
-        currentChart.destroy();
-        if (t.className.indexOf('enabled') == -1)
-            t.className += ' enabled';
-        else
-            t.className = t.className.replace('enabled', '');
-        enableCheck();
-        data = {
-            labels: dateLabel,
-            datasets: [
-                sleepChart,
-                averageChart,
-                wakeChart,
-                sampleChart1,
-                sampleChart2,
-                sampleChart3
-            ]
-        };
-        newChart = new Chart(ctx).Line(data, options);
-        currentChart = newChart;
-    };
-
-    $("#ex1").css("background-color", "rgba(255, 215,   0, 0.7)");
-    $("#ex2").css("background-color", "rgba(173, 216, 230, 0.7)");
-    $("#ex3").css("background-color", "rgba(0  , 128,   0, 0.7)");
-
-    var theHB = document.getElementById("ex1");
-    theHB.onclick = function() {
-        toggleLine(this);
-    };
-
-    var theSB = document.getElementById("ex2");
-    theSB.onclick = function() {
-        toggleLine(this);
-    };
-
-    var theAB = document.getElementById("ex3");
-    theAB.onclick = function() {
-        toggleLine(this);
-    };
-
-    var theSampleB = document.getElementById("ex4");
-    theSampleB.onclick = function() {
-        toggleLine(this);
-    };
-});
+//************************************************************
+// Resizing updates
+//************************************************************
+var chart = $("#graph"),
+    aspect = chart.width() / chart.height(),
+    container = chart.parent();
+$(window).on("resize", function() {
+    var targetWidth = container.width();
+    chart.attr("width", targetWidth);
+    chart.attr("height", Math.round(targetWidth / aspect));
+}).trigger("resize");
