@@ -1,13 +1,15 @@
-var DEBUG = 1;
+var DEBUG = 0;
+var LINE_WIDTH = 6,
+    DOT_RADIUS = 9;
 //************************************************************
 // Data notice the structure
 //************************************************************
-var data = 	[
-    [{'x':'01/01/2016','y':3},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':3},{'x':'0/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
-    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'0/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}]
+var data = 	[ //[{'x': '', 'y': ''}]
+    [{'x':'01/01/2016','y':3},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':3},{'x':'01/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
+    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'01/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}],
+    [{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
 ];
 data.push(
-    [{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
 );
 var colors = [
     'steelblue',
@@ -49,18 +51,19 @@ if(DEBUG) {
 }
 var minDate = new Date( data[0][0].x );
 var maxDate = new Date( data[0][data[0].length-1].x );
+
 var xScale = d3.time.scale()
     .nice(d3.time.day)
     .domain([minDate,maxDate])
     .range([0, width]);
 
 var yScale = d3.scale.linear()
-    .domain([1, 7])
+    .domain([0.5, 7.5])
     .range([height, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(xScale)
-    //.tickSize(-height)        // gives me the horizontal grid lines
+    .tickSize(-height)        // gives me the vertical grid lines
     .tickPadding(10)            // created padding from x-axis and label
     //.tickSubdivide(true)
     .ticks(d3.time.day, 1)
@@ -71,7 +74,7 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(yScale)
     //.tickPadding(10)
-    //.tickSize(-width)   // gives me the horizontal grid lines
+    .tickSize(-width)   // gives me the horizontal grid lines
     .tickSubdivide(true)
     .ticks(7)
     .orient("left");
@@ -92,18 +95,24 @@ var svg = d3.select("#graph")//.append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var ZERO = 0;
-console.log("BEFORE");
-console.log(height);
+if(DEBUG) {
+    console.log("BEFORE");
+    console.log(height);
+}
 svg.append("g")
     .attr("class", "x axis")
     //.attr("transform", "translate("+ZERO+"," + height + ")")
     .attr("transform", "translate(0," + height + ")")
+    .style("stroke", "black")
+    //.style("stroke-width", 0)
+    .style("font-size", "15px")
     .call(xAxis);
-console.log("AFTER");
 
 svg.append("g")
     .attr("class", "y axis")
+    .style("stroke", "black")
+    //.style("stroke-width", 0)
+    .style("font-size", "15px")
     .call(yAxis);
 
 svg.append("g")
@@ -113,6 +122,9 @@ svg.append("g")
     .attr("transform", "rotate(-90)")
     .attr("y", (-margin.left) + 20)
     .attr("x", -height/2)
+    .style("stroke", "black")
+    //.style("stroke-width", 0)
+    .style("font-size", "15px")
     .text('Mood Level');
 
 svg.append("clipPath")
@@ -139,9 +151,8 @@ svg.selectAll('.line')
     .attr('stroke', function(d,i){
         return colors[i%colors.length];
     })
-    .attr("d", line);
-
-
+    .attr("d", line)
+    .style("stroke-width", LINE_WIDTH);
 
 
 //************************************************************
@@ -165,12 +176,12 @@ points.selectAll('.dot')
     .enter()
     .append('circle')
     .attr('class','dot')
-    .attr("r", 2.5)
+    .attr("r", DOT_RADIUS)
     .attr('fill', function(d,i){
         return colors[d.index%colors.length];
     })
     .attr("transform", function(d) {
-        if(DEBUG === 0) {
+        if(DEBUG) {
             console.log("LOOK HERE");
             console.log(d);
         }

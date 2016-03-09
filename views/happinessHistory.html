@@ -55,10 +55,10 @@
 
     <hr>
     <!-- Nav for Chart -->
-    <div align="center">
+    <div id="chartNav" align="center">
         <h4 align="center"><i id="infoIcon" class='glyphicon glyphicon-info-sign' title="Toggle between the buttons and see the mood level for each category that corresponds to the color on the graph" style="color: #428bca;"></i><strong>&nbsp;Toggle Graphs</strong><small> (y-axis)</small></h4>
     </div>
-    <div class="btn-group-wrap">
+    <div id="chartLegend" class="btn-group-wrap">
         <div class="btn-toolbar" role="toolbar" aria-label="...">
             <div class="chart-toggles btn-group">
                 <button id="ex1" class="hB enabled btn btn-default active" data-toggle="button">Wake Up</button>
@@ -124,11 +124,12 @@
             font-weight: bold;
         }
 
-        /*#graph {
-            width: 100%;
+        #graph {
+            /*width: 100%;
             height: 400px;
-            /*position: absolute;*/
-        }*/
+            position: absolute;*/
+            z-index: 0;
+        }
         body {
             font-family: 'PT Sans', sans-serif;
             font-size: 12px;
