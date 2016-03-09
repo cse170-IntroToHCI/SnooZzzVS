@@ -89,7 +89,7 @@ window.onload = function() {
                 "hour": hourValue,
                 "minute": minuteValue,
                 "meridiem": meridiemValue,
-                "wakeFeeling": mySlider.getValue()
+                "feeling": mySlider.getValue()
             }
         });
 

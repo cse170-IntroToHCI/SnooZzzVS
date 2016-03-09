@@ -90,7 +90,7 @@ window.onload = function() {
 				"hour": hourValue,
 				"minute": minuteValue,
 				"meridiem": meridiemValue,
-				"sleepFeeling": mySlider.getValue()
+				"feeling": mySlider.getValue()
 			},
 			success: function() {
 
