@@ -12,6 +12,23 @@
     <link rel="shortcut icon" href="img/snooZzzvs.png?r=2423">
     <meta charset="UTF-8">
     <title>Account</title>
+    <style>
+        .boxed-group {
+            box-sizing: border-box;
+            position: relative;
+            margin-bottom: 30px;
+            border-radius: 3px;
+            display: block;
+        }
+        .boxed-group-inner {
+            padding: 1px 10px;
+            font-size: 13px;
+            background: #fff;
+            border: 1px solid #d8d8d8;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -41,10 +58,6 @@
         <h1 style="color: black">Account</h1>
     </div>
 
-    <div class="container" align="center">
-        <p>Change/update account information</p>
-    </div>
-
     <!-- Account Form -->
     <div style="width: 90%; margin: 0 auto" class="container">
         <form>
@@ -52,43 +65,93 @@
             <fieldset class="form-group">
                 <label for="firstName">First Name</label>
                 <input type="text-muted" class="form-control" id="firstName" placeholder="First Name">
+               <!-- <p class="form-control-static" id="firstName"></p> -->
             </fieldset>
 
             <!-- Last Name -->
             <fieldset class="form-group">
                 <label for="lastName">Last Name</label>
                 <input type="text-muted" class="form-control" id="lastName" placeholder="Last Name">
-            </fieldset>
+            </fieldset><br>
 
             <!-- Email -->
-            <fieldset class="form-group">
+<!--             <fieldset class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email" placeholder="New email address">
-            </fieldset>
+            </fieldset><br> -->
 
-            <!-- Confirm Email for change-->
-            <fieldset class="form-group">
-                <label for="email">Confirm Email Address</label>
+            
+            <!-- Change email-->
+            <div class="boxed-group">
+                <h5><strong>Change Email</strong></h5>
+                <div class="boxed-group-inner">
+                    <fieldset class="form-group">
+                        <label for="email">Current Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
+                    </fieldset>
+                    <fieldset class="form-group">
+                            <label for="email">New Email</label>
+                    <input type="email" class="form-control" id="newEmail" placeholder="Enter new email">
+                    <!-- <small class="email2">Re-enter your new e-mail</small> -->
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="email">Confirm New Email</label>
+                        <input type="email" class="form-control" id="confirmEmail" placeholder="Confirm email for change">
+                        <small class="email2">Re-enter your new e-mail</small>
+                    </fieldset>
+                    <p>
+                    <button id="updateEmail" class="btn btn-primary" tabindex="2">Update email</button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Change password-->
+            <div class="boxed-group">
+                <h5><strong>Change Password</strong></h5>
+                <div class="boxed-group-inner">
+                    <fieldset class="form-group">
+                        <label for="email">Current Password</label>
+                        <input type="email" class="form-control" id="currentPassword" value="********">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="email">New Password</label>
+                        <input type="email" class="form-control" id="newPassword" placeholder="Enter new password">
+                        <small class="email2">Must be 8 characters long and contain 1 numer</small>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="email">Confirm New Password</label>
+                        <input type="email" class="form-control" id="confirmPassword" placeholder="Confirm password for change">
+                        <small class="email2">Re-enter your new password</small>
+                    </fieldset>
+                    <p>
+                    <button id="updateButton" class="btn btn-primary" tabindex="2">Update password</button>
+                    </p>
+                </div>
+            </div>
+
+
+<!--             <fieldset class="form-group">
+                <label for="email">Change Email Address</label>
                 <input type="email" class="form-control" id="confirmEmail" placeholder="Confirm email for change">
                 <small class="email2">Re-enter your new e-mail</small>
-            </fieldset>
+            </fieldset> -->
 
             <!-- Password -->
-            <fieldset class="form-group">
+            <!-- <fieldset class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="New password">
-            </fieldset>
+            </fieldset> -->
 
             <!-- Confirm Password for change-->
-            <fieldset class="form-group">
+            <!-- <fieldset class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password for change">
                 <small class="password2">Re-enter your new password</small>
-            </fieldset>
+            </fieldset> -->
 
             <!-- Update Button -->
             <div class="container" align="center">
-                <button type="button" class="btn btn-primary" id="updateButton">Update</button><br><br>
+               <!--  <button type="button" class="btn btn-primary" id="updateButton">Update</button><br><br> -->
                 <button type="button" class="btn btn-danger" id="deleteButton" data-toggle="modal" data-target="#myModal">Delete Account</button>
             </div>
         </form>

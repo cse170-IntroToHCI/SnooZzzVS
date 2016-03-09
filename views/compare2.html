@@ -242,12 +242,14 @@
 
 		// for displaying the "i" icon bubble text
 		$(document).ready(function() {
-			$('#infoIcon').attr("data-original-title", "Click me!");
-			$('#infoIcon').tooltip('show');
-			setTimeout(function() {
-				$('#infoIcon').tooltip('hide');
-				$('#infoIcon').attr("data-original-title", "Fill out at most 2 rows. The unfilled row(s) would be the data of interest, then click 'Compare!'");
-			}, 850);
+		    $('#infoIcon').attr("data-original-title", "Click me!");
+		    $('#infoIcon').tooltip('show');
+    
+		    $('#infoIcon').click(function() {
+		        $('#infoIcon').tooltip('toggle');
+		        $('#infoIcon').attr("data-original-title", "Toggle between the buttons and see the mood level for each category that corresponds to the color on the graph");
+		        $('#infoIcon').tooltip('show');
+		    });
 		});
 		$('#infoIcon').tooltip();
 
