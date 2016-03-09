@@ -8,7 +8,7 @@ module.exports.POST = function(req, res) {
     var hour        = req.body.hour;
     var minute      = req.body.minute;
     var meridiem    = req.body.meridiem;
-    var sleepFeeling = req.body.sleepFeeling;
+    var feeling     = req.body.feeling;
     var sess = req.session;
 
     var newSleepData = {
@@ -16,7 +16,7 @@ module.exports.POST = function(req, res) {
         "hour": hour,
         "minute": minute,
         "meridiem": meridiem,
-        "sleepFeeling": sleepFeeling
+        "feeling": feeling
     };
 
     var sleepDataCollection = db.get().collection('sleepData');
