@@ -1,30 +1,26 @@
-
+var DEBUG = 1;
 //************************************************************
 // Data notice the structure
 //************************************************************
-//var data = 	[
-//    [{'x':'01/01/2016','y':0},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':0},{'x':'0/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
-//    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'0/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}]
-//];
-//data.push([{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
-//);
 var data = 	[
-    {'x':'01/01/2016','y':0},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':0},{'x':'0/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5},
-    {'x':'01/08/2016','y':0},{'x':'01/09/2016','y':5},{'x':'01/10/2016','y':1},{'x':'01/11/2016','y':0},{'x':'0/12/2016','y':6},{'x':'01/13/2016','y':1},{'x':'01/14/2016','y':5},
-    {'x':'01/15/2016','y':0},{'x':'01/16/2016','y':5},{'x':'01/17/2016','y':1},{'x':'01/18/2016','y':0},{'x':'0/19/2016','y':6},{'x':'01/20/2016','y':1},{'x':'01/21/2016','y':5}
+    [{'x':'01/01/2016','y':0},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':0},{'x':'0/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
+    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'0/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}]
 ];
+data.push(
+    [{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
+);
 var colors = [
     'steelblue',
     'green',
     'red',
     'purple'
 ];
-//for(var i = 0; i < data.length; ++i) {
-    data.forEach(function (d) {
-        d.x = d3.time.format("%x").parse(d.x);
+for(var i = 0; i < data.length; ++i) {
+    data[i].forEach(function (d) {
+        d.x = d3.time.format("%m/%d/%Y").parse(d.x);
         d.y = +d.y;
     });
-//}
+}
 
 //************************************************************
 // Create Margins and Axis and hook our zoom function
@@ -45,12 +41,17 @@ var margin = {top: 20, right: 30, bottom: 30, left: 50},
 //        }
 //    }))
 //    .range([0, width]);
-// todo - Having issues when I try to enter more than one graph. I'm guessing it's because the dates conflict
+
+if(DEBUG) {
+    console.log("data[0][0]");
+    console.log(data[0][0]);
+    console.log(data[0][data[0].length-1].x);
+}
 
 var xScale = d3.time.scale()
-    .domain(d3.extent(data, function(d) { return d.x; }))
-    .range([0, width])
-    .nice();
+    .nice(d3.time.day)
+    .domain([new Date(data[0][0].x)], data[0][data[0].length-1].x)
+    .range([0, width]);
 
 var yScale = d3.scale.linear()
     .domain([1, 7])
@@ -61,7 +62,8 @@ var xAxis = d3.svg.axis()
     //.tickSize(-height)        // gives me the horizontal grid lines
     .tickPadding(10)            // created padding from x-axis and label
     //.tickSubdivide(true)
-    //.ticks(1)
+    .ticks(d3.time.day, 1)
+    //.tickValues(d3.range(data[0][0].x, data[0][data[0].length-1].x))
     .tickFormat(d3.time.format("%m/%d/%Y"))
     .orient("bottom");
 
@@ -89,10 +91,15 @@ var svg = d3.select("#graph")//.append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var ZERO = 0;
+console.log("BEFORE");
+console.log(height);
 svg.append("g")
     .attr("class", "x axis")
+    //.attr("transform", "translate("+ZERO+"," + height + ")")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
+console.log("AFTER");
 
 svg.append("g")
     .attr("class", "y axis")
@@ -146,25 +153,28 @@ var points = svg.selectAll('.dots')
     .attr("class", "dots")
     .attr("clip-path", "url(#clip)");
 
-//points.selectAll('.dot')
-//    .data(function(d, index){
-//        var a = [];
-//        console.log(d);
-//        d.forEach(function(point,i){
-//            a.push({'index': index, 'point': point});
-//        });
-//        return a;
-//    })
-//    .enter()
-//    .append('circle')
-//    .attr('class','dot')
-//    .attr("r", 2.5)
-//    .attr('fill', function(d,i){
-//        return colors[d.index%colors.length];
-//    })
-//    .attr("transform", function(d) {
-//        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
-//    );
+points.selectAll('.dot')
+    .data(function(d, index){
+        var a = [];
+        d.forEach(function(point,i){
+            a.push({'index': index, 'point': point});
+        });
+        return a;
+    })
+    .enter()
+    .append('circle')
+    .attr('class','dot')
+    .attr("r", 2.5)
+    .attr('fill', function(d,i){
+        return colors[d.index%colors.length];
+    })
+    .attr("transform", function(d) {
+        if(DEBUG === 0) {
+            console.log("LOOK HERE");
+            console.log(d);
+        }
+        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
+    );
 
 
 //************************************************************
@@ -175,27 +185,30 @@ function zoomed() {
     // svg.select(".y.axis").call(yAxis);
     svg.selectAll('path.line').attr('d', line);
 
-    //points.selectAll('circle').attr("transform", function(d) {
-    //    return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
-    //);
+    points.selectAll('circle').attr("transform", function(d) {
+        return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
+    );
 }
 
 //************************************************************
 // GET request
 //************************************************************
-/*d3.json("/sleepData").get(function(err, data) {
-    if (err) {
-        console.log("Error: ");
-        console.log(err);
-    }
-
-    data.forEach(function (d) {
-        d.date = d3.time.format("%x").parse(d.date);
-        d.sleepFeeling = +d.sleepFeeling;
-    });
-
-    //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
-});*/ // end get request
+//d3.json("/sleepData").get(function(err, data) {
+//    console.log("Fetching Data ... ");
+//    console.log(data);
+//    if (err) {
+//        console.log("Error: ");
+//        console.log(err);
+//    }
+//
+//    data.forEach(function (d) {
+//        d.date = d3.time.format("%x").parse(d.date);
+//        d.sleepFeeling = +d.sleepFeeling;
+//    });
+//
+//    //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
+//}); // end get request
+//    //xScale.domain([0, d3.extent(data, function(d) { return d.x; })]);
 
 
 //************************************************************
