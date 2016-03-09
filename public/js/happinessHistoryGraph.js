@@ -12,9 +12,9 @@ var data = 	[ //[{'x': '', 'y': ''}]
 data.push(
 );
 var colors = [
-    'steelblue',
-    'green',
-    'red',
+    'gold',
+    'lightblue',
+    'lightgreen',
     'purple'
 ];
 for(var i = 0; i < data.length; ++i) {
@@ -68,7 +68,7 @@ var xAxis = d3.svg.axis()
     //.tickSubdivide(true)
     .ticks(d3.time.day, 1)
     //.tickValues(d3.range(data[0][0].x, data[0][data[0].length-1].x))
-    .tickFormat(d3.time.format("%m/%d/%Y"))
+    .tickFormat(d3.time.format("%m/%d"))
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
@@ -186,7 +186,9 @@ points.selectAll('.dot')
             console.log(d);
         }
         return "translate(" + xScale(d.point.x) + "," + yScale(d.point.y) + ")"; }
-    );
+    )
+    .style("stroke", "black")
+    .style("stroke-width", 3);
 
 
 //************************************************************
