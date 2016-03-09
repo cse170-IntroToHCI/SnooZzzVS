@@ -1,21 +1,56 @@
 var DEBUG = 0;
 var LINE_WIDTH = 6,
     DOT_RADIUS = 9;
+
+var data      = [ [{'x': '', 'y': ''}] ],
+    sleepData = [],
+    wakeData  = [];
 //************************************************************
 // Data notice the structure
 //************************************************************
-var data = 	[ //[{'x': '', 'y': ''}]
-    [{'x':'01/01/2016','y':3},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':3},{'x':'01/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
-    [{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'01/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}],
-    [{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
-];
-data.push(
-);
+$.ajax({
+    type: 'GET',
+    url: '/sleepData',
+    async: false,
+    success: function(req) {
+        for(var k = 0; k < req.length; ++k) {
+            sleepData[k] = req[k];
+        }
+    }/*,
+    error: function() {
+        console.log("Error Fetching Sleep Data");
+    }*/
+});
+
+$.ajax({
+    type: 'GET',
+    url: '/wakeData',
+    async: false,
+    success: function(req) {
+        for(var k = 0; k < req.length; ++k) {
+            wakeData[k] = req[k];
+        }
+    }/*,
+    error: function() {
+        console.log("Error Fetching Wake Data");
+    }*/
+});
+
+// Check to fill the data array
+if( !(sleepData.length === 0 && wakeData.length === 0) ) {
+    console.log(sleepData);
+    console.log(wakeData);
+}
+//data = 	[ //[{'x': '', 'y': ''}]
+    //[{'x':'01/01/2016','y':3},{'x':'01/02/2016','y':5},{'x':'01/03/2016','y':1},{'x':'01/04/2016','y':3},{'x':'01/05/2016','y':6},{'x':'01/06/2016','y':1},{'x':'01/07/2016','y':5}],
+    //[{'x':'01/01/2016','y':1},{'x':'01/02/2016','y':6},{'x':'01/03/2016','y':2},{'x':'01/04/2016','y':1},{'x':'01/05/2016','y':7},{'x':'01/06/2016','y':2},{'x':'01/07/2016','y':6}],
+    //[{'x':'01/01/2016','y':2},{'x':'01/02/2016','y':7},{'x':'01/03/2016','y':3},{'x':'01/04/2016','y':2},{'x':'01/05/2016','y':5},{'x':'01/06/2016','y':3},{'x':'01/07/2016','y':7}]
+//];
+
 var colors = [
     'gold',
     'lightblue',
-    'lightgreen',
-    'purple'
+    'lightgreen'
 ];
 for(var i = 0; i < data.length; ++i) {
     data[i].forEach(function (d) {
@@ -105,14 +140,14 @@ svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .style("stroke", "black")
     //.style("stroke-width", 0)
-    .style("font-size", "15px")
+    .style("font-size", "22px")
     .call(xAxis);
 
 svg.append("g")
     .attr("class", "y axis")
     .style("stroke", "black")
     //.style("stroke-width", 0)
-    .style("font-size", "15px")
+    .style("font-size", "20px")
     .call(yAxis);
 
 svg.append("g")
@@ -121,10 +156,10 @@ svg.append("g")
     .attr("class", "axis-label")
     .attr("transform", "rotate(-90)")
     .attr("y", (-margin.left) + 20)
-    .attr("x", -height/2)
+    .attr("x", -height/2 - 40)
     .style("stroke", "black")
     //.style("stroke-width", 0)
-    .style("font-size", "15px")
+    .style("font-size", "20px")
     .text('Mood Level');
 
 svg.append("clipPath")
