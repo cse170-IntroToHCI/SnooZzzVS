@@ -33,3 +33,15 @@ $('#historyButton').click(function (e) {
     $('#monthButton').removeClass('active');
     $('#yearButton').removeClass('active');
 });
+
+document.getElementById('logoutButton').onclick = function() {
+    console.log("logging out");
+    $.ajax({
+        type: 'GET',
+        url: '/user/logout',
+        data: {},
+        success: function() {
+            window.location = './';
+        }
+    });
+};

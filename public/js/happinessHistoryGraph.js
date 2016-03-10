@@ -54,7 +54,6 @@ var nextNewYearsDay = new Date("01/01/"+parseInt(thisYear+1));
 
 for(var day_i = newYearsDay; day_i < nextNewYearsDay; day_i.setDate(day_i.getDate() + 1)) {
     var tempDate = parseInt(day_i.getMonth()+1)+"/"+day_i.getDate()+"/"+day_i.getFullYear();
-    console.log(tempDate);
     var dataForSampleOne = {
         date: tempDate,
         feeling: Math.floor(Math.random() * (8 - 1) + 1)
@@ -69,12 +68,12 @@ for(var day_i = newYearsDay; day_i < nextNewYearsDay; day_i.setDate(day_i.getDat
 
     var dataForSampleThree = {
         date: tempDate,
-        feeling: Math.floor(Math.random() * (8 - 1) + 1)
+        feeling: (dataForSampleOne.feeling + dataForSampleTwo.feeling)/2
     };
     sampleData3.push(dataForSampleThree);
 }
 
-if(DEBUG === 0) {
+if(DEBUG) {
     console.log(sampleData1);
     console.log(sampleData2);
     console.log(sampleData3);
@@ -178,7 +177,7 @@ for(var i = 0; i < data.length; ++i) {
     });
 }
 
-if(DEBUG === 0) {
+if(DEBUG) {
     console.log("Filling Data Array done.");
     console.log(data);
 }
@@ -235,7 +234,8 @@ var yAxis = d3.svg.axis()
 
 var zoom = d3.behavior.zoom()
     .x(xScale.domain([minDateForZoom, maxDateForZoom]))
-    .scaleExtent([1, 10])    // controls the zoom
+    //.x(xScale.domain([new Date("01/01/2016"), new Date("01/01/2017")]))
+    .scaleExtent([1, 100])    // controls the zoom
     .on("zoom", zoomed);
 
 //************************************************************
@@ -439,7 +439,6 @@ function toggleTheSampleLines() {
 //************************************************************
 function reset() {
     console.log("Resetting");
-    //zoom.x(xScale.domain([minDate, maxDate]));
 
     // code below changes the zoom window
     //console.log(minDate);
@@ -449,7 +448,15 @@ function reset() {
     //console.log(t);
     zoom.x(xScale.domain([minDateForZoom, maxDateForZoom]));
     zoomed();
-    //svg.transition().duration(500).select("axis").call(xAxis).call(yAxis);
+    /*
+                        For "VIEW BY" Buttons
+
+        If I want to make the "View By" Month/Year/History Buttons I need to
+        - format the x axis because the dates overlap each other
+        - change the scaleExtent([]) <- has to change with each button press
+        - change the zoom.x(xScale.domain([])); <- has to change with each button press
+     */
+
 }
 
 //************************************************************

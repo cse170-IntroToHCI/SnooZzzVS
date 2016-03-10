@@ -117,8 +117,84 @@ app.get('/user', function(req, res) {
     })
 });
 
-// User - Update User Route
-//app.put('/user', user.PUT);
+// User - Update User Email Route
+app.put('/user/updateEmail', function(req, res) {
+    var currentEmail = req.body.currentEmail;
+    var newEmail = req.body.newEmail;
+    var confirmEmail = req.body.confirmEmail;
+
+    if(newEmail !== confirmEmail) {
+        console.log("New Emails don't match");
+        return res.status(400).end();
+    } else if(currentEmail !== req.session.email) {
+        console.log("Current Email is wrong.");
+        return res.status(400).end();
+    }
+
+    var usersCollection = db.get().collection('users');
+    // CHECK IF EMAIL ALREADY EXISTS
+    usersCollection.find({email: newEmail}).toArray(function(err, user) {
+        if(err) {
+            console.log("Error Updating Email");
+            console.log(err);
+            return res.status(400).end();
+        } else if(user) {
+            console.log("Email already exists");
+            console.log(user);
+            return res.status(400).end();
+        }
+    });
+
+    // PERFORM UPDATE
+    usersCollection.find({email: currentEmail}).toArray(function(err, user) {
+        if(err) {
+            console.log("Error Updating Email");
+            console.log(err);
+            return res.status(400).send("Failed to update Email").end();
+        }
+        user[0].email = newEmail;
+        usersCollection.update({email: currentEmail}, user[0], function(err, update) {
+            if(err) {
+                console.log("Update Email Failed");
+                return res.status(400).end();
+            } else {
+                req.session.email = newEmail;
+                return res.status(200).send("Email Updated").end();
+            }
+        });
+    });
+});
+
+// User - Update User Password Route
+app.put('/user/updatePassword', function(req, res) {
+    var currentPassword = req.body.currentPassword;
+    var newPassword     = req.body.newPassword;
+    var confirmPassword = req.body.confirmPassword;
+
+    if(newPassword !== confirmPassword) {
+        console.log("New Passwords don't match");
+        return res.status(400).end();
+    }
+
+    // PERFORM UPDATE
+    var usersCollection = db.get().collection('users');
+    usersCollection.find({email: req.session.email}).toArray(function(err, user) {
+        if(err) {
+            console.log("Error Updating Password");
+            console.log(err);
+            return res.status(400).send("Failed to update Password").end();
+        }
+        user[0].password = newPassword;
+        usersCollection.update({email: req.session.email}, user[0], function(err, update) {
+            if(err) {
+                console.log("Update Password Failed");
+                return res.status(400).end();
+            } else {
+                return res.status(200).send("Password Updated").end();
+            }
+        });
+    });
+});
 
 // User - Delete User Route
 app.delete('/user', function(req, res) {
