@@ -8,25 +8,38 @@ var LINE_WIDTH = 6,
 var data      = [ [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}] ],
     sleepData = [],
     wakeData  = [],
-    averageData = [];
+    averageData = [],
+    sampleData1 = [],
+    sampleData2 = [],
+    sampleData3 = [];
 
 var colors = [
     'gold',
     'lightblue',
-    'green'
+    'green',
+    'red',
+    'orange',
+    'purple'
 ], uniqueIdForLines = [
     'wakeLine',
     'sleepLine',
-    'averageLine'
+    'averageLine',
+    'sampleLine1',
+    'sampleLine2',
+    'sampleLine3'
 ], uniqueClassForPoints = [
     'wakePoints',
     'sleepPoints',
-    'averagePoints'
+    'averagePoints',
+    'samplePoints',
+    'samplePoints',
+    'samplePoints'
 ];
 
 var toggleWakeLine    = 1,
     toggleSleepLine   = 1,
-    toggleAverageLine = 1;
+    toggleAverageLine = 1,
+    toggleSampleLines = 0;  // off by default
 
 //************************************************************
 // Init properties
@@ -34,6 +47,38 @@ var toggleWakeLine    = 1,
 $("#ex1").css("background-color", "");
 $("#ex2").css("background-color", "");
 $("#ex3").css("background-color", "");
+
+var thisYear = new Date().getFullYear();
+var newYearsDay = new Date("01/01/"+thisYear);
+var nextNewYearsDay = new Date("01/01/"+parseInt(thisYear+1));
+
+for(var day_i = newYearsDay; day_i < nextNewYearsDay; day_i.setDate(day_i.getDate() + 1)) {
+    var tempDate = parseInt(day_i.getMonth()+1)+"/"+day_i.getDate()+"/"+day_i.getFullYear();
+    console.log(tempDate);
+    var dataForSampleOne = {
+        date: tempDate,
+        feeling: Math.floor(Math.random() * (8 - 1) + 1)
+    };
+    sampleData1.push(dataForSampleOne);
+
+    var dataForSampleTwo = {
+        date: tempDate,
+        feeling: Math.floor(Math.random() * (8 - 1) + 1)
+    };
+    sampleData2.push(dataForSampleTwo);
+
+    var dataForSampleThree = {
+        date: tempDate,
+        feeling: Math.floor(Math.random() * (8 - 1) + 1)
+    };
+    sampleData3.push(dataForSampleThree);
+}
+
+if(DEBUG === 0) {
+    console.log(sampleData1);
+    console.log(sampleData2);
+    console.log(sampleData3);
+}
 
 //************************************************************
 // Request the Sleep/Wake Data
@@ -63,37 +108,37 @@ $.ajax({
 //************************************************************
 // Calculate Average Data
 //************************************************************
-var theLength = wakeData.length;
-if(sleepData.length > wakeData.length) {
-    var sleepDataObject = sleepData.reduce(function(map, obj) {
-        map[obj.date] = obj.feeling;
-        return map;
-    }, {});
+var sleepDataObject = sleepData.reduce(function(map, obj) {
+    map[obj.date] = obj.feeling;
+    return map;
+}, {});
+
+var wakeDataObject = wakeData.reduce(function(map, obj) {
+    map[obj.date] = obj.feeling;
+    return map;
+}, {});
+
+if(DEBUG) {
     console.log(sleepDataObject);
     console.log("---------------");
-    var wakeDataObject = wakeData.reduce(function(map, obj) {
-        map[obj.date] = obj.feeling;
-        return map;
-    }, {});
     console.log(wakeDataObject);
     console.log("---------------");
+}
 
-    for(dateKey in sleepDataObject) {
-        var wakeFeeling = parseInt(wakeDataObject[dateKey]);
-        var sleepFeeling = parseInt(sleepDataObject[dateKey]);
+for(dateKey in sleepDataObject) {
+    var wakeFeeling = parseInt(wakeDataObject[dateKey]);
+    var sleepFeeling = parseInt(sleepDataObject[dateKey]);
+    var averageFeeling = (wakeFeeling + sleepFeeling)/2;
+    averageData.push({
+        date: dateKey,
+        feeling: averageFeeling
+    });
+
+    if(DEBUG) {
         console.log(wakeFeeling);
         console.log("*************");
         console.log(sleepFeeling);
-
-        var averageFeeling = (wakeFeeling + sleepFeeling)/2;
-
-        averageData.push({
-            date: dateKey,
-            feeling: averageFeeling
-        });
     }
-    console.log("---------------");
-    console.log("---------------");
 }
 
 var tempAverageArray = [];
@@ -107,7 +152,7 @@ averageData = tempAverageArray;
 //************************************************************
 // Fill Data array
 //************************************************************
-// Check to fill the data array
+// Check if sleepData || wakeData are empty - if true then don't fill data[]
 if( !(sleepData.length === 0 && wakeData.length === 0) ) {
     $("#ex1").css("background-color", "gold");
     $("#ex2").css("background-color", "lightblue");
@@ -122,13 +167,38 @@ if( !(sleepData.length === 0 && wakeData.length === 0) ) {
     data.push(averageData);
 }
 
+data.push(sampleData1);
+data.push(sampleData2);
+data.push(sampleData3);
+
 for(var i = 0; i < data.length; ++i) {
     data[i].forEach(function (d) {
         d.date = d3.time.format("%m/%d/%Y").parse(d.date);
         d.feeling = +d.feeling;
     });
 }
-console.log(data);
+
+if(DEBUG === 0) {
+    console.log("Filling Data Array done.");
+    console.log(data);
+}
+
+//************************************************************
+// Calculate min/max Date for the default view of the graph
+//************************************************************
+var minWakeDate  = new Date(data[0][0].date),
+    minSleepDate = new Date(data[1][0].date);
+
+var maxWakeDate  = new Date(data[0][data[0].length - 1].date),
+    maxSleepDate = new Date(data[1][data[1].length - 1].date);
+
+var minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
+var maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
+
+// these dates are used for the default view of the zoom view
+var oneDay = 24*60*60*1000;
+var minDateForZoom = minDate.getTime() - oneDay;
+var maxDateForZoom = maxDate.getTime() + oneDay;
 
 //************************************************************
 // Create Margins and Axis and hook our zoom function
@@ -136,15 +206,6 @@ console.log(data);
 var margin = {top: 20, right: 30, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
-
-if(DEBUG) {
-    console.log("data[0][0]");
-    console.log(data[0][0]);
-    console.log(data[0][data[0].length-1].date);
-}
-
-var minDate = new Date( data[0][0].date );
-var maxDate = new Date( data[0][data[0].length-1].date );
 
 var xScale = d3.time.scale()
     .nice(d3.time.day)
@@ -159,9 +220,7 @@ var xAxis = d3.svg.axis()
     .scale(xScale)
     .tickSize(-height)        // gives me the vertical grid lines
     .tickPadding(10)            // created padding from x-axis and label
-    //.tickSubdivide(true)
     .ticks(d3.time.day, 1)
-    //.tickValues(d3.range(data[0][0].x, data[0][data[0].length-1].x))
     .tickFormat(d3.time.format("%m/%d"))
     .orient("bottom");
 
@@ -175,8 +234,8 @@ var yAxis = d3.svg.axis()
 
 
 var zoom = d3.behavior.zoom()
-    .x(xScale)
-    .scaleExtent([1, 10])
+    .x(xScale.domain([minDateForZoom, maxDateForZoom]))
+    .scaleExtent([1, 10])    // controls the zoom
     .on("zoom", zoomed);
 
 //************************************************************
@@ -296,7 +355,6 @@ points.selectAll('.dot')
 //************************************************************
 function zoomed() {
     svg.select(".x.axis").call(xAxis);
-    // svg.select(".y.axis").call(yAxis);
     svg.selectAll('path.line').attr('d', line);
 
     points.selectAll('circle').attr("transform", function(d) {
@@ -355,7 +413,51 @@ function toggleTheAverageLine() {
     }
 }
 
+// Sample Data is turned off by default
+d3.select("#sampleLine1").style("opacity", toggleSampleLines);
+d3.select("#sampleLine2").style("opacity", toggleSampleLines);
+d3.select("#sampleLine3").style("opacity", toggleSampleLines);
+d3.selectAll(".samplePoints").style("visibility", "hidden");
+function toggleTheSampleLines() {
+    toggleSampleLines = (toggleSampleLines === 1) ? 0 : 1;
+    d3.select("#sampleLine1").style("opacity", toggleSampleLines);
+    d3.select("#sampleLine2").style("opacity", toggleSampleLines);
+    d3.select("#sampleLine3").style("opacity", toggleSampleLines);
+    if(toggleSampleLines) {
+        $("#ex4").css("color", "white");
+        $("#ex4").css("background-color", "black");
+        d3.selectAll(".samplePoints").style("visibility", "visible");
+    } else {
+        $("#ex4").css("color", "");
+        $("#ex4").css("background-color", "");
+        d3.selectAll(".samplePoints").style("visibility", "hidden");
+    }
+}
+
+//************************************************************
+// Re-Center the graph
+//************************************************************
+function reset() {
+    console.log("Resetting");
+    //zoom.x(xScale.domain([minDate, maxDate]));
+
+    // code below changes the zoom window
+    //console.log(minDate);
+    //console.log(maxDate);
+    //var t =new Date("02/28/2016");
+    //var t2=new Date("03/10/2016");
+    //console.log(t);
+    zoom.x(xScale.domain([minDateForZoom, maxDateForZoom]));
+    zoomed();
+    //svg.transition().duration(500).select("axis").call(xAxis).call(yAxis);
+}
+
+//************************************************************
+// Click Listeners
+//************************************************************
 $("#ex1").click(toggleTheWakeLine);
 $("#ex2").click(toggleTheSleepLine);
 $("#ex3").click(toggleTheAverageLine);
-//$("#ex4").click(toggleTheSampleLine);
+$("#ex4").click(toggleTheSampleLines);
+
+$("#centerButton").click(reset);
