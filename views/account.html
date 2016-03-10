@@ -21,7 +21,7 @@
             display: block;
         }
         .boxed-group-inner {
-            padding: 1px 10px;
+            padding: 10px 10px;
             font-size: 13px;
             background: #fff;
             border: 1px solid #d8d8d8;
@@ -44,6 +44,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a id="headerName" style="color: white"></a></li>
                     <li><a href="./index">Home</a></li>
                     <li><a href="./account">Account</a></li>
                     <li><a href="./help">Help</a></li>
@@ -60,19 +61,18 @@
 
     <!-- Account Form -->
     <div style="width: 90%; margin: 0 auto" class="container">
-        <form>
+        <h3 id="name"></h3><br>
             <!-- First Name -->
-            <fieldset class="form-group">
+<!--             <fieldset class="form-group">
                 <label for="firstName">First Name</label>
                 <input type="text-muted" class="form-control" id="firstName" placeholder="First Name">
-               <!-- <p class="form-control-static" id="firstName"></p> -->
-            </fieldset>
+            </fieldset> -->
 
             <!-- Last Name -->
-            <fieldset class="form-group">
+<!--             <fieldset class="form-group">
                 <label for="lastName">Last Name</label>
                 <input type="text-muted" class="form-control" id="lastName" placeholder="Last Name">
-            </fieldset><br>
+            </fieldset><br> -->
 
             <!-- Email -->
 <!--             <fieldset class="form-group">
@@ -80,38 +80,40 @@
                 <input type="email" class="form-control" id="email" placeholder="New email address">
             </fieldset><br> -->
 
-            
-            <!-- Change email-->
+        <!-- Change email-->
+        <form>
             <div class="boxed-group">
-                <h5><strong>Change Email</strong></h5>
+                <h4><strong>Email Information</strong></h4>
                 <div class="boxed-group-inner">
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" id="emailFieldset">
                         <label for="email">Current Email</label>
                         <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
                     </fieldset>
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" id="newEmailFieldset">
                             <label for="email">New Email</label>
                     <input type="email" class="form-control" id="newEmail" placeholder="Enter new email">
                     <!-- <small class="email2">Re-enter your new e-mail</small> -->
                     </fieldset>
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" id="confirmEmailFieldset">
                         <label for="email">Confirm New Email</label>
                         <input type="email" class="form-control" id="confirmEmail" placeholder="Confirm email for change">
                         <small class="email2">Re-enter your new e-mail</small>
                     </fieldset>
                     <p>
-                    <button id="updateEmail" class="btn btn-primary" tabindex="2">Update email</button>
+                    <button id="updateEmail" class="btn btn-primary" tabindex="2">Change email</button>
                     </p>
                 </div>
             </div>
+        </form>
 
-            <!-- Change password-->
+        <!-- Change password-->
+        <form>
             <div class="boxed-group">
-                <h5><strong>Change Password</strong></h5>
+                <h4><strong>Password Information</strong></h4>
                 <div class="boxed-group-inner">
                     <fieldset class="form-group">
-                        <label for="email">Current Password</label>
-                        <input type="email" class="form-control" id="currentPassword" value="********">
+                        <label for="email">Old Password</label>
+                        <input type="email" class="form-control" id="password" placeholder="Enter old password">
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="email">New Password</label>
@@ -124,37 +126,16 @@
                         <small class="email2">Re-enter your new password</small>
                     </fieldset>
                     <p>
-                    <button id="updateButton" class="btn btn-primary" tabindex="2">Update password</button>
+                    <button id="updatePassword" class="btn btn-primary" tabindex="2">Change password</button>
                     </p>
                 </div>
             </div>
-
-
-<!--             <fieldset class="form-group">
-                <label for="email">Change Email Address</label>
-                <input type="email" class="form-control" id="confirmEmail" placeholder="Confirm email for change">
-                <small class="email2">Re-enter your new e-mail</small>
-            </fieldset> -->
-
-            <!-- Password -->
-            <!-- <fieldset class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="New password">
-            </fieldset> -->
-
-            <!-- Confirm Password for change-->
-            <!-- <fieldset class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password for change">
-                <small class="password2">Re-enter your new password</small>
-            </fieldset> -->
-
-            <!-- Update Button -->
-            <div class="container" align="center">
-               <!--  <button type="button" class="btn btn-primary" id="updateButton">Update</button><br><br> -->
-                <button type="button" class="btn btn-danger" id="deleteButton" data-toggle="modal" data-target="#myModal">Delete Account</button>
-            </div>
         </form>
+
+        <!-- Update Button -->
+        <div class="container" align="center">
+            <button type="button" class="btn btn-danger" id="deleteButton" data-toggle="modal" data-target="#myModal">Delete Account</button>
+        </div>
     </div>
     <br>
 
