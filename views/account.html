@@ -62,23 +62,6 @@
     <!-- Account Form -->
     <div style="width: 90%; margin: 0 auto" class="container">
         <h3 id="name"></h3><br>
-            <!-- First Name -->
-<!--             <fieldset class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text-muted" class="form-control" id="firstName" placeholder="First Name">
-            </fieldset> -->
-
-            <!-- Last Name -->
-<!--             <fieldset class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text-muted" class="form-control" id="lastName" placeholder="Last Name">
-            </fieldset><br> -->
-
-            <!-- Email -->
-<!--             <fieldset class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="New email address">
-            </fieldset><br> -->
 
         <!-- Change email-->
         <form>
@@ -92,7 +75,6 @@
                     <fieldset class="form-group" id="newEmailFieldset">
                             <label for="email">New Email</label>
                     <input type="email" class="form-control" id="newEmail" placeholder="Enter new email">
-                    <!-- <small class="email2">Re-enter your new e-mail</small> -->
                     </fieldset>
                     <fieldset class="form-group" id="confirmEmailFieldset">
                         <label for="email">Confirm New Email</label>
@@ -100,7 +82,7 @@
                         <small class="email2">Re-enter your new e-mail</small>
                     </fieldset>
                     <p>
-                    <button id="updateEmail" class="btn btn-primary" tabindex="2">Change email</button>
+                    <button id="updateEmail" class="btn btn-primary" type="button">Change email</button>
                     </p>
                 </div>
             </div>
@@ -111,22 +93,22 @@
             <div class="boxed-group">
                 <h4><strong>Password Information</strong></h4>
                 <div class="boxed-group-inner">
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" id="passwordFieldset">
                         <label for="email">Old Password</label>
-                        <input type="email" class="form-control" id="password" placeholder="Enter old password">
+                        <input type="password" class="form-control" id="password" placeholder="Enter old password">
                     </fieldset>
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" id="newPasswordFieldset">
                         <label for="email">New Password</label>
-                        <input type="email" class="form-control" id="newPassword" placeholder="Enter new password">
+                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
                         <small class="email2">Must be 8 characters long and contain 1 numer</small>
                     </fieldset>
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" id="confirmPasswordFieldset">
                         <label for="email">Confirm New Password</label>
-                        <input type="email" class="form-control" id="confirmPassword" placeholder="Confirm password for change">
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password for change">
                         <small class="email2">Re-enter your new password</small>
                     </fieldset>
                     <p>
-                    <button id="updatePassword" class="btn btn-primary" tabindex="2">Change password</button>
+                    <button id="updatePassword" class="btn btn-primary" type="button">Change password</button>
                     </p>
                 </div>
             </div>
@@ -139,7 +121,7 @@
     </div>
     <br>
 
-    <!-- Modal -->
+    <!-- Delete Account Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

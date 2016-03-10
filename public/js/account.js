@@ -4,34 +4,11 @@ var updatePasswordButton = document.getElementById("updatePassword");
 updateEmailButton.onclick = function() {
 
     // boolean variables
-    // var fN = 0, lN = 0, eM = 0, pW = 0, cP = 0;
     var eM = 0, nEM = 0, cEM = 0;
-
-    // // first name validation
-    // var firstName = $("#firstName").val();
-    // if(firstName.search(/^\s*$/) !== -1) {
-    //     $("#firstNameFieldset").attr("class", "form-group has-error");
-    //     console.log("1");
-    //     fN = 0;
-    // } else {
-    //     $("#firstNameFieldset").attr("class", "form-group");
-    //     console.log("2");
-    //     fN = 1;
-    // }
-
-    // // last name validation
-    // var lastName = $("#lastName").val();
-    // if(lastName.search(/^\s*$/) !== -1) {
-    //     $("#lastNameFieldset").attr("class", "form-group has-error");
-    //     lN = 0;
-    // } else {
-    //     $("#lastNameFieldset").attr("class", "form-group");
-    //     lN = 1;
-    // }
 
     // old email validation
     var oldEmail = $("#email").val();
-    if(email.search(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i) === -1) {
+    if(oldEmail.search(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i) === -1) {
         $("#emailFieldset").attr("class", "form-group has-error");
         eM = 0;
     } else {
@@ -60,21 +37,26 @@ updateEmailButton.onclick = function() {
     }
 
     if(eM && nEM && cEM) {
-        console.log("updating");
-        // if all checks pass then redirect
-        //$.ajax({
-        //    type: 'PUT',
-        //    url: '/user',
-        //    data: {
-        //        "firstName": firstName,
-        //        "lastName": lastName,
-        //        "email": email,
-        //        "password": password
-        //    },
-        //    success: function() {
-        //        window.location = "./index";
-        //    }
-        //});
+        console.log("Updating Email");
+         //if all checks pass then redirect
+        $.ajax({
+            type: 'PUT',
+            url: '/user/updateEmail',
+            data: {
+                "currentEmail": oldEmail,
+                "newEmail":     newEmail,
+                "confirmEmail": confirmEmail
+            },
+            success: function() {
+                $("#email").val(newEmail);
+                $("#newEmail").val("");
+                $("#confirmEmail").val("");
+                alert("Email Updated!");
+            }, error: function() {
+                alert("Make sure you have filled out all fields pertaining to Email correctly " +
+                    "or that the Email doesn't already exist");
+            }
+        });
     }
 };
 
@@ -87,6 +69,7 @@ updatePasswordButton.onclick = function() {
     var password = $("#password").val();
     if(password.search(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) === -1) {
         $("#passwordFieldset").attr("class", "form-group has-error");
+        console.log("hello");
         pW = 0;
     } else {
         $("#passwordFieldset").attr("class", "form-group");
@@ -114,23 +97,31 @@ updatePasswordButton.onclick = function() {
     }
 
     if(pW && nPW && cP) {
-        console.log("updating");
+        console.log("Updating Password");
         // if all checks pass then redirect
-        //$.ajax({
-        //    type: 'PUT',
-        //    url: '/user',
-        //    data: {
-        //        "firstName": firstName,
-        //        "lastName": lastName,
-        //        "email": email,
-        //        "password": password
-        //    },
-        //    success: function() {
-        //        window.location = "./index";
-        //    }
-        //});
+        $.ajax({
+            type: 'PUT',
+            url: '/user/updatePassword',
+            data: {
+                "currentPassword": password,
+                "newPassword": newPassword,
+                "confirmPassword": confirmPassword
+            },
+            success: function() {
+                $("#password").val("");
+                $("#newPassword").val("");
+                $("#confirmPassword").val("");
+                alert("Password Updated!");
+            }, error: function() {
+                alert("Make sure you have filled out all fields pertaining to Passwor correctly ");
+            }
+        });
     }
 };
+
+//************************************************************
+//
+//************************************************************
 
 $("#yesDeleteAccount").click(function() {
     $.ajax({
