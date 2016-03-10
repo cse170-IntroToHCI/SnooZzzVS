@@ -84,6 +84,8 @@ app.post('/user', function(req, res) {
                             // Create session token
                             usersCollection.insertOne(newUser);
                             sess.email = email;
+                            sess.graphVisited = false;
+                            sess.compareVisited = false;
                             sess.sleepObjectId = newSleepDoc.ops[0]._id;
                             sess.wakeObjectId = newWakeDoc.ops[0]._id;
                             console.log("Signup Success");
@@ -238,6 +240,8 @@ app.post('/user/login', function(req, res) {
                 if(users[user_i].email === email) {
                     if(users[user_i].password === password) {
                         sess.email = email;
+                        sess.graphVisited = false;
+                        sess.compareVisited = false;
                         sess.sleepObjectId = users[user_i].sleepObjectId;
                         sess.wakeObjectId = users[user_i].wakeObjectId;
                         console.log("Login Success");

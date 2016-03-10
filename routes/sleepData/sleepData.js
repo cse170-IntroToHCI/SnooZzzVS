@@ -28,7 +28,6 @@ module.exports.POST = function(req, res) {
 };
 
 module.exports.GET = function(req, res) {
-    var email = req.session.email;
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.find({_id: ObjectId(req.session.sleepObjectId)}).toArray(function(err, sleepDataObject) {
         if(err) {

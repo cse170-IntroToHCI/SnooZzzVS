@@ -28,7 +28,6 @@ module.exports.POST = function(req, res) {
 };
 
 module.exports.GET = function(req, res) {
-    var email = req.session.email;
     var wakeDataCollection = db.get().collection('wakeData');
     wakeDataCollection.find({_id: ObjectId(req.session.wakeObjectId)}).toArray(function(err, wakeDataObject) {
         if(err) {
