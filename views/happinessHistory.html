@@ -213,6 +213,20 @@
     <!-- Chart -->
     <script src="js/happinessHistoryButtons.js" type="text/javascript"></script>
     <script src="js/happinessHistoryGraph.js" type="text/javascript"></script>
+    <script>
+        var logoutButton = document.getElementById('logoutButton');
+        logoutButton.onclick = function() {
+            console.log("logging out");
+            $.ajax({
+                type: 'GET',
+                url: '/user/logout',
+                data: {},
+                success: function() {
+                    window.location = './';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
