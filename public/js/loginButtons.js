@@ -11,6 +11,8 @@ $(document).ready(function() {
 var loginButton = document.getElementById("loginButton");
 loginButton.onclick = function() {
 
+    var compareVisited = 'compareVisited:0;';
+    var graphVisited = 'graphVisited=0;';
     // Post data to JSON
     $.ajax({
         type: 'POST',
@@ -18,12 +20,19 @@ loginButton.onclick = function() {
         data: {
             "email": $("#email").val(),
             "password": $("#password").val()
+            //"cookie": document.cookie
         },
         success: function() {
+            document.cookie =
+            document.cookie = compareVisited;
+            document.cookie = graphVisited;
             window.location = "./index";
         },
         error: function() {
             $("#loginFailedAlert").fadeIn();
+            setTimeout(function() {
+                $("#loginFailedAlert").fadeOut();
+            }, 4000);
         }
     });
 };

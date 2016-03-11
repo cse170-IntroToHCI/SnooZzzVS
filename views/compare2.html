@@ -236,31 +236,32 @@
 	</style>
 
 	<script>
-		// get the session info
-		/*var compareVisited;
-		$.ajax({
-			type: 'GET',
-			url: '/user',
-			async: false,
-			success: function(req) {
-				compareVisited = req.session.compareVisited;
-			}
-		});*/
-
 		var boolWakeFilter = 0;
 		var boolSleepFilter = 0;
 		var boolHappinessFilter = 0;
 
+		var compareVisited;
+		var cookieFields = document.cookie.split(";");
+
+		for(field in cookieFields) {
+			if(cookieFields[field].indexOf("compareVisited=") >= 0) {
+				var objectField = cookieFields[field].split("=");
+				compareVisited = parseInt(objectField[1]);
+			}
+		}
+
 		// for displaying the "i" icon bubble text
 		$(document).ready(function() {
-		    $('#infoIcon').attr("data-original-title", "Click me!");
-		    $('#infoIcon').tooltip('show');
-
-		    $('#infoIcon').click(function() {
-		        $('#infoIcon').tooltip('toggle');
-		        $('#infoIcon').attr("data-original-title", "Toggle between the buttons and see the mood level for each category that corresponds to the color on the graph");
-		        $('#infoIcon').tooltip('show');
-		    });
+		    if(compareVisited < 1) {
+				$('#infoIcon').attr("data-original-title", "Click me!");
+				$('#infoIcon').tooltip('show');
+				document.cookie = "compareVisited="+ ++compareVisited;
+			}
+			$('#infoIcon').click(function() {
+				$('#infoIcon').tooltip('toggle');
+				$('#infoIcon').attr("data-original-title", "Toggle between the buttons and see the mood level for each category that corresponds to the color on the graph");
+				$('#infoIcon').tooltip('show');
+			});
 		});
 		$('#infoIcon').tooltip();
 
