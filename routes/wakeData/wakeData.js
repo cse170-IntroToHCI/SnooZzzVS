@@ -23,12 +23,13 @@ module.exports.POST = function(req, res) {
     var wakeDataCollection = db.get().collection('wakeData');
     wakeDataCollection.update(
         {_id: ObjectId(sess.wakeObjectId)},
-        {$push: {
-            wakeData: {
-                $each: [newWakeData],
-                $sort: {date: 1}
+        {
+            $push: {
+                wakeData: {
+                    $each: [newWakeData],
+                    $sort: {date: 1}
+                }
             }
-        }
         },
         function(err, result) {
             if(err) {

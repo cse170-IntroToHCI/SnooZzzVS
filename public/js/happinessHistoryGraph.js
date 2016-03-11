@@ -41,6 +41,13 @@ var toggleWakeLine    = 1,
     toggleAverageLine = 1,
     toggleSampleLines = 0;  // off by default
 
+var wakeBool        = true,
+    sleepBool       = true,
+    averageBool     = true,
+    sampleBool      = false, // false by default
+    userGraphBool   = true,
+    sampleGraphBool = false; // false by default
+
 //************************************************************
 // Init properties
 //************************************************************
@@ -427,9 +434,11 @@ function toggleTheWakeLine() {
     if(toggleWakeLine) {
         $("#ex1").css("background-color", "gold");
         d3.selectAll(".wakePoints").style("visibility", "visible");
+        wakeBool = true;
     } else {
         $("#ex1").css("background-color", "");
         d3.selectAll(".wakePoints").style("visibility", "hidden");
+        wakeBool = false;
     }
 }
 
@@ -439,9 +448,11 @@ function toggleTheSleepLine() {
     if(toggleSleepLine) {
         $("#ex2").css("background-color", "lightblue");
         d3.selectAll(".sleepPoints").style("visibility", "visible");
+        sleepBool = true;
     } else {
         $("#ex2").css("background-color", "");
         d3.selectAll(".sleepPoints").style("visibility", "hidden");
+        sleepBool = false;
     }
 }
 
@@ -451,9 +462,11 @@ function toggleTheAverageLine() {
     if(toggleAverageLine) {
         $("#ex3").css("background-color", "green");
         d3.selectAll(".averagePoints").style("visibility", "visible");
+        averageBool = true;
     } else {
         $("#ex3").css("background-color", "");
         d3.selectAll(".averagePoints").style("visibility", "hidden");
+        averageBool = false;
     }
 }
 
@@ -471,10 +484,59 @@ function toggleTheSampleLines() {
         $("#ex4").css("color", "white");
         $("#ex4").css("background-color", "black");
         d3.selectAll(".samplePoints").style("visibility", "visible");
+        sampleBool = true;
     } else {
         $("#ex4").css("color", "");
         $("#ex4").css("background-color", "");
         d3.selectAll(".samplePoints").style("visibility", "hidden");
+        sampleBool = false;
+    }
+}
+
+function toggleMaster(theId) {
+    //userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
+    //sampleGraphBool = !userGraphBool;
+    //if(userGraphBool) {
+    //    if(wakeBool) toggleTheWakeLine;
+    //    if(sleepBool) toggleTheSleepLine;
+    //    if(averageBool) toggleTheAverageLine;
+    //} else {
+    //    toggleTheSampleLines;
+    //}
+
+    userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
+
+    //if(userGraphBool) {
+        if(this.id === "ex1") {
+            toggleTheWakeLine();
+            sampleGraphBool = false;
+        }
+        if(this.id === "ex2") {
+            toggleTheSleepLine();
+            sampleGraphBool = false;
+        }
+        if(this.id === "ex3") {
+            toggleTheAverageLine();
+            sampleGraphBool = false;
+        }
+    //}
+
+    if(userGraphBool) {
+        if(sampleGraphBool) {
+            toggleTheSampleLines();
+        } else {
+            sampleGraphBool = false;
+        }
+    }
+
+    if(this.id === "ex4") {
+        toggleTheSampleLines();
+        if(sampleGraphBool) {
+            userGraphBool = false;
+            if(wakeBool) toggleTheWakeLine();
+            if(sleepBool) toggleTheSleepLine();
+            if(averageBool) toggleTheAverageLine();
+        }
     }
 }
 
@@ -482,8 +544,6 @@ function toggleTheSampleLines() {
 // Re-Center the graph
 //************************************************************
 function reset() {
-    console.log("Resetting");
-
     // code below changes the zoom window
     //console.log(minDate);
     //console.log(maxDate);
@@ -506,9 +566,14 @@ function reset() {
 //************************************************************
 // Click Listeners
 //************************************************************
-$("#ex1").click(toggleTheWakeLine);
-$("#ex2").click(toggleTheSleepLine);
-$("#ex3").click(toggleTheAverageLine);
-$("#ex4").click(toggleTheSampleLines);
+$("#ex1").click(toggleMaster);
+$("#ex2").click(toggleMaster);
+$("#ex3").click(toggleMaster);
+$("#ex4").click(toggleMaster);
+
+//$("#ex1").click(toggleTheWakeLine);
+//$("#ex2").click(toggleTheSleepLine);
+//$("#ex3").click(toggleTheAverageLine);
+//$("#ex4").click(toggleTheSampleLines);
 
 $("#centerButton").click(reset);
