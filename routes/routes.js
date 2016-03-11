@@ -83,6 +83,7 @@ router.post('/sleepData', sleepData.POST);
 router.get('/sleepData', sleepData.GET);
 router.put('/sleepData', sleepData.PUT);
 router.delete('/sleepData', sleepData.DELETE);
+router.get('/sleepData/search', sleepData.SEARCH);
 
 router.post('/wakeData', wakeData.POST);
 router.get('/wakeData', wakeData.GET);

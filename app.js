@@ -25,11 +25,7 @@ app.use(session({
     secret: 'supposedToBeASecret',
     maxAge: new Date(Date.now() + (10 * 60 * 60 * 1000)), // 10 hours
     saveUninitialized: true,
-    resave: false,
-    //cookie: {
-    //    compareVisited: false,
-    //    graphVisited: false
-    //}
+    resave: false
 }));
 
 // User - Create User Route
