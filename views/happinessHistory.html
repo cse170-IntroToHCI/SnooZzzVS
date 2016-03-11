@@ -137,7 +137,7 @@
             /*z-index: 0;*/
         }
         body {
-            font-family: 'PT Sans', sans-serif;
+            /*font-family: 'PT Sans', sans-serif;*/
             font-size: 12px;
             background-color: #fefefe;
             height: 100%;
@@ -213,6 +213,20 @@
     <!-- Chart -->
     <script src="js/happinessHistoryButtons.js" type="text/javascript"></script>
     <script src="js/happinessHistoryGraph.js" type="text/javascript"></script>
+    <script>
+        var logoutButton = document.getElementById('logoutButton');
+        logoutButton.onclick = function() {
+            console.log("logging out");
+            $.ajax({
+                type: 'GET',
+                url: '/user/logout',
+                data: {},
+                success: function() {
+                    window.location = './';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
