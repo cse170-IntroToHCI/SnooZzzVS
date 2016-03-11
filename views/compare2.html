@@ -54,7 +54,7 @@
 					<li><a href="./index">Home</a></li>
 					<li><a href="./account">Account</a></li>
 					<li><a href="./help">Help</a></li>
-					<li><a href="./login">Logout</a></li>
+					<li><a id="logoutButton">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -497,6 +497,20 @@
 
 		ga('create', 'UA-73881570-2', 'auto');
 		ga('send', 'pageview');
+	</script>
+	<script>
+		var logoutButton = document.getElementById('logoutButton');
+		logoutButton.onclick = function() {
+			console.log("logging out");
+			$.ajax({
+				type: 'GET',
+				url: '/user/logout',
+				data: {},
+				success: function() {
+					window.location = './';
+				}
+			});
+		}
 	</script>
 </body>
 </html>

@@ -19,7 +19,7 @@ $(document).ready(function () {
 		// } else {
 		// 	window.location.href = "/compare";
 		// }
-		window.location.href = "/compare2";
+		window.location.href = "/compare";
 	});
 
 	$("#b4").click(function () {
