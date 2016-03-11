@@ -151,6 +151,8 @@
                 url: '/user/logout',
                 data: {},
                 success: function() {
+                    document.cookie = "compareVisited=0;";
+                    document.cookie = "graphVisited=0;";
                     window.location = './';
                 }
             });

@@ -1,6 +1,19 @@
+var graphVisited;
+var cookieFields = document.cookie.split(";");
+
+for(field in cookieFields) {
+    if(cookieFields[field].indexOf("graphVisited=") >= 0) {
+        var objectField = cookieFields[field].split("=");
+        graphVisited = parseInt(objectField[1]);
+    }
+}
+
 $(document).ready(function() {
-    $('#infoIcon').attr("data-original-title", "Click me!");
-    $('#infoIcon').tooltip('show');
+    if(graphVisited < 1) {
+        $('#infoIcon').attr("data-original-title", "Click me!");
+        $('#infoIcon').tooltip('show');
+        document.cookie = "graphVisited="+ ++graphVisited;
+    }
     
     $('#infoIcon').click(function() {
         $('#infoIcon').tooltip('toggle');
