@@ -81,14 +81,14 @@ module.exports.PUT    = function(req, res) {
                         {_id: ObjectId(sleepObjectId), "sleepData.date": date}, // query
                         {$set: {"sleepData.$" : req.body}},                     // update
                         function(err, update) {
-                        if(err) {
-                            console.log("Update Sleep Data Failed");
-                            console.log(err);
-                            return res.status(400).end();
-                        } else {
-                            console.log("Sleep Data Updated");
-                            return res.status(200).send("Sleep Data Updated").end();
-                        }
+                            if(err) {
+                                console.log("Update Sleep Data Failed");
+                                console.log(err);
+                                return res.status(400).end();
+                            } else {
+                                console.log("Sleep Data Updated");
+                                return res.status(200).end();
+                            }
                     });
                 }
             }

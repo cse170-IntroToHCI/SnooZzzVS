@@ -180,7 +180,7 @@ window.onload = function() {
                     feeling: $("#happinessSlider").val()
                 },
                 success: function() {
-                    $("#sleepUpdateSuccessModal").modal('show');
+                    $("#wakeUpdateSuccessModal").modal('show');
                 }
             });
         }

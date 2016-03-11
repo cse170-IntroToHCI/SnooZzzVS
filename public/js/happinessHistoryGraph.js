@@ -506,37 +506,30 @@ function toggleMaster(theId) {
 
     userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
 
-    //if(userGraphBool) {
-        if(this.id === "ex1") {
-            toggleTheWakeLine();
-            sampleGraphBool = false;
-        }
-        if(this.id === "ex2") {
-            toggleTheSleepLine();
-            sampleGraphBool = false;
-        }
-        if(this.id === "ex3") {
-            toggleTheAverageLine();
-            sampleGraphBool = false;
-        }
-    //}
-
-    if(userGraphBool) {
-        if(sampleGraphBool) {
+    if(this.id === "ex1") {
+        if(sampleBool)
             toggleTheSampleLines();
-        } else {
-            sampleGraphBool = false;
-        }
+
+        toggleTheWakeLine();
+    }
+    if(this.id === "ex2") {
+        if(sampleBool)
+            toggleTheSampleLines();
+
+        toggleTheSleepLine();
+    }
+    if(this.id === "ex3") {
+        if(sampleBool)
+            toggleTheSampleLines();
+
+        toggleTheAverageLine();
     }
 
     if(this.id === "ex4") {
+        if(wakeBool) toggleTheWakeLine();
+        if(sleepBool) toggleTheSleepLine();
+        if(averageBool) toggleTheAverageLine();
         toggleTheSampleLines();
-        if(sampleGraphBool) {
-            userGraphBool = false;
-            if(wakeBool) toggleTheWakeLine();
-            if(sleepBool) toggleTheSleepLine();
-            if(averageBool) toggleTheAverageLine();
-        }
     }
 }
 

@@ -64,7 +64,7 @@ module.exports.PUT    = function(req, res) {
     var wakeDataCollection = db.get().collection('wakeData');
     wakeDataCollection.find({_id: ObjectId(wakeObjectId)}).toArray(function(err, wakeDataObjectArray) {
         if(err) {
-            console.log("Error-Wake Data Error@GET: " + err);
+            console.log("Error-Wake Data Error@GET: ", err);
             return res.status(400).end();
         } else {
             for(targetDate in wakeDataObjectArray[0].wakeData) {
@@ -79,9 +79,9 @@ module.exports.PUT    = function(req, res) {
                                 return res.status(400).end();
                             } else {
                                 console.log("Wake Data Updated");
-                                return res.status(200).send("Wake Data Updated").end();
+                                return res.status(200).end();
                             }
-                        });
+                    });
                 }
             }
         }
