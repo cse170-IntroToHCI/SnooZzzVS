@@ -43,6 +43,14 @@ module.exports.GET = function(req, res) {
 
 module.exports.PUT    = function(req, res) {
     var date = req.body.date;
+    var updateData = {
+        date: date,
+        hour: req.body.hour,
+        minute: req.body.minunte,
+        meridiem: req.body.meridiem,
+        feeling: req.body.feeling
+    };
+
     var sleepObjectId = req.session.sleepObjectId;
     var sleepDataCollection = db.get().collection('sleepData');
     console.log("req.body",req.body);
@@ -58,13 +66,48 @@ module.exports.PUT    = function(req, res) {
             for(targetDate in sleepDataObjectArray[0].sleepData) {
                 console.log("targetDate:",targetDate);
                 if(new Date(sleepDataObjectArray[0].sleepData[targetDate].date).getTime() === new Date(date).getTime()) {
-                    console.log("in");
-                    sleepDataCollection.update({date: date}, req.body, function(err, update) {
+
+                    //console.log("FOUND IT BEFORE: ", sleepDataObjectArray[0].sleepData[targetDate]);
+                    //sleepDataObjectArray[0].sleepData[targetDate] = updateData;
+                    //console.log("FOUND IT AFTER : ", sleepDataObjectArray[0].sleepData[targetDate]);
+                    ////sleepDataCollection.save(
+                    ////    {
+                    ////        date: date,
+                    ////        hour: ,
+                    ////        minute: ,
+                    ////        meridiem: ,
+                    ////        feeling
+                    ////    }
+                    ////);
+                    console.log("############################");
+
+                    sleepDataCollection.find({_id: ObjectId(sleepObjectId), "sleepData.date": date}).toArray(function(err, wtf) {
+                        console.log("err:",err);
+                        console.log("wtf:",wtf);
+                    });
+
+                    sleepDataCollection.find({_id: ObjectId(sleepObjectId)}).toArray(function(err1, wtf1) {
+                        console.log("err1:",err1);
+                        console.log("wtf1:",wtf1);
+                    });
+
+                    sleepDataCollection.find({"sleepData.date": date}).toArray(function(err2, wtf2) {
+                        console.log("err2:",err2);
+                        console.log("wtf2:",wtf2);
+                    });
+
+                    sleepDataCollection.update({_id: ObjectId(sleepObjectId), "sleepData.date": date}, {$set: {"sleepData.$" : req.body}}, function(err, update) {
                         if(err) {
                             console.log("Update Sleep Data Failed");
+                            console.log(err);
                             return res.status(400).end();
+                        } else if(!update) {
+                            console.log("Nothing found to update");
+                            return res.status(200).end();
                         } else {
                             console.log("Sleep Data Updated");
+                            console.log("+++++++++++++++++++++++++");
+                            //console.log("update: ", update);
                             return res.status(200).send("Sleep Data Updated").end();
                         }
                     });
