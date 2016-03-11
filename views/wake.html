@@ -23,8 +23,7 @@
 	<!-- Imports -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
-	>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 
 	<link rel="shortcut icon" href="img/snooZzzvs.png">
@@ -37,6 +36,44 @@
 	</style>
 </head>
 <body>
+	<!-- Replace Wake Data Log Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Overwriting Pre-existing Wake Log</h4>
+				</div>
+				<div class="modal-body">
+					A Log was found on the date you have selected. Are you sure you want to replace the log?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="yesReplaceLog">Yes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Update Success Alert -->
+	<div class="modal fade" id="wakeUpdateSuccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<br>
+				<h4 class="modal-title text-center" id="myModalLabel">Sleep Log Update Successful!</h4><br>
+				<div class="modal-footer">
+					<button id="okayButton" class="enabled btn btn-default center-block">Okay</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -66,7 +103,7 @@
 	</div>
 
 	<!-- Form begins here -->
-	<div class="text-center">
+	<div id="mainForm" class="text-center">
 		<form enctype="application/json">
 
 			<!-- Calendar -->

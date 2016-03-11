@@ -5,7 +5,7 @@ var DEBUG = 0;
 var LINE_WIDTH = 6,
     DOT_RADIUS = 9;
 
-var data      = [ [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}] ],
+var data      = [],// [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}] ],
     sleepData = [],
     wakeData  = [],
     averageData = [],
@@ -41,6 +41,13 @@ var toggleWakeLine    = 1,
     toggleAverageLine = 1,
     toggleSampleLines = 0;  // off by default
 
+var wakeBool        = true,
+    sleepBool       = true,
+    averageBool     = true,
+    sampleBool      = false, // false by default
+    userGraphBool   = true,
+    sampleGraphBool = false; // false by default
+
 //************************************************************
 // Init properties
 //************************************************************
@@ -48,6 +55,7 @@ $("#ex1").css("background-color", "");
 $("#ex2").css("background-color", "");
 $("#ex3").css("background-color", "");
 
+// Init Sample Data
 var thisYear = new Date().getFullYear();
 var newYearsDay = new Date("01/01/"+thisYear);
 var nextNewYearsDay = new Date("01/01/"+parseInt(thisYear+1));
@@ -78,6 +86,7 @@ if(DEBUG) {
     console.log(sampleData2);
     console.log(sampleData3);
 }
+// END Init Sample Data
 
 //************************************************************
 // Request the Sleep/Wake Data
@@ -153,23 +162,41 @@ averageData = tempAverageArray;
 //************************************************************
 // Check if sleepData || wakeData are empty - if true then don't fill data[]
 if( !(sleepData.length === 0 && wakeData.length === 0) ) {
-    $("#ex1").css("background-color", "gold");
-    $("#ex2").css("background-color", "lightblue");
-    $("#ex3").css("background-color", "green");
-    data = [];
-    if(DEBUG) {
-        console.log(sleepData);
-        console.log(wakeData);
-    }
-    data.push(wakeData);
-    data.push(sleepData);
-    data.push(averageData);
+
 }
+$("#ex1").css("background-color", "gold");
+$("#ex2").css("background-color", "lightblue");
+$("#ex3").css("background-color", "green");
+if(DEBUG) {
+    console.log(sleepData);
+    console.log(wakeData);
+}
+
+if(wakeData.length === 0) {
+    var tempWakeDataPoint = {
+        date: '01/01/1980',
+        feeling: 5
+    };
+    wakeData.push(tempWakeDataPoint);
+}
+
+if(sleepData.length === 0) {
+    var tempSleepDataPoint = {
+        date: '01/01/1980',
+        feeling: 3
+    };
+    sleepData.push(tempSleepDataPoint);
+}
+
+data.push(wakeData);
+data.push(sleepData);
+data.push(averageData);
 
 data.push(sampleData1);
 data.push(sampleData2);
 data.push(sampleData3);
 
+// format Date data
 for(var i = 0; i < data.length; ++i) {
     data[i].forEach(function (d) {
         d.date = d3.time.format("%m/%d/%Y").parse(d.date);
@@ -190,6 +217,30 @@ var minWakeDate  = new Date(data[0][0].date),
 
 var maxWakeDate  = new Date(data[0][data[0].length - 1].date),
     maxSleepDate = new Date(data[1][data[1].length - 1].date);
+
+// This covers the corner case where no data in the wakeData array
+if(minWakeDate.getTime() === new Date("01/01/1980").getTime()) {
+    var todaysDate = new Date();
+    minWakeDate  = todaysDate;
+    maxWakeDate  = todaysDate;
+    if(DEBUG) {
+        console.log(minWakeDate);
+        console.log(maxWakeDate);
+        console.log(todaysDate);
+    }
+}
+
+// This covers the corner case where no data in the sleepData array
+if(minSleepDate.getTime() === new Date("01/01/1980").getTime()) {
+    var todaysDate = new Date();
+    minSleepDate  = todaysDate;
+    maxSleepDate  = todaysDate;
+    if(DEBUG) {
+        console.log(minSleepDate);
+        console.log(maxSleepDate);
+        console.log(todaysDate);
+    }
+}
 
 var minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
 var maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
@@ -383,9 +434,11 @@ function toggleTheWakeLine() {
     if(toggleWakeLine) {
         $("#ex1").css("background-color", "gold");
         d3.selectAll(".wakePoints").style("visibility", "visible");
+        wakeBool = true;
     } else {
         $("#ex1").css("background-color", "");
         d3.selectAll(".wakePoints").style("visibility", "hidden");
+        wakeBool = false;
     }
 }
 
@@ -395,9 +448,11 @@ function toggleTheSleepLine() {
     if(toggleSleepLine) {
         $("#ex2").css("background-color", "lightblue");
         d3.selectAll(".sleepPoints").style("visibility", "visible");
+        sleepBool = true;
     } else {
         $("#ex2").css("background-color", "");
         d3.selectAll(".sleepPoints").style("visibility", "hidden");
+        sleepBool = false;
     }
 }
 
@@ -407,9 +462,11 @@ function toggleTheAverageLine() {
     if(toggleAverageLine) {
         $("#ex3").css("background-color", "green");
         d3.selectAll(".averagePoints").style("visibility", "visible");
+        averageBool = true;
     } else {
         $("#ex3").css("background-color", "");
         d3.selectAll(".averagePoints").style("visibility", "hidden");
+        averageBool = false;
     }
 }
 
@@ -427,10 +484,52 @@ function toggleTheSampleLines() {
         $("#ex4").css("color", "white");
         $("#ex4").css("background-color", "black");
         d3.selectAll(".samplePoints").style("visibility", "visible");
+        sampleBool = true;
     } else {
         $("#ex4").css("color", "");
         $("#ex4").css("background-color", "");
         d3.selectAll(".samplePoints").style("visibility", "hidden");
+        sampleBool = false;
+    }
+}
+
+function toggleMaster(theId) {
+    //userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
+    //sampleGraphBool = !userGraphBool;
+    //if(userGraphBool) {
+    //    if(wakeBool) toggleTheWakeLine;
+    //    if(sleepBool) toggleTheSleepLine;
+    //    if(averageBool) toggleTheAverageLine;
+    //} else {
+    //    toggleTheSampleLines;
+    //}
+
+    userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
+
+    if(this.id === "ex1") {
+        if(sampleBool)
+            toggleTheSampleLines();
+
+        toggleTheWakeLine();
+    }
+    if(this.id === "ex2") {
+        if(sampleBool)
+            toggleTheSampleLines();
+
+        toggleTheSleepLine();
+    }
+    if(this.id === "ex3") {
+        if(sampleBool)
+            toggleTheSampleLines();
+
+        toggleTheAverageLine();
+    }
+
+    if(this.id === "ex4") {
+        if(wakeBool) toggleTheWakeLine();
+        if(sleepBool) toggleTheSleepLine();
+        if(averageBool) toggleTheAverageLine();
+        toggleTheSampleLines();
     }
 }
 
@@ -438,8 +537,6 @@ function toggleTheSampleLines() {
 // Re-Center the graph
 //************************************************************
 function reset() {
-    console.log("Resetting");
-
     // code below changes the zoom window
     //console.log(minDate);
     //console.log(maxDate);
@@ -462,9 +559,14 @@ function reset() {
 //************************************************************
 // Click Listeners
 //************************************************************
-$("#ex1").click(toggleTheWakeLine);
-$("#ex2").click(toggleTheSleepLine);
-$("#ex3").click(toggleTheAverageLine);
-$("#ex4").click(toggleTheSampleLines);
+$("#ex1").click(toggleMaster);
+$("#ex2").click(toggleMaster);
+$("#ex3").click(toggleMaster);
+$("#ex4").click(toggleMaster);
+
+//$("#ex1").click(toggleTheWakeLine);
+//$("#ex2").click(toggleTheSleepLine);
+//$("#ex3").click(toggleTheAverageLine);
+//$("#ex4").click(toggleTheSampleLines);
 
 $("#centerButton").click(reset);
