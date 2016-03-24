@@ -66,7 +66,6 @@ window.onload = function() {
 			type: 'GET',
 			url: '/sleepData/search?date='+dayValue,
 			success: function(req) {
-				console.log(req);
 				// Data Not Found
 				if(req === null || req === undefined || req === "") {
 					// Post data to JSON
@@ -92,7 +91,7 @@ window.onload = function() {
 							var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
 
 							$("#calendarContainer").html(newCalendarHTML);
-							$("#wakingUpAtH4").html("You went to sleepData at:");
+							$("#sleepingAtH4").html("You went to sleepData at:");
 							$("#clockContainer").html(newTimeHTML);
 							$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
 
@@ -135,7 +134,7 @@ window.onload = function() {
 								var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
 
 								$("#calendarContainer").html(newCalendarHTML);
-								$("#wakingUpAtH4").html("You went to sleep at:");
+								$("#sleepingAtH4").html("You went to sleep at:");
 								$("#clockContainer").html(newTimeHTML);
 								$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
 
@@ -159,7 +158,7 @@ window.onload = function() {
 	$("#setBtn").click(function() {
 		if(flipFlop === true) {
 			$("#setAlert").hide('medium');
-			$("#wakingUpAtH4").html("Going to sleep at:");
+			$("#sleepingAtH4").html("Going to sleep at:");
 			$("#clockContainer").html(preserveClock);
 			$("#sliderContainer").html(preserveSlider);
 
@@ -174,18 +173,21 @@ window.onload = function() {
 				type: 'PUT',
 				url: '/sleepData',
 				data: {
-					date: $("#selectDate").val(),
+					date: $("#calendarContainer h3 span").html(),
 					hour: $("#selectHour").val(),
 					minute: $("#selectMinute").val(),
 					meridiem: $("#selectMeridiem").val(),
 					feeling: $("#happinessSlider").val()
 				},
 				success: function() {
-					alert("Log Updated!");
-					window.location = './';
+					$("#sleepUpdateSuccessModal").modal('show');
 				}
 			});
 		}
 	});
-	//$("body").append(preserveSlider);
+
+	$("#okayButton").click(function() {
+		window.location = './index';
+	});
 };
+
