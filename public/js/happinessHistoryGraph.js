@@ -5,7 +5,8 @@ var DEBUG = 0;
 var LINE_WIDTH = 6,
     DOT_RADIUS = 9;
 
-var data      = [],// [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}] ],
+// Graph stroke arrays
+var data      = [],
     sleepData = [],
     wakeData  = [],
     averageData = [],
@@ -13,6 +14,7 @@ var data      = [],// [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''
     sampleData2 = [],
     sampleData3 = [];
 
+// Colors for graph strokes
 var colors = [
     'gold',
     'lightblue',
@@ -36,10 +38,11 @@ var colors = [
     'samplePoints'
 ];
 
+// Toggle booleans for graph strokes
 var toggleWakeLine    = 1,
     toggleSleepLine   = 1,
     toggleAverageLine = 1,
-    toggleSampleLines = 0;  // off by default
+    toggleSampleLines = 0;  // turned off by default
 
 //************************************************************
 // Init properties
@@ -48,7 +51,7 @@ $("#ex1").css("background-color", "");
 $("#ex2").css("background-color", "");
 $("#ex3").css("background-color", "");
 
-// Init Sample Data
+// Init-Sample-Data
 var thisYear = new Date().getFullYear();
 var newYearsDay = new Date("01/01/"+thisYear);
 var nextNewYearsDay = new Date("01/01/"+parseInt(thisYear+1));
@@ -79,7 +82,7 @@ if(DEBUG) {
     console.log(sampleData2);
     console.log(sampleData3);
 }
-// END Init Sample Data
+// END Init-Sample-Data
 
 //************************************************************
 // Request the Sleep/Wake Data
@@ -153,34 +156,31 @@ averageData = tempAverageArray;
 //************************************************************
 // Fill Data array
 //************************************************************
-// Check if sleepData || wakeData are empty - if true then don't fill data[]
-if( !(sleepData.length === 0 && wakeData.length === 0) ) {
-
-}
 $("#ex1").css("background-color", "gold");
 $("#ex2").css("background-color", "lightblue");
 $("#ex3").css("background-color", "green");
-if(DEBUG) {
-    console.log(sleepData);
-    console.log(wakeData);
+if(!DEBUG) {
+    console.log("Sleep Data\n",sleepData);
+    console.log("Wake  Data\n",wakeData);
 }
 
-if(wakeData.length === 0) {
-    var tempWakeDataPoint = {
-        date: '01/01/1980',
-        feeling: 5
-    };
-    wakeData.push(tempWakeDataPoint);
-}
+//if(wakeData.length === 0) {
+//    var tempWakeDataPoint = {
+//        date: '01/01/1980',
+//        feeling: 5
+//    };
+//    wakeData.push(tempWakeDataPoint);
+//}
+//
+//if(sleepData.length === 0) {
+//    var tempSleepDataPoint = {
+//        date: '01/01/1980',
+//        feeling: 3
+//    };
+//    sleepData.push(tempSleepDataPoint);
+//}
 
-if(sleepData.length === 0) {
-    var tempSleepDataPoint = {
-        date: '01/01/1980',
-        feeling: 3
-    };
-    sleepData.push(tempSleepDataPoint);
-}
-
+// Finalize the data array which contains all graph strokes
 data.push(wakeData);
 data.push(sleepData);
 data.push(averageData);
@@ -192,7 +192,14 @@ data.push(sampleData3);
 // format Date data
 for(var i = 0; i < data.length; ++i) {
     data[i].forEach(function (d) {
-        d.date = d3.time.format("%m/%d/%Y").parse(d.date);
+        if(DEBUG === 1 && i === 0) {
+            //d.date = new Date();
+            console.log("d.date", d.date);
+            console.log("^year ", new Date(d.date));
+            //d.date = new Date(d.date);
+        }
+        //d.date = d3.time.format("%m/%d/%Y").parse(d.date);
+        d.date = d3.time.format("%a %b %d %Y %I:%M").parse(d.date);
         d.feeling = +d.feeling;
     });
 }
@@ -205,36 +212,24 @@ if(DEBUG) {
 //************************************************************
 // Calculate min/max Date for the default view of the graph
 //************************************************************
-var minWakeDate  = new Date(data[0][0].date),
+var minWakeDate,
+    minSleepDate,
+    maxWakeDate,
+    maxSleepDate;
+
+// Check if sleep data is empty
+if(sleepData.length !== 0) {
     minSleepDate = new Date(data[1][0].date);
-
-var maxWakeDate  = new Date(data[0][data[0].length - 1].date),
     maxSleepDate = new Date(data[1][data[1].length - 1].date);
-
-// This covers the corner case where no data in the wakeData array
-if(minWakeDate.getTime() === new Date("01/01/1980").getTime()) {
-    var todaysDate = new Date();
-    minWakeDate  = todaysDate;
-    maxWakeDate  = todaysDate;
-    if(DEBUG) {
-        console.log(minWakeDate);
-        console.log(maxWakeDate);
-        console.log(todaysDate);
-    }
 }
 
-// This covers the corner case where no data in the sleepData array
-if(minSleepDate.getTime() === new Date("01/01/1980").getTime()) {
-    var todaysDate = new Date();
-    minSleepDate  = todaysDate;
-    maxSleepDate  = todaysDate;
-    if(DEBUG) {
-        console.log(minSleepDate);
-        console.log(maxSleepDate);
-        console.log(todaysDate);
-    }
+// Check if wake data is empty
+if(wakeData.length !== 0) {
+    minWakeDate  = new Date(data[0][0].date);
+    maxWakeDate  = new Date(data[0][data[0].length - 1].date);
 }
 
+// select the min/max dates based on earliest/latest dates in data[0] and data[1]
 var minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
 var maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
 

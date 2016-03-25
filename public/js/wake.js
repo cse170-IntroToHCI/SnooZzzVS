@@ -69,25 +69,22 @@ window.onload = function() {
         setButton.attr("type", "button");
         setButton.attr("onclick", "location='/wake'");
 
-        // var cancelButton = $("#btnShow");
-        // cancelButton.html("Home");
-        // cancelButton.attr("onclick", "location='/index'");
-
         $("#btnShow").hide();
-        // setTimeout(function() {
-        //     $("#setAlert").fadeOut();
-        // }, 2000);
 
         // ----- EDITING LAYOUT ENDS HERE -----
-
-        // Post data to JSON
+        var wakeDate = new Date(
+            new Date(dayValue).getFullYear(),
+            new Date(dayValue).getMonth(),
+            new Date(dayValue).getDate(),
+            hourValue,
+            minuteValue
+        );
+        console.log(wakeDate);
         $.ajax({
             type: 'POST',
             url: '/wakeData',
             data: {
-                "date": dayValue,
-                "hour": hourValue,
-                "minute": minuteValue,
+                "date": wakeDate,
                 "meridiem": meridiemValue,
                 "feeling": mySlider.getValue()
             }

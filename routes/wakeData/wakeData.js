@@ -1,20 +1,19 @@
-
+var DEBUG = 1;
 var db = require('../../db');
 var ObjectId = require('mongodb').ObjectID;
 module.exports.wakeData = {};
 
 module.exports.POST = function(req, res) {
-    var date        = req.body.date;
-    var hour        = req.body.hour;
-    var minute      = req.body.minute;
-    var meridiem    = req.body.meridiem;
-    var feeling     = req.body.feeling;
-    var sess = req.session;
+    var date        = req.body.date,
+        meridiem    = req.body.meridiem,
+        feeling     = req.body.feeling,
+        sess        = req.session;
+
+    var formatDateArray = date.split(":");
+    date = formatDateArray[0]+":"+formatDateArray[1];
 
     var newWakeData = {
         "date": date,
-        "hour": hour,
-        "minute": minute,
         "meridiem": meridiem,
         "feeling": feeling
     };
