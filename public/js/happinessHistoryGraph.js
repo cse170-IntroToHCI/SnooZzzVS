@@ -159,26 +159,10 @@ averageData = tempAverageArray;
 $("#ex1").css("background-color", "gold");
 $("#ex2").css("background-color", "lightblue");
 $("#ex3").css("background-color", "green");
-if(!DEBUG) {
+if(DEBUG) {
     console.log("Sleep Data\n",sleepData);
     console.log("Wake  Data\n",wakeData);
 }
-
-//if(wakeData.length === 0) {
-//    var tempWakeDataPoint = {
-//        date: '01/01/1980',
-//        feeling: 5
-//    };
-//    wakeData.push(tempWakeDataPoint);
-//}
-//
-//if(sleepData.length === 0) {
-//    var tempSleepDataPoint = {
-//        date: '01/01/1980',
-//        feeling: 3
-//    };
-//    sleepData.push(tempSleepDataPoint);
-//}
 
 // Finalize the data array which contains all graph strokes
 data.push(wakeData);
@@ -192,11 +176,9 @@ data.push(sampleData3);
 // format Date data
 for(var i = 0; i < data.length; ++i) {
     data[i].forEach(function (d) {
-        if(DEBUG === 1 && i === 0) {
-            //d.date = new Date();
+        if(DEBUG && i === 0) {
             console.log("d.date", d.date);
             console.log("^year ", new Date(d.date));
-            //d.date = new Date(d.date);
         }
         //d.date = d3.time.format("%m/%d/%Y").parse(d.date);
         d.date = d3.time.format("%a %b %d %Y %I:%M").parse(d.date);
@@ -229,9 +211,16 @@ if(wakeData.length !== 0) {
     maxWakeDate  = new Date(data[0][data[0].length - 1].date);
 }
 
-// select the min/max dates based on earliest/latest dates in data[0] and data[1]
-var minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
-var maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
+var minDate,
+    maxDate;
+
+if(sleepData.length === wakeData.length && sleepData.length === 0) {
+    minDate = maxDate = new Date();
+} else {
+    // select the min/max dates based on earliest/latest dates in data[0] and data[1]
+    minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
+    maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
+}
 
 // these dates are used for the default view of the zoom view
 var oneDay = 24*60*60*1000;
