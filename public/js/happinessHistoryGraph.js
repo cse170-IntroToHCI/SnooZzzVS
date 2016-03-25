@@ -532,7 +532,8 @@ function reset() {
         - format the x axis because the dates overlap each other
         - change the scaleExtent([]) <- has to change with each button press
         - change the zoom.x(xScale.domain([])); <- has to change with each button press
-     */
+
+    */
 
 }
 
