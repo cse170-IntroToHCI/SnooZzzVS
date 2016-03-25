@@ -51,30 +51,34 @@ $("#ex1").css("background-color", "");
 $("#ex2").css("background-color", "");
 $("#ex3").css("background-color", "");
 
+//"Mon Mar 28 2016 09:57"
 // Init-Sample-Data
 var thisYear = new Date().getFullYear();
 var newYearsDay = new Date("01/01/"+thisYear);
 var nextNewYearsDay = new Date("01/01/"+parseInt(thisYear+1));
 
 for(var day_i = newYearsDay; day_i < nextNewYearsDay; day_i.setDate(day_i.getDate() + 1)) {
-    var tempDate = parseInt(day_i.getMonth()+1)+"/"+day_i.getDate()+"/"+day_i.getFullYear();
+    var formatDateArray = day_i.toString().split(":");
+    day_i = formatDateArray[0]+":"+formatDateArray[1];
+
     var dataForSampleOne = {
-        date: tempDate,
+        date: day_i,
         feeling: Math.floor(Math.random() * (8 - 1) + 1)
     };
     sampleData1.push(dataForSampleOne);
 
     var dataForSampleTwo = {
-        date: tempDate,
+        date: day_i,
         feeling: Math.floor(Math.random() * (8 - 1) + 1)
     };
     sampleData2.push(dataForSampleTwo);
 
     var dataForSampleThree = {
-        date: tempDate,
+        date: day_i,
         feeling: (dataForSampleOne.feeling + dataForSampleTwo.feeling)/2
     };
     sampleData3.push(dataForSampleThree);
+    day_i = new Date(day_i);
 }
 
 if(DEBUG) {
@@ -172,6 +176,10 @@ data.push(averageData);
 data.push(sampleData1);
 data.push(sampleData2);
 data.push(sampleData3);
+
+if(DEBUG) {
+    console.log("sample data:\n", sampleData1, sampleData2, sampleData3);
+}
 
 // format Date data
 for(var i = 0; i < data.length; ++i) {
