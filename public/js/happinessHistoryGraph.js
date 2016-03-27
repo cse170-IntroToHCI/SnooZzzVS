@@ -5,7 +5,8 @@ var DEBUG = 0;
 var LINE_WIDTH = 6,
     DOT_RADIUS = 9;
 
-var data      = [],// [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''}] ],
+// Graph stroke arrays
+var data      = [],
     sleepData = [],
     wakeData  = [],
     averageData = [],
@@ -13,6 +14,7 @@ var data      = [],// [{'date': '', 'feeling': ''}], [{'date': '', 'feeling': ''
     sampleData2 = [],
     sampleData3 = [];
 
+// Colors for graph strokes
 var colors = [
     'gold',
     'lightblue',
@@ -36,17 +38,16 @@ var colors = [
     'samplePoints'
 ];
 
+// Toggle booleans for graph strokes
 var toggleWakeLine    = 1,
     toggleSleepLine   = 1,
     toggleAverageLine = 1,
-    toggleSampleLines = 0;  // off by default
+    toggleSampleLines = 0;  // turned off by default
 
 var wakeBool        = true,
     sleepBool       = true,
     averageBool     = true,
-    sampleBool      = false, // false by default
-    userGraphBool   = true,
-    sampleGraphBool = false; // false by default
+    sampleBool      = false; // false by default
 
 //************************************************************
 // Init properties
@@ -55,30 +56,34 @@ $("#ex1").css("background-color", "");
 $("#ex2").css("background-color", "");
 $("#ex3").css("background-color", "");
 
-// Init Sample Data
+//"Mon Mar 28 2016 09:57"
+// Init-Sample-Data
 var thisYear = new Date().getFullYear();
 var newYearsDay = new Date("01/01/"+thisYear);
 var nextNewYearsDay = new Date("01/01/"+parseInt(thisYear+1));
 
 for(var day_i = newYearsDay; day_i < nextNewYearsDay; day_i.setDate(day_i.getDate() + 1)) {
-    var tempDate = parseInt(day_i.getMonth()+1)+"/"+day_i.getDate()+"/"+day_i.getFullYear();
+    var formatDateArray = day_i.toString().split(":");
+    day_i = formatDateArray[0]+":"+formatDateArray[1];
+
     var dataForSampleOne = {
-        date: tempDate,
+        date: day_i,
         feeling: Math.floor(Math.random() * (8 - 1) + 1)
     };
     sampleData1.push(dataForSampleOne);
 
     var dataForSampleTwo = {
-        date: tempDate,
+        date: day_i,
         feeling: Math.floor(Math.random() * (8 - 1) + 1)
     };
     sampleData2.push(dataForSampleTwo);
 
     var dataForSampleThree = {
-        date: tempDate,
+        date: day_i,
         feeling: (dataForSampleOne.feeling + dataForSampleTwo.feeling)/2
     };
     sampleData3.push(dataForSampleThree);
+    day_i = new Date(day_i);
 }
 
 if(DEBUG) {
@@ -86,7 +91,7 @@ if(DEBUG) {
     console.log(sampleData2);
     console.log(sampleData3);
 }
-// END Init Sample Data
+// END Init-Sample-Data
 
 //************************************************************
 // Request the Sleep/Wake Data
@@ -97,7 +102,20 @@ $.ajax({
     async: false,
     success: function(req) {
         for(var k = 0; k < req.length; ++k) {
-            sleepData[k] = req[k];
+            var splitDate = req[k].date.split("/");
+            var sleepDate = new Date(
+                splitDate[2],
+                splitDate[1],
+                splitDate[0],
+                req[k].hour,
+                req[k].minute
+            );
+            splitDate = sleepDate.toString().split(":");
+            sleepData[k] = {
+                "date": splitDate[0]+":"+splitDate[1],
+                "meridiem": req[k].meridiem,
+                "feeling": req[k].feeling
+            };
         }
     }
 });
@@ -108,7 +126,20 @@ $.ajax({
     async: false,
     success: function(req) {
         for(var k = 0; k < req.length; ++k) {
-            wakeData[k] = req[k];
+            var splitDate = req[k].date.split("/");
+            var wakeDate = new Date(
+                splitDate[2],
+                splitDate[1],
+                splitDate[0],
+                req[k].hour,
+                req[k].minute
+            );
+            splitDate = wakeDate.toString().split(":");
+            wakeData[k] = {
+                "date": splitDate[0]+":"+splitDate[1],
+                "meridiem": req[k].meridiem,
+                "feeling": req[k].feeling
+            };
         }
     }
 });
@@ -160,34 +191,15 @@ averageData = tempAverageArray;
 //************************************************************
 // Fill Data array
 //************************************************************
-// Check if sleepData || wakeData are empty - if true then don't fill data[]
-if( !(sleepData.length === 0 && wakeData.length === 0) ) {
-
-}
 $("#ex1").css("background-color", "gold");
 $("#ex2").css("background-color", "lightblue");
 $("#ex3").css("background-color", "green");
 if(DEBUG) {
-    console.log(sleepData);
-    console.log(wakeData);
+    console.log("Sleep Data\n",sleepData);
+    console.log("Wake  Data\n",wakeData);
 }
 
-if(wakeData.length === 0) {
-    var tempWakeDataPoint = {
-        date: '01/01/1980',
-        feeling: 5
-    };
-    wakeData.push(tempWakeDataPoint);
-}
-
-if(sleepData.length === 0) {
-    var tempSleepDataPoint = {
-        date: '01/01/1980',
-        feeling: 3
-    };
-    sleepData.push(tempSleepDataPoint);
-}
-
+// Finalize the data array which contains all graph strokes
 data.push(wakeData);
 data.push(sleepData);
 data.push(averageData);
@@ -196,10 +208,19 @@ data.push(sampleData1);
 data.push(sampleData2);
 data.push(sampleData3);
 
+if(DEBUG) {
+    console.log("sample data:\n", sampleData1, sampleData2, sampleData3);
+}
+
 // format Date data
 for(var i = 0; i < data.length; ++i) {
     data[i].forEach(function (d) {
-        d.date = d3.time.format("%m/%d/%Y").parse(d.date);
+        if(DEBUG && i === 0) {
+            console.log("d.date", d.date);
+            console.log("^year ", new Date(d.date));
+        }
+        //d.date = d3.time.format("%m/%d/%Y").parse(d.date);
+        d.date = d3.time.format("%a %b %d %Y %I:%M").parse(d.date);
         d.feeling = +d.feeling;
     });
 }
@@ -212,38 +233,33 @@ if(DEBUG) {
 //************************************************************
 // Calculate min/max Date for the default view of the graph
 //************************************************************
-var minWakeDate  = new Date(data[0][0].date),
+var minWakeDate,
+    minSleepDate,
+    maxWakeDate,
+    maxSleepDate;
+
+// Check if sleep data is empty
+if(sleepData.length !== 0) {
     minSleepDate = new Date(data[1][0].date);
-
-var maxWakeDate  = new Date(data[0][data[0].length - 1].date),
     maxSleepDate = new Date(data[1][data[1].length - 1].date);
-
-// This covers the corner case where no data in the wakeData array
-if(minWakeDate.getTime() === new Date("01/01/1980").getTime()) {
-    var todaysDate = new Date();
-    minWakeDate  = todaysDate;
-    maxWakeDate  = todaysDate;
-    if(DEBUG) {
-        console.log(minWakeDate);
-        console.log(maxWakeDate);
-        console.log(todaysDate);
-    }
 }
 
-// This covers the corner case where no data in the sleepData array
-if(minSleepDate.getTime() === new Date("01/01/1980").getTime()) {
-    var todaysDate = new Date();
-    minSleepDate  = todaysDate;
-    maxSleepDate  = todaysDate;
-    if(DEBUG) {
-        console.log(minSleepDate);
-        console.log(maxSleepDate);
-        console.log(todaysDate);
-    }
+// Check if wake data is empty
+if(wakeData.length !== 0) {
+    minWakeDate  = new Date(data[0][0].date);
+    maxWakeDate  = new Date(data[0][data[0].length - 1].date);
 }
 
-var minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
-var maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
+var minDate,
+    maxDate;
+
+if(sleepData.length === wakeData.length && sleepData.length === 0) {
+    minDate = maxDate = new Date();
+} else {
+    // select the min/max dates based on earliest/latest dates in data[0] and data[1]
+    minDate = (minWakeDate > minSleepDate) ? minSleepDate : minWakeDate;
+    maxDate = (maxWakeDate < maxSleepDate) ? maxSleepDate : maxWakeDate;
+}
 
 // these dates are used for the default view of the zoom view
 var oneDay = 24*60*60*1000;
@@ -494,18 +510,6 @@ function toggleTheSampleLines() {
 }
 
 function toggleMaster(theId) {
-    //userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
-    //sampleGraphBool = !userGraphBool;
-    //if(userGraphBool) {
-    //    if(wakeBool) toggleTheWakeLine;
-    //    if(sleepBool) toggleTheSleepLine;
-    //    if(averageBool) toggleTheAverageLine;
-    //} else {
-    //    toggleTheSampleLines;
-    //}
-
-    userGraphBool = (wakeBool || sleepBool || averageBool) ? true : false;
-
     if(this.id === "ex1") {
         if(sampleBool)
             toggleTheSampleLines();
@@ -537,6 +541,8 @@ function toggleMaster(theId) {
 // Re-Center the graph
 //************************************************************
 function reset() {
+    console.log("Resetting");
+
     // code below changes the zoom window
     //console.log(minDate);
     //console.log(maxDate);
@@ -546,12 +552,13 @@ function reset() {
     zoom.x(xScale.domain([minDateForZoom, maxDateForZoom]));
     zoomed();
     /*
-                        For "VIEW BY" Buttons
+     For "VIEW BY" Buttons
 
-        If I want to make the "View By" Month/Year/History Buttons I need to
-        - format the x axis because the dates overlap each other
-        - change the scaleExtent([]) <- has to change with each button press
-        - change the zoom.x(xScale.domain([])); <- has to change with each button press
+     If I want to make the "View By" Month/Year/History Buttons I need to
+     - format the x axis because the dates overlap each other
+     - change the scaleExtent([]) <- has to change with each button press
+     - change the zoom.x(xScale.domain([])); <- has to change with each button press
+
      */
 
 }
@@ -563,10 +570,5 @@ $("#ex1").click(toggleMaster);
 $("#ex2").click(toggleMaster);
 $("#ex3").click(toggleMaster);
 $("#ex4").click(toggleMaster);
-
-//$("#ex1").click(toggleTheWakeLine);
-//$("#ex2").click(toggleTheSleepLine);
-//$("#ex3").click(toggleTheAverageLine);
-//$("#ex4").click(toggleTheSampleLines);
 
 $("#centerButton").click(reset);
