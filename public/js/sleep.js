@@ -61,12 +61,20 @@ window.onload = function() {
 		var meridiemValue = $("#selectMeridiem").val();
 		var moodValue = mySlider.getValue();
 
+		var sleepDate = new Date(
+			new Date(dayValue).getFullYear(),
+			new Date(dayValue).getMonth(),
+			new Date(dayValue).getDate(),
+			hourValue,
+			minuteValue
+		);
+
 		// Post data to JSON
 		$.ajax({
 			type: 'GET',
-			url: '/sleepData/search?date='+dayValue,
+			url: '/sleepData/search?date='+sleepDate,
 			success: function(req) {
-				console.log(req);
+				console.log("success request: ",req);
 				// Data Not Found
 				if(req === null || req === undefined || req === "") {
 					// Post data to JSON
@@ -74,11 +82,9 @@ window.onload = function() {
 						type: 'POST',
 						url: '/sleepData',
 						data: {
-							"date": dayValue,
-							"hour": hourValue,
-							"minute": minuteValue,
+							"date": sleepDate,
 							"meridiem": meridiemValue,
-							"feeling": mySlider.getValue()
+							"feeling": moodValue
 						},
 						success: function() {
 							$("#setAlert").show('medium');
@@ -116,14 +122,11 @@ window.onload = function() {
 							type: 'PUT',
 							url: '/sleepData',
 							data: {
-								date: $("#selectDate").val(),
-								hour: $("#selectHour").val(),
-								minute: $("#selectMinute").val(),
-								meridiem: $("#selectMeridiem").val(),
-								feeling: $("#happinessSlider").val()
+								date: sleepDate,
+								meridiem: meridiemValue,
+								feeling: moodValue
 							},
 							success: function() {
-								//alert("Log Updated!"); todo - button code below in here
 								$("#setAlert").show('medium');
 								$("#btnShow").hide();
 
@@ -170,15 +173,28 @@ window.onload = function() {
 			new Slider("#happinessSlider", {});
 			flipFlop = 2;
 		} else if(flipFlop === 2) {
+			// current Form values
+			var dayValue = $("#selectDate").val();
+			var hourValue = $("#selectHour").val();
+			var minuteValue = $("#selectMinute").val();
+			var meridiemValue = $("#selectMeridiem").val();
+			var moodValue = mySlider.getValue();
+
+			var sleepDate = new Date(
+				new Date(dayValue).getFullYear(),
+				new Date(dayValue).getMonth(),
+				new Date(dayValue).getDate(),
+				hourValue,
+				minuteValue
+			);
+
 			$.ajax({
 				type: 'PUT',
 				url: '/sleepData',
 				data: {
-					date: $("#selectDate").val(),
-					hour: $("#selectHour").val(),
-					minute: $("#selectMinute").val(),
-					meridiem: $("#selectMeridiem").val(),
-					feeling: $("#happinessSlider").val()
+					date: sleepDate,
+					meridiem: meridiemValue,
+					feeling: moodValue
 				},
 				success: function() {
 					alert("Log Updated!");
@@ -187,5 +203,4 @@ window.onload = function() {
 			});
 		}
 	});
-	//$("body").append(preserveSlider);
 };

@@ -51,6 +51,14 @@ window.onload = function() {
         var meridiemValue = $("#selectMeridiem").val();
         var moodValue = mySlider.getValue();
 
+        var wakeDate = new Date(
+            new Date(dayValue).getFullYear(),
+            new Date(dayValue).getMonth(),
+            new Date(dayValue).getDate(),
+            hourValue,
+            minuteValue
+        );
+
         $("#setAlert").show('medium');
 
         // Change page layout
@@ -72,14 +80,7 @@ window.onload = function() {
         $("#btnShow").hide();
 
         // ----- EDITING LAYOUT ENDS HERE -----
-        var wakeDate = new Date(
-            new Date(dayValue).getFullYear(),
-            new Date(dayValue).getMonth(),
-            new Date(dayValue).getDate(),
-            hourValue,
-            minuteValue
-        );
-        console.log(wakeDate);
+
         $.ajax({
             type: 'POST',
             url: '/wakeData',
