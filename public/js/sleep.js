@@ -1,5 +1,6 @@
 
 var flipFlop = false;
+var clickLogCounter = 0;
 
 // default Form values
 var today = new Date();
@@ -7,7 +8,7 @@ var theDay = (today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear();
 var theHour = today.getHours() % 12; // scale = [0 - 23]. (13 = 1pm)
 var theMinute = today.getMinutes();
 var theMeridiem = today.getHours();
-
+$("#loadingMask").hide();
 function alertClick() {
 	$("#cancelAlert").show('medium');
 }
@@ -66,7 +67,6 @@ window.onload = function() {
 			type: 'GET',
 			url: '/sleepData/search?date='+dayValue,
 			success: function(req) {
-				console.log(req);
 				// Data Not Found
 				if(req === null || req === undefined || req === "") {
 					// Post data to JSON
@@ -92,7 +92,7 @@ window.onload = function() {
 							var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
 
 							$("#calendarContainer").html(newCalendarHTML);
-							$("#wakingUpAtH4").html("You went to sleepData at:");
+							$("#sleepingAtH4").html("You went to sleepData at:");
 							$("#clockContainer").html(newTimeHTML);
 							$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
 
@@ -108,12 +108,41 @@ window.onload = function() {
 					});
 				// Data already Exists
 				} else {
-					$("#myModal").modal('show');
-					$("#yesReplaceLog").click(function() {
-						$("#myModal").modal('hide');
+					console.log("req:");
+					console.log(req);
 
+					for(var reqIndex in req) {
+						console.log("req["+parseInt(reqIndex)+"].date = ", req[reqIndex].date);
+						console.log("req["+parseInt(reqIndex)+"].mood = ", req[reqIndex].feeling);
+						var idOfModals = "#preexistingLogs"+reqIndex;
+						console.log("idOfModals:", idOfModals);
+						var preexistingLogsText = $(idOfModals);
+						preexistingLogsText.html(
+							"Date: " + req[reqIndex].date + "<br>" +
+							"Time: " + req[reqIndex].hour + ":" + req[reqIndex].minute + " " + req[reqIndex].meridiem + "<br>" +
+							"Mood: " + req[reqIndex].feeling + "<br>" + // todo - change the id names for the buttons
+							"<button id='ZZZZ'  type='submit' class='btn btn-danger' style='float: right;'>Delete</button>" +
+							"<button id='ZZZZZ' type='submit' class='btn btn-primary' style='float: right; margin-right: 8px;'>Update</button>"
+						);
+						console.log("reqIndex = ", (parseInt(reqIndex) + 1));
+						console.log("req.len  = ", req.length);
+						if((parseInt(reqIndex) + 1) !== req.length) {
+							var newLogsId = parseInt(reqIndex) + 1;
+							preexistingLogsText.after(
+								"<hr id='hr"+newLogsId+"' class='logModals' style='margin-bottom: 0; margin-top: 15px;'>" +
+								"<div id='preexistingLogs" + newLogsId + "' class='modal-body logModals'></div>"
+							);
+							console.log("parseInt(reqIndex + 1)", newLogsId);
+						}
+					}
+
+					$("#myModal").modal('show');
+					$("#addSleepLogButton").click(function() {
+						//$("#myModal").modal('hide');
+
+						$("#loadingMask").show();
 						$.ajax({
-							type: 'PUT',
+							type: 'POST',
 							url: '/sleepData',
 							data: {
 								date: $("#selectDate").val(),
@@ -123,29 +152,37 @@ window.onload = function() {
 								feeling: $("#happinessSlider").val()
 							},
 							success: function() {
-								//alert("Log Updated!"); todo - button code below in here
-								$("#setAlert").show('medium');
-								$("#btnShow").hide();
+								//$("#setAlert").show('medium');
+								$("#loadingMask").hide();
 
-								//************************************************************
-								// Update Page Layout
-								//************************************************************
-								var newCalendarHTML = "<h3><span class='label label-info'>"+dayValue+"</span></h3>";
-								var newTimeHTML = "<h3><span class='label label-info'>"+hourValue+":"+minuteValue+" "+meridiemValue+"</span></h3>";
-								var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
+								// add to the current modal
+								var idOfLastModal = "preexistingLogs"+(parseInt(req.length - 1));
+								console.log("idOfLastModal", idOfLastModal);
+								$(idOfLastModal).after(
+									"<hr id='hr"+req.length+"' class='logModals' style='margin-bottom: 0; margin-top: 15px;'>" +
+									"<div id='preexistingLogs" + req.length + "' class='modal-body logModals'></div>"
+								);
 
-								$("#calendarContainer").html(newCalendarHTML);
-								$("#wakingUpAtH4").html("You went to sleep at:");
-								$("#clockContainer").html(newTimeHTML);
-								$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
+								var tempSleepData = {
+									"date": $("#selectDate").val(),
+									"hour": $("#selectHour").val(),
+									"minute": $("#selectMinute").val(),
+									"meridiem": $("#selectMeridiem").val(),
+									"feeling": $("#happinessSlider").val()
+								};
 
-								var setButton = $("#setBtn");
-								setButton.html("Edit")
-									.attr("id", "editBtn")
-									.attr("type", "button");
+								req.push(tempSleepData);
 
-								flipFlop = true;
-								// ----- EDITING LAYOUT ENDS HERE -----
+								idOfLastModal = "preexistingLogs"+req.length;
+								$(idOfLastModal).html(
+									"Date: " + req[req.length-1].date + "<br>" +
+									"Time: " + req[req.length-1].hour + ":" + req[req.length-1].minute + " " + req[req.length-1].meridiem + "<br>" +
+									"Mood: " + req[req.length-1].feeling + "<br>" + // todo - change the id names for the buttons
+									"<button id='ZZZZ'  type='submit' class='btn btn-danger' style='float: right;'>Delete</button>"
+								);
+							},
+							error: function() {
+								alert("Failed to Log - Try again later :)");
 							}
 						});
 					});
@@ -159,7 +196,7 @@ window.onload = function() {
 	$("#setBtn").click(function() {
 		if(flipFlop === true) {
 			$("#setAlert").hide('medium');
-			$("#wakingUpAtH4").html("Going to sleep at:");
+			$("#sleepingAtH4").html("Going to sleep at:");
 			$("#clockContainer").html(preserveClock);
 			$("#sliderContainer").html(preserveSlider);
 
@@ -174,18 +211,27 @@ window.onload = function() {
 				type: 'PUT',
 				url: '/sleepData',
 				data: {
-					date: $("#selectDate").val(),
+					date: $("#calendarContainer h3 span").html(),
 					hour: $("#selectHour").val(),
 					minute: $("#selectMinute").val(),
 					meridiem: $("#selectMeridiem").val(),
 					feeling: $("#happinessSlider").val()
 				},
 				success: function() {
-					alert("Log Updated!");
-					window.location = './';
+					$("#sleepUpdateSuccessModal").modal('show');
 				}
 			});
 		}
 	});
-	//$("body").append(preserveSlider);
+
+	$("#okayButton").click(function() {
+		window.location = './index';
+	});
+
+	// hide-listener for the modal
+	$("#myModal").on('hidden.bs.modal', function() {
+		$("#preexistingLogs0").html("");
+		$(".logModals").remove();
+	});
 };
+

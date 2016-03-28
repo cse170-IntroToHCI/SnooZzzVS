@@ -9,7 +9,7 @@ module.exports.POST = function(req, res) {
     var minute      = req.body.minute;
     var meridiem    = req.body.meridiem;
     var feeling     = req.body.feeling;
-    var sess = req.session;
+    var sess        = req.session;
 
     var newSleepData = {
         "date": date,
@@ -19,12 +19,28 @@ module.exports.POST = function(req, res) {
         "feeling": feeling
     };
 
+    // must use update when pushing to an array
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.update(
         {_id: ObjectId(sess.sleepObjectId)},
-        {$push: {sleepData: newSleepData}}
+        {$push: {
+                sleepData: {
+                    $each: [newSleepData],
+                    $sort: {date: 1}
+                }
+            }
+        },
+        function(err, result) {
+            if(err) {
+                console.log("Error Posting Sleep Data");
+                console.log(err);
+                return res.status(400).end();
+            } else {
+                console.log("Posted Sleep Data");
+                return res.status(200).end();
+            }
+        }
     );
-    return res.status(200).end();
 };
 
 module.exports.GET = function(req, res) {
@@ -42,36 +58,66 @@ module.exports.GET = function(req, res) {
 };
 
 module.exports.PUT    = function(req, res) {
-    var date = req.body.date;
+    var date = req.body.date,
+        hours = req.body.hour,
+        meridiem = req.body.meridiem;
     var sleepObjectId = req.session.sleepObjectId;
     var sleepDataCollection = db.get().collection('sleepData');
-    console.log("req.body",req.body);
-    sleepDataCollection.find({_id: ObjectId(sleepObjectId)}).toArray(function(err, sleepDataObjectArray) {
-        if(err) {
-            console.log("Error-Sleep Data Error@GET: " + err);
-            return res.status(400).end();
-        } else {
-            console.log("sleepDataObjectArray",sleepDataObjectArray);
-            console.log("******************************");
-            console.log("sleepDataObjectArray[0].sleepData", sleepDataObjectArray[0].sleepData);
-            console.log("******************************");
-            for(targetDate in sleepDataObjectArray[0].sleepData) {
-                console.log("targetDate:",targetDate);
-                if(new Date(sleepDataObjectArray[0].sleepData[targetDate].date).getTime() === new Date(date).getTime()) {
-                    console.log("in");
-                    sleepDataCollection.update({date: date}, req.body, function(err, update) {
-                        if(err) {
-                            console.log("Update Sleep Data Failed");
-                            return res.status(400).end();
-                        } else {
-                            console.log("Sleep Data Updated");
-                            return res.status(200).send("Sleep Data Updated").end();
-                        }
-                    });
-                }
+
+    sleepDataCollection.update(
+        {   // query
+            _id: ObjectId(sleepObjectId),
+            "sleepData.date": date,
+            "sleepData.hour": hours,
+            "sleepData.meridiem": meridiem
+        },
+        {   // update
+            $set: {
+                "sleepData.$" : req.body
+            }
+        },
+        function(err, update) {
+            if(err) {
+                console.log("Update Sleep Data Failed");
+                console.log(err);
+                return res.status(400).end();
+            } else if(update) {
+                console.log("Sleep Data Updated");
+                return res.status(200).end();
+            } else {
+                console.log("No Sleep Data Updated");
+                return res.status(200).end();
             }
         }
-    });
+    );
+
+    //sleepDataCollection.find({_id: ObjectId(sleepObjectId)}).toArray(function(err, sleepDataObjectArray) {
+    //    if(err) {
+    //        console.log("Error-Sleep Data Error@GET: " + err);
+    //        return res.status(400).end();
+    //    } else {
+    //        var help = sleepDataObjectArray[0].sleepData;
+    //        var myDate = new Date(date);
+    //        console.log("myDate", myDate);
+    //        for(var targetDate in help) {
+    //            var splitHelpDate = help[targetDate].date.toString().split("/");
+    //            var helpDate = new Date(
+    //                splitHelpDate[2],       // year
+    //                splitHelpDate[0]-1,     // month
+    //                splitHelpDate[1],       // day
+    //                help[targetDate].hour
+    //            );
+    //
+    //            if(helpDate.getFullYear() === myDate.getFullYear() &&
+    //               helpDate.getMonth() === myDate.getMonth() &&
+    //               helpDate.getDate() === myDate.getDate() &&
+    //               helpDate.getHours() === parseInt(hours) &&
+    //               help[targetDate].meridiem === meridiem) {
+    //                console.log("hello");
+    //            }
+    //        }
+    //    }
+    //});
 };
 
 module.exports.DELETE = function(req, res) {};
@@ -79,22 +125,29 @@ module.exports.DELETE = function(req, res) {};
 module.exports.SEARCH = function(req, res) {
     var date = req.query.date;
     var sleepObjectId = req.session.sleepObjectId;
+
+    console.log("Searching...");
     var sleepDataCollection = db.get().collection('sleepData');
-    sleepDataCollection.find({_id: ObjectId(sleepObjectId)}).toArray(function(err, sleepDataObjectArray) {
+    sleepDataCollection.find(
+        {   // query
+            _id: ObjectId(sleepObjectId),
+            "sleepData.date": date
+        }).toArray(function(err, result) {
         if(err) {
             console.log("Error-Sleep Data Error@GET: " + err);
             return res.status(400).end();
-        } else {
-            console.log("Searching...");
-            var sleepDataArray = sleepDataObjectArray[0].sleepData;
+        } else if(result) {
+            console.log("Given Date Exists");
+            var resultArray = [];
+            var sleepDataArray = result[0].sleepData;
             for(sleepDataIndex in sleepDataArray) {
                 var sleepDate = sleepDataArray[sleepDataIndex].date;
-                if(new Date(sleepDate).getTime() === new Date(date).getTime()) {
-                    console.log("Given Date Exists");
-                    return res.status(200).send(sleepDataArray[sleepDataIndex]).end();
+                if(sleepDate === date) {
+                    resultArray.push(sleepDataArray[sleepDataIndex]);
                 }
             }
-
+            return res.status(200).send(resultArray);
+        } else {
             console.log("Given Date Does Not Exist");
             return res.status(200).send().end();
         }

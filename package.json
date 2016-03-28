@@ -3,7 +3,8 @@
   "description": "Our sample Node to Heroku app",
   "main": "server.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "nodemon --watch routes ./bin/www"
   },
   "repository": {
     "type": "git",

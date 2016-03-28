@@ -89,6 +89,7 @@ router.post('/wakeData', wakeData.POST);
 router.get('/wakeData', wakeData.GET);
 router.put('/wakeData', wakeData.PUT);
 router.delete('/wakeData', wakeData.DELETE);
+router.get('/wakeData/search', wakeData.SEARCH);
 
 /*
 *  Routes/pages that we didn't have time to implement
