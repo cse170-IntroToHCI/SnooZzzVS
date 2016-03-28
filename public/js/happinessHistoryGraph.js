@@ -104,9 +104,9 @@ $.ajax({
         for(var k = 0; k < req.length; ++k) {
             var splitDate = req[k].date.split("/");
             var sleepDate = new Date(
-                splitDate[2],
-                splitDate[1],
-                splitDate[0],
+                splitDate[2],       // year
+                splitDate[0]-1,     // month
+                splitDate[1],       // day
                 req[k].hour,
                 req[k].minute
             );
@@ -128,9 +128,9 @@ $.ajax({
         for(var k = 0; k < req.length; ++k) {
             var splitDate = req[k].date.split("/");
             var wakeDate = new Date(
-                splitDate[2],
-                splitDate[1],
-                splitDate[0],
+                splitDate[2],       // year
+                splitDate[0]-1,     // month
+                splitDate[1],       // day
                 req[k].hour,
                 req[k].minute
             );
