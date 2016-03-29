@@ -8,10 +8,6 @@ var theDay = (today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear();
 var theHour = today.getHours() % 12; // scale = [0 - 23]. (13 = 1pm)
 var theMinute = today.getMinutes();
 var theMeridiem = today.getHours();
-$("#loadingMask").hide();
-function alertClick() {
-	$("#cancelAlert").show('medium');
-}
 
 function successClick() {
 	$("#setAlert").show('medium');
@@ -23,8 +19,6 @@ window.onload = function() {
 		preserveClock = $("#clockContainer").html(),
 		preserveSlider = $("#sliderContainer").html(),
 		preserveTest = $("#mainForm").html();
-
-	alertClick;
 
 	// Calendar
 	var datePicker = $('#datePicker').datepicker({format: 'mm/dd/yyyy'});
@@ -62,12 +56,15 @@ window.onload = function() {
 		var meridiemValue = $("#selectMeridiem").val();
 		var moodValue = mySlider.getValue();
 
+		$("#loadingMask").show();
 		// Post data to JSON
 		$.ajax({
 			type: 'GET',
 			url: '/sleepData/search?date='+dayValue,
 			success: function(req) {
-				// Data Not Found
+				$("#loadingMask").hide();
+
+				// Data Not Found, Then save Log right away
 				if(req === null || req === undefined || req === "") {
 					// Post data to JSON
 					$.ajax({
@@ -102,71 +99,23 @@ window.onload = function() {
 								.attr("id", "editBtn")
 								.attr("type", "button");
 
-							flipFlop = true;
+							flipFlop = true;	// delete
 							// ----- EDITING LAYOUT ENDS HERE -----
 						}
 					});
-				// Data already Exists
+
+				// Data already Exists, present alternative option
 				} else {
 					fillModalUp(req);
-
 					$("#myModal").modal('show');
-					$("#addSleepLogButton").click(function() {
-						//$("#myModal").modal('hide');
-
-						$("#loadingMask").show();
-						$.ajax({
-							type: 'POST',
-							url: '/sleepData',
-							data: {
-								date: $("#selectDate").val(),
-								hour: $("#selectHour").val(),
-								minute: $("#selectMinute").val(),
-								meridiem: $("#selectMeridiem").val(),
-								feeling: $("#happinessSlider").val()
-							},
-							success: function() {
-								//$("#setAlert").show('medium');
-								$("#loadingMask").hide();
-
-								// add to the current modal
-								var idOfLastModal = "preexistingLogs"+(parseInt(req.length - 1));
-								console.log("idOfLastModal", idOfLastModal);
-								$(idOfLastModal).after(
-									"<hr id='hr"+req.length+"' class='logModals' style='margin-bottom: 0; margin-top: 15px;'>" +
-									"<div id='preexistingLogs" + req.length + "' class='modal-body logModals'></div>"
-								);
-
-								var tempSleepData = {
-									"date": $("#selectDate").val(),
-									"hour": $("#selectHour").val(),
-									"minute": $("#selectMinute").val(),
-									"meridiem": $("#selectMeridiem").val(),
-									"feeling": $("#happinessSlider").val()
-								};
-
-								req.push(tempSleepData);
-
-								idOfLastModal = "preexistingLogs"+req.length;
-								$(idOfLastModal).html(
-									"Date: " + req[req.length-1].date + "<br>" +
-									"Time: " + req[req.length-1].hour + ":" + req[req.length-1].minute + " " + req[req.length-1].meridiem + "<br>" +
-									"Mood: " + req[req.length-1].feeling + "<br>" + // todo - change the id names for the buttons
-									"<button id='ZZZZ'  type='submit' class='btn btn-danger' style='float: right;'>Delete</button>"
-								);
-							},
-							error: function() {
-								alert("Failed to Log - Try again later :)");
-							}
-						});
-					});
 				}
 			}
 		});
 
-		return false;
+		return false; // DELETE - not sure what this is for
 	});
 
+	// DELETE
 	$("#setBtn").click(function() {
 		if(flipFlop === true) {
 			$("#setAlert").hide('medium');
@@ -198,6 +147,7 @@ window.onload = function() {
 		}
 	});
 
+	// DELETE
 	$("#okayButton").click(function() {
 		window.location = './index';
 	});
@@ -207,6 +157,30 @@ window.onload = function() {
 		$("#preexistingLogs0").html("");
 		$(".logModals").remove();
 	});
+
+	// click listener for adding new log from modal
+	$("#addSleepLogButton").click(function() {
+
+		$.ajax({
+			type: 'POST',
+			url: '/sleepData',
+			data: {
+				date: $("#selectDate").val(),
+				hour: $("#selectHour").val(),
+				minute: $("#selectMinute").val(),
+				meridiem: $("#selectMeridiem").val(),
+				feeling: $("#happinessSlider").val()
+			},
+			success: function() {
+				// Grow current modal with log entered
+				$("#myModal").modal('hide');
+				$("#setAlert").show('medium');
+			},
+			error: function() {
+				alert("Failed to Log - Try again later :)");
+			}
+		});
+	});
 };
 
 function fillModalUp(req) {
@@ -214,7 +188,7 @@ function fillModalUp(req) {
 		var reqData = req[reqIndex];
 		var idOfModals = "#preexistingLogs"+reqIndex;
 		var preexistingLogsText = $(idOfModals);
-console.log("reqData", reqData);
+
 		// Create Delete Button
 		var deleteButton = document.createElement("button"),
 			deleteBtnTxt = document.createTextNode("Delete");
@@ -236,16 +210,16 @@ console.log("reqData", reqData);
 		updateButton.className = ("btn btn-primary");
 
 		preexistingLogsText.html(
-			"Date: " + req[reqIndex].date + "<br>" +
-			"Time: " + req[reqIndex].hour + ":" + req[reqIndex].minute + " " + req[reqIndex].meridiem + "<br>" +
-			"Mood: " + req[reqIndex].feeling + "<br>"
+			"Date: " + reqData.date + "<br>" +
+			"Time: " + reqData.hour + ":" + reqData.minute + " " + reqData.meridiem + "<br>" +
+			"Mood: " + reqData.feeling + "<br>"
 		);
 
 		// Append the Delete and Update Buttons
 		preexistingLogsText.append(deleteButton);
 		preexistingLogsText.append(updateButton);
 
-		// Check if we are at the last iteration of the req[] array.
+		// Check if we are at the last iteration of the req[]-Objects array.
 		if((parseInt(reqIndex) + 1) !== req.length) {
 			var newLogsId = parseInt(reqIndex) + 1;
 			preexistingLogsText.after(
@@ -259,4 +233,9 @@ console.log("reqData", reqData);
 function deleteLog(logToDelete) {
 	var sleepDataToDelete = logToDelete.getAttribute("data-z");
 	console.log("::", JSON.parse(sleepDataToDelete));
+	// todo --> $.ajax(Delete);
+}
+
+function updateLog(logToUpdate) {
+	// todo --> $.ajax(PUT);
 }
