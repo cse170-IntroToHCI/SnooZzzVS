@@ -67,7 +67,7 @@ module.exports.PUT    = function(req, res) {
             console.log("Error-Wake Data Error@GET: ", err);
             return res.status(400).end();
         } else {
-            for(targetDate in wakeDataObjectArray[0].wakeData) {
+            for(var targetDate in wakeDataObjectArray[0].wakeData) {
                 if(new Date(wakeDataObjectArray[0].wakeData[targetDate].date).getTime() === new Date(date).getTime()) {
                     wakeDataCollection.update(
                         {_id: ObjectId(wakeObjectId), "wakeData.date": date}, // query
