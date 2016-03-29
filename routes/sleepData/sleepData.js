@@ -138,6 +138,7 @@ module.exports.SEARCH = function(req, res) {
             return res.status(400).end();
         } else if(result) {
             console.log("Given Date Exists");
+            console.log("result", result);
             var resultArray = [];
             var sleepDataArray = result[0].sleepData;
             for(sleepDataIndex in sleepDataArray) {
