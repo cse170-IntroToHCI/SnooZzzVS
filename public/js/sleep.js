@@ -108,33 +108,7 @@ window.onload = function() {
 					});
 				// Data already Exists
 				} else {
-					console.log("req:");
-					console.log(req);
-
-					for(var reqIndex in req) {
-						console.log("req["+parseInt(reqIndex)+"].date = ", req[reqIndex].date);
-						console.log("req["+parseInt(reqIndex)+"].mood = ", req[reqIndex].feeling);
-						var idOfModals = "#preexistingLogs"+reqIndex;
-						console.log("idOfModals:", idOfModals);
-						var preexistingLogsText = $(idOfModals);
-						preexistingLogsText.html(
-							"Date: " + req[reqIndex].date + "<br>" +
-							"Time: " + req[reqIndex].hour + ":" + req[reqIndex].minute + " " + req[reqIndex].meridiem + "<br>" +
-							"Mood: " + req[reqIndex].feeling + "<br>" + // todo - change the id names for the buttons
-							"<button id='ZZZZ'  type='submit' class='btn btn-danger' style='float: right;'>Delete</button>" +
-							"<button id='ZZZZZ' type='submit' class='btn btn-primary' style='float: right; margin-right: 8px;'>Update</button>"
-						);
-						console.log("reqIndex = ", (parseInt(reqIndex) + 1));
-						console.log("req.len  = ", req.length);
-						if((parseInt(reqIndex) + 1) !== req.length) {
-							var newLogsId = parseInt(reqIndex) + 1;
-							preexistingLogsText.after(
-								"<hr id='hr"+newLogsId+"' class='logModals' style='margin-bottom: 0; margin-top: 15px;'>" +
-								"<div id='preexistingLogs" + newLogsId + "' class='modal-body logModals'></div>"
-							);
-							console.log("parseInt(reqIndex + 1)", newLogsId);
-						}
-					}
+					fillModalUp(req);
 
 					$("#myModal").modal('show');
 					$("#addSleepLogButton").click(function() {
@@ -235,3 +209,54 @@ window.onload = function() {
 	});
 };
 
+function fillModalUp(req) {
+	for(var reqIndex in req) {
+		var reqData = req[reqIndex];
+		var idOfModals = "#preexistingLogs"+reqIndex;
+		var preexistingLogsText = $(idOfModals);
+console.log("reqData", reqData);
+		// Create Delete Button
+		var deleteButton = document.createElement("button"),
+			deleteBtnTxt = document.createTextNode("Delete");
+		deleteButton.appendChild(deleteBtnTxt);
+		deleteButton.setAttribute("type", "submit");
+		deleteButton.setAttribute("style", "float: right;");
+		deleteButton.setAttribute("data-z", JSON.stringify(reqData));
+		deleteButton.className = ("btn btn-danger");
+		deleteButton.onclick = function() {
+			deleteLog(this);
+		};
+
+		// Create Update Button
+		var updateButton = document.createElement("button"),
+			updateBtnTxt = document.createTextNode("Update");
+		updateButton.appendChild(updateBtnTxt);
+		updateButton.setAttribute("type", "submit");
+		updateButton.setAttribute("style", "float: right; margin-right: 8px;");
+		updateButton.className = ("btn btn-primary");
+
+		preexistingLogsText.html(
+			"Date: " + req[reqIndex].date + "<br>" +
+			"Time: " + req[reqIndex].hour + ":" + req[reqIndex].minute + " " + req[reqIndex].meridiem + "<br>" +
+			"Mood: " + req[reqIndex].feeling + "<br>"
+		);
+
+		// Append the Delete and Update Buttons
+		preexistingLogsText.append(deleteButton);
+		preexistingLogsText.append(updateButton);
+
+		// Check if we are at the last iteration of the req[] array.
+		if((parseInt(reqIndex) + 1) !== req.length) {
+			var newLogsId = parseInt(reqIndex) + 1;
+			preexistingLogsText.after(
+				"<hr id='hr"+newLogsId+"' class='logModals' style='margin-bottom: 0; margin-top: 15px;'>" +
+				"<div id='preexistingLogs" + newLogsId + "' class='modal-body logModals'></div>"
+			);
+		}
+	}
+}
+
+function deleteLog(logToDelete) {
+	var sleepDataToDelete = logToDelete.getAttribute("data-z");
+	console.log("::", JSON.parse(sleepDataToDelete));
+}
