@@ -126,30 +126,38 @@ module.exports.SEARCH = function(req, res) {
     var date = req.query.date;
     var sleepObjectId = req.session.sleepObjectId;
 
-    console.log("Searching...");
+    console.log("Searching for " +date+ " in Database...");
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.find(
         {   // query
-            _id: ObjectId(sleepObjectId),
-            "sleepData.date": date
+            _id: ObjectId(sleepObjectId)
         }).toArray(function(err, result) {
         if(err) {
             console.log("Error-Sleep Data Error@GET: " + err);
             return res.status(400).end();
         } else if(result) {
-            console.log("Given Date Exists");
-            var resultArray = [];
-            var sleepDataArray = result[0].sleepData;
-            for(sleepDataIndex in sleepDataArray) {
-                var sleepDate = sleepDataArray[sleepDataIndex].date;
-                if(sleepDate === date) {
-                    resultArray.push(sleepDataArray[sleepDataIndex]);
+            // result array is empty
+            if(result.length === 0) {
+                console.log("Given Date Does Not Exist");
+                return res.status(200).send().end();
+            } else {
+                var resultArray = [];
+                var sleepDataArray = result[0].sleepData;
+                for(sleepDataIndex in sleepDataArray) {
+                    var sleepDate = sleepDataArray[sleepDataIndex].date;
+                    if(sleepDate === date) {
+                        resultArray.push(sleepDataArray[sleepDataIndex]);
+                    }
                 }
+                console.log("result array:\n", resultArray);
+                // No matching date found
+                if(resultArray.length === 0) {
+                    console.log("Given Date Does Not Exist");
+                    return res.status(200).send().end();
+                }
+                console.log("Given Date Exists");
+                return res.status(200).send(resultArray);
             }
-            return res.status(200).send(resultArray);
-        } else {
-            console.log("Given Date Does Not Exist");
-            return res.status(200).send().end();
         }
     });
 };

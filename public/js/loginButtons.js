@@ -3,16 +3,21 @@ $(document).ready(function() {
     $("#loginFailedAlert").hide();
 });
 
-// var signupButton = document.getElementById("signupButton");
-// signupButton.onclick = function() {
-//     window.location = "./signup";
-// };
-
 var loginButton = document.getElementById("loginButton");
-loginButton.onclick = function() {
+loginButton.onclick = loginIntoSnooZzz;
 
+$(document).keyup(function(e) {
+    if(e.keyCode === 13) {
+        if(document.activeElement.id === "email" ||
+           document.activeElement.id === "password")
+            loginIntoSnooZzz();
+    }
+});
+
+function loginIntoSnooZzz() {
     var compareVisited = 'compareVisited:0;';
     var graphVisited = 'graphVisited=0;';
+
     // Post data to JSON
     $.ajax({
         type: 'POST',
@@ -20,10 +25,8 @@ loginButton.onclick = function() {
         data: {
             "email": $("#email").val(),
             "password": $("#password").val()
-            //"cookie": document.cookie
         },
         success: function() {
-            document.cookie =
             document.cookie = compareVisited;
             document.cookie = graphVisited;
             window.location = "./index";
@@ -35,4 +38,4 @@ loginButton.onclick = function() {
             }, 4000);
         }
     });
-};
+}
