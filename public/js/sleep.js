@@ -75,7 +75,7 @@ window.onload = function() {
 							"hour": hourValue,
 							"minute": minuteValue,
 							"meridiem": meridiemValue,
-							"feeling": mySlider.getValue()
+							"feeling": moodValue
 						},
 						success: function() {
 							$("#setAlert").show('medium');
@@ -124,11 +124,6 @@ window.onload = function() {
 				}
 			});
 		}
-	});
-
-	// DELETE
-	$("#okayButton").click(function() {
-		window.location = './index';
 	});
 
 	// hide-listener for the modal
@@ -188,6 +183,7 @@ function fillModalUp(req) {
 		updateButton.setAttribute("style", "float: right; margin-right: 8px;");
 		updateButton.className = ("btn btn-primary");
 
+		// modal body content
 		preexistingLogsText.html(
 			"Date: " + reqData.date + "<br>" +
 			"Time: " + reqData.hour + ":" + reqData.minute + " " + reqData.meridiem + "<br>" +
