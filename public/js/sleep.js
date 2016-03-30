@@ -80,27 +80,6 @@ window.onload = function() {
 						success: function() {
 							$("#setAlert").show('medium');
 							$("#btnShow").hide();
-
-							//************************************************************
-							// Update Page Layout
-							//************************************************************
-							var newCalendarHTML = "<h3><span class='label label-info'>"+dayValue+"</span></h3>";
-							var newTimeHTML = "<h3><span class='label label-info'>"+hourValue+":"+minuteValue+" "+meridiemValue+"</span></h3>";
-							var newFeelingHTML = "<h3><span class='label label-info'>"+moodValue+"</span></h3><br>";
-
-							$("#calendarContainer").html(newCalendarHTML);
-							$("#sleepingAtH4").html("You went to sleepData at:");
-							$("#clockContainer").html(newTimeHTML);
-							$("#sliderContainer").html("<h4>Your mood level was:</h4>" + newFeelingHTML);
-
-
-							var setButton = $("#setBtn");
-							setButton.html("Edit")
-								.attr("id", "editBtn")
-								.attr("type", "button");
-
-							flipFlop = true;	// delete
-							// ----- EDITING LAYOUT ENDS HERE -----
 						}
 					});
 
