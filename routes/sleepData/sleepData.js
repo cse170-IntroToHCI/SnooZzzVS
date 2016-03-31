@@ -90,37 +90,45 @@ module.exports.PUT    = function(req, res) {
             }
         }
     );
-
-    //sleepDataCollection.find({_id: ObjectId(sleepObjectId)}).toArray(function(err, sleepDataObjectArray) {
-    //    if(err) {
-    //        console.log("Error-Sleep Data Error@GET: " + err);
-    //        return res.status(400).end();
-    //    } else {
-    //        var help = sleepDataObjectArray[0].sleepData;
-    //        var myDate = new Date(date);
-    //        console.log("myDate", myDate);
-    //        for(var targetDate in help) {
-    //            var splitHelpDate = help[targetDate].date.toString().split("/");
-    //            var helpDate = new Date(
-    //                splitHelpDate[2],       // year
-    //                splitHelpDate[0]-1,     // month
-    //                splitHelpDate[1],       // day
-    //                help[targetDate].hour
-    //            );
-    //
-    //            if(helpDate.getFullYear() === myDate.getFullYear() &&
-    //               helpDate.getMonth() === myDate.getMonth() &&
-    //               helpDate.getDate() === myDate.getDate() &&
-    //               helpDate.getHours() === parseInt(hours) &&
-    //               help[targetDate].meridiem === meridiem) {
-    //                console.log("hello");
-    //            }
-    //        }
-    //    }
-    //});
 };
 
-module.exports.DELETE = function(req, res) {};
+module.exports.DELETE = function(req, res) {
+    var sleepDataToDelete = {
+        date: req.query.date,
+        hour: req.query.hour,
+        minute: req.query.minute,
+        meridiem: req.query.meridiem,
+        feeling: req.query.feeling
+    };
+
+    var sleepObjectId = req.session.sleepObjectId;
+    var sleepDataCollection = db.get().collection('sleepData');
+    sleepDataCollection.update(
+        {
+            _id: ObjectId(sleepObjectId)
+        },
+        {
+            $pull: {
+                sleepData: {
+                    date: sleepDataToDelete.date,
+                    hour: sleepDataToDelete.hour,
+                    minute: sleepDataToDelete.minute,
+                    meridiem: sleepDataToDelete.meridiem,
+                    feeling: sleepDataToDelete.feeling
+                }
+            }
+        },
+        function(err, result) {
+            if(err) {
+                console.log("err", err);
+                return res.status(400).end();
+            } else {
+                console.log("Deleted!");
+                return res.status(200).end();
+            }
+        }
+    );
+};
 
 module.exports.SEARCH = function(req, res) {
     var date = req.query.date;
@@ -149,7 +157,6 @@ module.exports.SEARCH = function(req, res) {
                         resultArray.push(sleepDataArray[sleepDataIndex]);
                     }
                 }
-                console.log("result array:\n", resultArray);
                 // No matching date found
                 if(resultArray.length === 0) {
                     console.log("Given Date Does Not Exist");

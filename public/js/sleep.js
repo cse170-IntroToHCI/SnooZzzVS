@@ -206,9 +206,24 @@ function fillModalUp(req) {
 }
 
 function deleteLog(logToDelete) {
-	var sleepDataToDelete = logToDelete.getAttribute("data-z");
-	console.log("::", JSON.parse(sleepDataToDelete));
-	// todo --> $.ajax(Delete);
+	var sleepDataToDelete = JSON.parse(logToDelete.getAttribute("data-z"));
+	var deleteDate = "date="+sleepDataToDelete.date,
+		deleteHour = "&hour="+sleepDataToDelete.hour,
+		deleteMinute = "&minute="+sleepDataToDelete.minute,
+		deleteMeridiem = "&meridiem="+sleepDataToDelete.meridiem,
+		deleteFeeling = "&feeling="+sleepDataToDelete.feeling;
+
+	$.ajax({
+		type: 'DELETE',
+		url: '/sleepData?'+deleteDate+deleteHour+deleteMinute+deleteMeridiem+deleteFeeling,
+		success: function() {
+			$("#myModal").modal('hide');
+			console.log("I think it worked");
+		},
+		error: function() {
+			console.log("Failed to Delete selected Log - Try again later :)");
+		}
+	});
 }
 
 function updateLog(logToUpdate) {
