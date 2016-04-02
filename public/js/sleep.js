@@ -181,7 +181,11 @@ function fillModalUp(req) {
 		updateButton.appendChild(updateBtnTxt);
 		updateButton.setAttribute("type", "submit");
 		updateButton.setAttribute("style", "float: right; margin-right: 8px;");
+		updateButton.setAttribute("data-z", JSON.stringify(reqData));
 		updateButton.className = ("btn btn-primary");
+		updateButton.onclick = function() {
+			updateLog(this);
+		};
 
 		// modal body content
 		preexistingLogsText.html(
@@ -218,7 +222,6 @@ function deleteLog(logToDelete) {
 		url: '/sleepData?'+deleteDate+deleteHour+deleteMinute+deleteMeridiem+deleteFeeling,
 		success: function() {
 			$("#myModal").modal('hide');
-			console.log("I think it worked");
 		},
 		error: function() {
 			console.log("Failed to Delete selected Log - Try again later :)");
@@ -227,5 +230,37 @@ function deleteLog(logToDelete) {
 }
 
 function updateLog(logToUpdate) {
-	// todo --> $.ajax(PUT);
+	var sleepDataToUpdate = JSON.parse(logToUpdate.getAttribute("data-z"));
+	var query = {
+		date: sleepDataToUpdate.date,
+		hour: sleepDataToUpdate.hour,
+		minute: sleepDataToUpdate.minute,
+		meridiem: sleepDataToUpdate.meridiem,
+		feeling: sleepDataToUpdate.feeling
+	};
+
+	var update = {
+		date: $("#selectDate").val(),
+		hour: $("#selectHour").val(),
+		minute: $("#selectMinute").val(),
+		meridiem: $("#selectMeridiem").val(),
+		feeling: $("#happinessSlider").val()
+	};
+
+	var wrapRequest = {
+		query: query,
+		update: update
+	};
+
+	$.ajax({
+		type: 'PUT',
+		url: '/sleepData',
+		data: wrapRequest,
+		success: function() {
+			$("#myModal").modal('hide');
+		},
+		error: function() {
+			console.log("Failed to Update selected Log - Try again later :)");
+		}
+	});
 }

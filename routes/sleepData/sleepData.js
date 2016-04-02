@@ -4,28 +4,16 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports.sleepData = {};
 
 module.exports.POST = function(req, res) {
-    var date        = req.body.date;
-    var hour        = req.body.hour;
-    var minute      = req.body.minute;
-    var meridiem    = req.body.meridiem;
-    var feeling     = req.body.feeling;
-    var sess        = req.session;
-
-    var newSleepData = {
-        "date": date,
-        "hour": hour,
-        "minute": minute,
-        "meridiem": meridiem,
-        "feeling": feeling
-    };
-
-    // must use update when pushing to an array
+    var sleepObjectId = req.session.sleepObjectId;
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.update(
-        {_id: ObjectId(sess.sleepObjectId)},
-        {$push: {
+        {
+            _id: ObjectId(sleepObjectId)
+        },
+        {
+            $push: {
                 sleepData: {
-                    $each: [newSleepData],
+                    $each: [req.body],
                     $sort: {date: 1}
                 }
             }
@@ -44,8 +32,12 @@ module.exports.POST = function(req, res) {
 };
 
 module.exports.GET = function(req, res) {
+    var sleepObjectId = req.session.sleepObjectId;
     var sleepDataCollection = db.get().collection('sleepData');
-    sleepDataCollection.find({_id: ObjectId(req.session.sleepObjectId)}).toArray(function(err, sleepDataObject) {
+    sleepDataCollection.find(
+        {
+            _id: ObjectId(sleepObjectId)
+        }).toArray(function(err, sleepDataObject) {
         if(err) {
             console.log("Error-Sleep Data Error@GET: " + err);
             return res.status(400).end();
@@ -58,22 +50,17 @@ module.exports.GET = function(req, res) {
 };
 
 module.exports.PUT    = function(req, res) {
-    var date = req.body.date,
-        hours = req.body.hour,
-        meridiem = req.body.meridiem;
+    console.log("Updating ...");
     var sleepObjectId = req.session.sleepObjectId;
     var sleepDataCollection = db.get().collection('sleepData');
-
     sleepDataCollection.update(
         {   // query
             _id: ObjectId(sleepObjectId),
-            "sleepData.date": date,
-            "sleepData.hour": hours,
-            "sleepData.meridiem": meridiem
+            sleepData: req.body.query
         },
         {   // update
             $set: {
-                "sleepData.$" : req.body
+                "sleepData.$" : req.body.update
             }
         },
         function(err, update) {
@@ -93,14 +80,6 @@ module.exports.PUT    = function(req, res) {
 };
 
 module.exports.DELETE = function(req, res) {
-    var sleepDataToDelete = {
-        date: req.query.date,
-        hour: req.query.hour,
-        minute: req.query.minute,
-        meridiem: req.query.meridiem,
-        feeling: req.query.feeling
-    };
-
     var sleepObjectId = req.session.sleepObjectId;
     var sleepDataCollection = db.get().collection('sleepData');
     sleepDataCollection.update(
@@ -109,13 +88,7 @@ module.exports.DELETE = function(req, res) {
         },
         {
             $pull: {
-                sleepData: {
-                    date: sleepDataToDelete.date,
-                    hour: sleepDataToDelete.hour,
-                    minute: sleepDataToDelete.minute,
-                    meridiem: sleepDataToDelete.meridiem,
-                    feeling: sleepDataToDelete.feeling
-                }
+                sleepData: req.query
             }
         },
         function(err, result) {
